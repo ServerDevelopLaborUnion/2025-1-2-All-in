@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5212800602263580491
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5782344961268854286}
+  - component: {fileID: 6711601500446223449}
+  - component: {fileID: 2752451670022054012}
+  m_Layer: 0
+  m_Name: SloltMachine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5782344961268854286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212800602263580491}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 725.7132, y: 613.50287, z: -6.104925}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6711601500446223449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212800602263580491}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd10d5865b6d4d4bb83b54e25207fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBetAmount: {fileID: 0}
+  imageBetAmount: {fileID: 0}
+  textCredits: {fileID: 0}
+  text11Reel: {fileID: 0}
+  text12Reel: {fileID: 0}
+  text13Reel: {fileID: 0}
+  text14Reel: {fileID: 0}
+  text15Reel: {fileID: 0}
+  text21Reel: {fileID: 0}
+  text22Reel: {fileID: 0}
+  text23Reel: {fileID: 0}
+  text24Reel: {fileID: 0}
+  text25Reel: {fileID: 0}
+  text31Reel: {fileID: 0}
+  text32Reel: {fileID: 0}
+  text33Reel: {fileID: 0}
+  text34Reel: {fileID: 0}
+  text35Reel: {fileID: 0}
+  textResult: {fileID: 0}
+  f1ReelImage: {fileID: 0}
+  f2ReelImage: {fileID: 0}
+  f3ReelImage: {fileID: 0}
+  f4ReelImage: {fileID: 0}
+  f5ReelImage: {fileID: 0}
+  s1ReelImage: {fileID: 0}
+  s2ReelImage: {fileID: 0}
+  s3ReelImage: {fileID: 0}
+  s4ReelImage: {fileID: 0}
+  s5ReelImage: {fileID: 0}
+  t1ReelImage: {fileID: 0}
+  t2ReelImage: {fileID: 0}
+  t3ReelImage: {fileID: 0}
+  t4ReelImage: {fileID: 0}
+  t5ReelImage: {fileID: 0}
+  pullButton: {fileID: 0}
+  allInButton: {fileID: 0}
+  credits: 100000
+--- !u!114 &2752451670022054012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212800602263580491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 736c7f6dca900514686bfc925fe67965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBetAmount: {fileID: 0}
+  imageBetAmount: {fileID: 0}
+  textCredits: {fileID: 0}
+  text11Reel: {fileID: 0}
+  text12Reel: {fileID: 0}
+  text13Reel: {fileID: 0}
+  text14Reel: {fileID: 0}
+  text15Reel: {fileID: 0}
+  text21Reel: {fileID: 0}
+  text22Reel: {fileID: 0}
+  text23Reel: {fileID: 0}
+  text24Reel: {fileID: 0}
+  text25Reel: {fileID: 0}
+  text31Reel: {fileID: 0}
+  text32Reel: {fileID: 0}
+  text33Reel: {fileID: 0}
+  text34Reel: {fileID: 0}
+  text35Reel: {fileID: 0}
+  textResult: {fileID: 0}
+  f1ReelImage: {fileID: 0}
+  f2ReelImage: {fileID: 0}
+  f3ReelImage: {fileID: 0}
+  f4ReelImage: {fileID: 0}
+  f5ReelImage: {fileID: 0}
+  s1ReelImage: {fileID: 0}
+  s2ReelImage: {fileID: 0}
+  s3ReelImage: {fileID: 0}
+  s4ReelImage: {fileID: 0}
+  s5ReelImage: {fileID: 0}
+  t1ReelImage: {fileID: 0}
+  t2ReelImage: {fileID: 0}
+  t3ReelImage: {fileID: 0}
+  t4ReelImage: {fileID: 0}
+  t5ReelImage: {fileID: 0}
+  pullButton: {fileID: 0}
+  allInButton: {fileID: 0}
+  credits: 100000
