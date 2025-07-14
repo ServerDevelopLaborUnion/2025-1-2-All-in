@@ -29,8 +29,10 @@ public class SloltMachine : MonoBehaviour
     private const float jackpotChanceMax = 1f;
     private const float jackpotChanceIncrement = 0.005f;
     private const float jackpotChanceInitial = 0.05f;
+
     #endregion
     [SerializeField] private TextMeshProUGUI textResult;
+    [SerializeField] private TextMeshProUGUI textChance;
     [SerializeField] private Button pullButton;
     [SerializeField] private Button allInButton;
     private Coroutine[] reelSpinCoroutines = new Coroutine[5];
@@ -63,6 +65,8 @@ public class SloltMachine : MonoBehaviour
         }
 
         textCredits.text = $"Credits : {credits}";
+        textChance.text = $"Jackpot Chance \n {jackpotChance:F3}%";
+
     }
 
     private void Update()
@@ -111,7 +115,7 @@ public class SloltMachine : MonoBehaviour
     {
         isHorizontalMatchApplied = false; // 초기화
 
-        int matchRowCount = Random.Range(1, 3); // 1~2줄 매칭
+        int matchRowCount = Random.Range(1, 4); // 1~2줄 매칭
         List<int> rows = new List<int> { 0, 1, 2 };
         for (int i = 0; i < rows.Count; i++)
         {
@@ -186,6 +190,8 @@ public class SloltMachine : MonoBehaviour
 
         credits -= bet;
         textCredits.text = $"Credits : {credits}";
+    
+
         StartSpin();
         pullButton.interactable = false;
     }
@@ -205,7 +211,7 @@ public class SloltMachine : MonoBehaviour
         // 세로줄 매치 확률 적용
         for (int col = 0; col < 5; col++)
         {
-            if (Random.value < 0.3f)
+            if (Random.value < 0.1f)
             {
                 int val = Random.Range(1, 8);
                 for (int row = 0; row < 3; row++)
@@ -218,7 +224,7 @@ public class SloltMachine : MonoBehaviour
         if (rand < jackpotChance)
         {
             ApplyJackpot();
-            jackpotChance = jackpotChanceInitial;
+            
         }
         else if (rand < jackpotChance + 0.5f)
         {
@@ -254,7 +260,7 @@ public class SloltMachine : MonoBehaviour
     }
 
     private void CheckBet()
-    {
+    { 
         int betAmount = int.Parse(inputBetAmount.text);
         bool hasMatch = false;
 
@@ -266,12 +272,15 @@ public class SloltMachine : MonoBehaviour
 
         bool vertical = CheckVertical(betAmount);
         bool horizontal = CheckHorizontal(betAmount);
+        bool jackpot = CheckJackpot(betAmount);
         hasMatch = vertical || horizontal;
 
         textCredits.text = $"Credits : {credits}";
+        textChance.text = $"Jackpot Chance \n {jackpotChance:F3}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
-        if (horizontal)
+
+        if (horizontal||jackpot)
         {
             StartCoroutine(PlayHorizontalMatchEffects());
         }
@@ -396,7 +405,7 @@ public class SloltMachine : MonoBehaviour
             horizontalMatchParticle.Play();
 
             // 화면 흔들기 효과 실행
-            yield return StartCoroutine(ScreenShakeCoroutine(0.3f, 0.01f));
+            yield return StartCoroutine(ScreenShakeCoroutine(0.5f, 0.01f));
         }
     }
 
@@ -438,7 +447,7 @@ public class SloltMachine : MonoBehaviour
             if (a == b && b == c)
             {
                 matched = true;
-                credits += bet * 5;
+                credits += bet * 2;
 
                 for (int row = 0; row < 3; row++)
                 {
@@ -466,7 +475,7 @@ public class SloltMachine : MonoBehaviour
             if (a == b && b == c && c == d && d == e)
             {
                 matched = true;
-                credits += bet * 10;
+                credits += bet * 4;
 
                 for (int col = 0; col < 5; col++)
                 {
@@ -488,9 +497,10 @@ public class SloltMachine : MonoBehaviour
                 if (reelResults[r, c] != first)
                     return false;
 
+        jackpotChance = jackpotChanceInitial;
         // 잭팟 처리
         textResult.text = " JACKPOT!!! ";
-        credits += betAmount * 1000000;
+        credits += betAmount * 100;
         textCredits.text = $"Credits : {credits}";
         return true;
     }
