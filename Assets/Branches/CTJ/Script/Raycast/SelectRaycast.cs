@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,8 +7,8 @@ public class SelectRaycast : MonoBehaviour
     Vector2 _mousePosition;
     Vector2 _worldmousePosition;
 
-    SelectChecker _currentObject;
-    SelectChecker _lastObject;
+    [SerializeField] SelectChecker _currentObject;
+    [SerializeField] SelectChecker _lastObject;
     Transform _player;
 
     [SerializeField] float selectRange = 5f;
@@ -20,33 +21,55 @@ public class SelectRaycast : MonoBehaviour
     private void Update()
     {
         Ray();
+        Click();
+    }
+
+    private void Click()
+    {
+        if (Mouse.current.leftButton.isPressed)
+        {
+            if (_currentObject != null && _currentObject.IsActive)
+            {
+                _currentObject.Mining();
+            }
+        }
     }
 
     public void Ray()
     {
+        if (_currentObject != null && _currentObject.gameObject == null) _currentObject = null;
+        if (_lastObject != null && _lastObject.gameObject == null) _lastObject = null;
+
         _mousePosition = Mouse.current.position.value;
         _worldmousePosition = Camera.main.ScreenToWorldPoint(_mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(_worldmousePosition, Vector2.zero, Mathf.Infinity);
 
-        if(hit.collider && hit.collider.gameObject.CompareTag("Target"))
+        if (hit)
         {
-            float distance = Vector2.Distance(_player.position, hit.collider.transform.position);
-            if (distance <= selectRange)
+            if (hit.collider && hit.collider.gameObject.CompareTag("Target"))
             {
                 _currentObject = hit.collider.gameObject.GetComponent<SelectChecker>();
-                _currentObject.GetActive();
+                float distance = Vector2.Distance(_player.position, hit.collider.transform.position);
+                if (distance <= selectRange)
+                {
+                    _currentObject.GetActive();
+                }
+                else
+                {
+                    _currentObject.ExitActive();
+                }
+
+                if (_lastObject != _currentObject)
+                {
+                    RollbackTheLastObject();
+                    _lastObject = _currentObject;
+                }
+
             }
             else
             {
-                _currentObject.ExitActive();
-            }
-
-            if (_lastObject != _currentObject)
-            {
                 RollbackTheLastObject();
-                _lastObject = _currentObject;
             }
-            
         }
         else
         {

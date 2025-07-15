@@ -151,6 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Test: {fileID: 2103039605}
+  lv1Dura: 8
+  lv2Dura: 5
+  lv3Dura: 2
 --- !u!61 &129462718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -818,6 +821,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Test: {fileID: 571627369}
+  lv1Dura: 8
+  lv2Dura: 5
+  lv3Dura: 2
 --- !u!1 &1265440294
 GameObject:
   m_ObjectHideFlags: 0
