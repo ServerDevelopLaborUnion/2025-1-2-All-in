@@ -28,29 +28,32 @@ public class SelectRaycast : MonoBehaviour
         _worldmousePosition = Camera.main.ScreenToWorldPoint(_mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(_worldmousePosition, Vector2.zero, Mathf.Infinity);
 
-        if(hit.collider && hit.collider.gameObject.CompareTag("Target"))
+        if (hit)
         {
-            float distance = Vector2.Distance(_player.position, hit.collider.transform.position);
-            if (distance <= selectRange)
+            if (hit.collider && hit.collider.gameObject.CompareTag("Target"))
             {
-                _currentObject = hit.collider.gameObject.GetComponent<SelectChecker>();
-                _currentObject.GetActive();
+                float distance = Vector2.Distance(_player.position, hit.collider.transform.position);
+                if (distance <= selectRange)
+                {
+                    _currentObject = hit.collider.gameObject.GetComponent<SelectChecker>();
+                    _currentObject.GetActive();
+                }
+                else
+                {
+                    _currentObject.ExitActive();
+                }
+
+                if (_lastObject != _currentObject)
+                {
+                    RollbackTheLastObject();
+                    _lastObject = _currentObject;
+                }
+
             }
             else
             {
-                _currentObject.ExitActive();
-            }
-
-            if (_lastObject != _currentObject)
-            {
                 RollbackTheLastObject();
-                _lastObject = _currentObject;
             }
-            
-        }
-        else
-        {
-            RollbackTheLastObject();
         }
     }
 
