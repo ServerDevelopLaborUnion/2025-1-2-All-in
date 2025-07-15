@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,113 +8,65 @@ public class SloltMachine : MonoBehaviour
 {
     [SerializeField] private TMP_InputField inputBetAmount;
     [SerializeField] private Image imageBetAmount;
-
-    #region ∏±
     [SerializeField] private TextMeshProUGUI textCredits;
-    [SerializeField] private TextMeshProUGUI text11Reel;
-    [SerializeField] private TextMeshProUGUI text12Reel;
-    [SerializeField] private TextMeshProUGUI text13Reel;
-    [SerializeField] private TextMeshProUGUI text14Reel;
-    [SerializeField] private TextMeshProUGUI text15Reel;
-    [SerializeField] private TextMeshProUGUI text21Reel;
-    [SerializeField] private TextMeshProUGUI text22Reel;
-    [SerializeField] private TextMeshProUGUI text23Reel;
-    [SerializeField] private TextMeshProUGUI text24Reel;
-    [SerializeField] private TextMeshProUGUI text25Reel;
-    [SerializeField] private TextMeshProUGUI text31Reel;
-    [SerializeField] private TextMeshProUGUI text32Reel;
-    [SerializeField] private TextMeshProUGUI text33Reel;
-    [SerializeField] private TextMeshProUGUI text34Reel;
-    [SerializeField] private TextMeshProUGUI text35Reel;
+
+    [Header("Î¶¥ ÌÖçÏä§Ìä∏")]
+    [SerializeField] private TextMeshProUGUI[] reelTextsFlat = new TextMeshProUGUI[15];
+
+    [Header("Î¶¥ Ïù¥ÎØ∏ÏßÄ")]
+    [SerializeField] private Image[] reelImagesFlat = new Image[15];
+
+
+    [Header("Ïπ¥Î©îÎùº")]
+    [SerializeField] private Transform cameraTransform;
+
+
+    [Header("ÌååÌã∞ÌÅ¥")]
+    [SerializeField] private ParticleSystem horizontalMatchParticle;
+
+    #region Ïû≠ÌåüÌôïÎ•† Í¥ÄÎ†®
+    private float jackpotChance = 0.05f;
+    private const float jackpotChanceMax = 1f;
+    private const float jackpotChanceIncrement = 0.005f;
+    private const float jackpotChanceInitial = 0.05f;
+
+    #endregion
     [SerializeField] private TextMeshProUGUI textResult;
-    #endregion
-
-    #region ∏± ªÛ≈¬
-    private bool is1ReelSpinned = false;
-    private bool is2ReelSpinned = false;
-    private bool is3ReelSpinned = false;
-    private bool is4ReelSpinned = false;
-    private bool is5ReelSpinned = false;
-    #endregion
-
-    #region ∏± ¿ÃπÃ¡ˆ
-    [SerializeField] private Image f1ReelImage;
-    [SerializeField] private Image f2ReelImage;
-    [SerializeField] private Image f3ReelImage;
-    [SerializeField] private Image f4ReelImage;
-    [SerializeField] private Image f5ReelImage;
-
-    [SerializeField] private Image s1ReelImage;
-    [SerializeField] private Image s2ReelImage;
-    [SerializeField] private Image s3ReelImage;
-    [SerializeField] private Image s4ReelImage;
-    [SerializeField] private Image s5ReelImage;
-
-    [SerializeField] private Image t1ReelImage;
-    [SerializeField] private Image t2ReelImage;
-    [SerializeField] private Image t3ReelImage;
-    [SerializeField] private Image t4ReelImage;
-    [SerializeField] private Image t5ReelImage;
-    #endregion
-
-    #region ∏±¿« ∞·∞˙∞™
-    private int f1ReelResult = 0;
-    private int f2ReelResult = 0;
-    private int f3ReelResult = 0;
-    private int f4ReelResult = 0;
-    private int f5ReelResult = 0;
-
-    private int s1ReelResult = 0;
-    private int s2ReelResult = 0;
-    private int s3ReelResult = 0;
-    private int s4ReelResult = 0;
-    private int s5ReelResult = 0;
-
-    private int t1ReelResult = 0;
-    private int t2ReelResult = 0;
-    private int t3ReelResult = 0;
-    private int t4ReelResult = 0;
-    private int t5ReelResult = 0;
-    #endregion
+    [SerializeField] private TextMeshProUGUI textChance;
+    [SerializeField] private Button pullButton;
+    [SerializeField] private Button allInButton;
+    private Coroutine[] reelSpinCoroutines = new Coroutine[5];
 
     private int[,] reelResults = new int[3, 5];
     private Image[,] reelImages = new Image[3, 5];
     private TextMeshProUGUI[,] reelTexts = new TextMeshProUGUI[3, 5];
 
-    [SerializeField] private Button pullButton;
-    [SerializeField] private Button allInButton;
-
     private float spinDuration = 0.2f;
     private float elapsedTime = 0f;
     private bool isStartSpin = false;
-    [SerializeField] private int credits = 100000;
+    private bool isHorizontalMatchApplied = false;
 
-    Color32 customTwo = new Color32(178, 34, 34, 255);
+
+    private int credits = 100000;
+
+    private bool[] isReelSpinned = new bool[5];
+
     Color32 customJackPot = new Color32(255, 239, 184, 255);
 
     private void Awake()
     {
-        Image[] images = new Image[]{
-            f1ReelImage, f2ReelImage, f3ReelImage, f4ReelImage, f5ReelImage,
-            s1ReelImage, s2ReelImage, s3ReelImage, s4ReelImage, s5ReelImage,
-            t1ReelImage, t2ReelImage, t3ReelImage, t4ReelImage, t5ReelImage
-        };
-
-        TextMeshProUGUI[] texts = new TextMeshProUGUI[]
-        {
-            text11Reel, text12Reel, text13Reel, text14Reel, text15Reel,
-            text21Reel, text22Reel, text23Reel, text24Reel, text25Reel,
-            text31Reel, text32Reel, text33Reel, text34Reel, text35Reel
-        };
-
         for (int row = 0; row < 3; row++)
         {
             for (int col = 0; col < 5; col++)
             {
-                reelImages[row, col] = images[row * 5 + col];
-                reelTexts[row, col] = texts[row * 5 + col];
+                reelImages[row, col] = reelImagesFlat[row * 5 + col];
+                reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
+
+        textCredits.text = $"Credits : {credits}";
+        textChance.text = $"Jackpot Chance \n {jackpotChance:F3}%";
+
     }
 
     private void Update()
@@ -122,121 +74,93 @@ public class SloltMachine : MonoBehaviour
         if (!isStartSpin) return;
 
         elapsedTime += Time.deltaTime;
-        int random_spinResult1 = Random.Range(1, 10);
-        int random_spinResult2 = Random.Range(1, 10);
-        int random_spinResult3 = Random.Range(1, 10);
 
-        if (!is1ReelSpinned)
+        for (int col = 0; col < 5; col++)
         {
-            f1ReelResult = random_spinResult1;
-            s1ReelResult = random_spinResult2;
-            t1ReelResult = random_spinResult3;
-            if (elapsedTime >= spinDuration)
+            if (!isReelSpinned[col] && elapsedTime >= spinDuration)
             {
-                is1ReelSpinned = true;
-                elapsedTime = 0;
-            }
-        }
-        else if (!is2ReelSpinned)
-        {
-            f2ReelResult = random_spinResult1;
-            s2ReelResult = random_spinResult2;
-            t2ReelResult = random_spinResult3;
-            if (elapsedTime >= spinDuration)
-            {
-                is2ReelSpinned = true;
-                elapsedTime = 0;
-            }
-        }
-        else if (!is3ReelSpinned)
-        {
-            f3ReelResult = random_spinResult1;
-            s3ReelResult = random_spinResult2;
-            t3ReelResult = random_spinResult3;
-            if (elapsedTime >= spinDuration)
-            {
-                is3ReelSpinned = true;
-                elapsedTime = 0;
-            }
-        }
-        else if (!is4ReelSpinned)
-        {
-            f4ReelResult = random_spinResult1;
-            s4ReelResult = random_spinResult2;
-            t4ReelResult = random_spinResult3;
-            if (elapsedTime >= spinDuration)
-            {
-                is4ReelSpinned = true;
-                elapsedTime = 0;
-            }
-        }
-        else if (!is5ReelSpinned)
-        {
-            f5ReelResult = random_spinResult1;
-            s5ReelResult = random_spinResult2;
-            t5ReelResult = random_spinResult3;
-            if (elapsedTime >= spinDuration)
-            {
-                isStartSpin = false;
-                elapsedTime = 0;
-
-                is1ReelSpinned = false;
-                is2ReelSpinned = false;
-                is3ReelSpinned = false;
-                is4ReelSpinned = false;
-                is5ReelSpinned = false;
-
-                //  ø©±‚º≠ ∞·∞˙∞™ ¿˙¿Â
-                reelResults[0, 0] = f1ReelResult;
-                reelResults[0, 1] = f2ReelResult;
-                reelResults[0, 2] = f3ReelResult;
-                reelResults[0, 3] = f4ReelResult;
-                reelResults[0, 4] = f5ReelResult;
-
-                reelResults[1, 0] = s1ReelResult;
-                reelResults[1, 1] = s2ReelResult;
-                reelResults[1, 2] = s3ReelResult;
-                reelResults[1, 3] = s4ReelResult;
-                reelResults[1, 4] = s5ReelResult;
-
-                reelResults[2, 0] = t1ReelResult;
-                reelResults[2, 1] = t2ReelResult;
-                reelResults[2, 2] = t3ReelResult;
-                reelResults[2, 3] = t4ReelResult;
-                reelResults[2, 4] = t5ReelResult;
-
-                CheckBet();
-                pullButton.interactable = true;
+                ApplyVerticalMatch(col);
+                isReelSpinned[col] = true;
+                elapsedTime = 0f;
+                break;
             }
         }
 
-        text11Reel.text = f1ReelResult.ToString("D1");
-        text21Reel.text = s1ReelResult.ToString("D1");
-        text31Reel.text = t1ReelResult.ToString("D1");
+        if (AllReelsSpinned())
+        {
+            isStartSpin = false;
+            ResetReelSpins();
 
-        text12Reel.text = f2ReelResult.ToString("D1");
-        text22Reel.text = s2ReelResult.ToString("D1");
-        text32Reel.text = t2ReelResult.ToString("D1");
+            if (Random.value < 0.1f)
+                ApplyHorizontalMatch();
 
-        text13Reel.text = f3ReelResult.ToString("D1");
-        text23Reel.text = s3ReelResult.ToString("D1");
-        text33Reel.text = t3ReelResult.ToString("D1");
+            UpdateReelDisplay();
+            CheckBet();
+            pullButton.interactable = true;
+        }
+    }
 
-        text14Reel.text = f4ReelResult.ToString("D1");
-        text24Reel.text = s4ReelResult.ToString("D1");
-        text34Reel.text = t4ReelResult.ToString("D1");
+    private void ApplyVerticalMatch(int col)
+    {
+        int baseSpin = Random.Range(1, 8);
+        bool forceVerticalMatch = Random.value < 0.2f;
 
-        text15Reel.text = f5ReelResult.ToString("D1");
-        text25Reel.text = s5ReelResult.ToString("D1");
-        text35Reel.text = t5ReelResult.ToString("D1");
+        for (int row = 0; row < 3; row++)
+        {
+            reelResults[row, col] = forceVerticalMatch ? baseSpin : Random.Range(1, 8);
+        }
+    }
+
+    private void ApplyHorizontalMatch()
+    {
+        isHorizontalMatchApplied = false; // Ï¥àÍ∏∞Ìôî
+
+        int matchRowCount = Random.Range(1, 4); // 1~2Ï§Ñ Îß§Ïπ≠
+        List<int> rows = new List<int> { 0, 1, 2 };
+        for (int i = 0; i < rows.Count; i++)
+        {
+            int j = Random.Range(i, rows.Count);
+            (rows[i], rows[j]) = (rows[j], rows[i]);
+        }
+
+        for (int i = 0; i < matchRowCount; i++)
+        {
+            int row = rows[i];
+            int value = Random.Range(1, 8);
+            for (int col = 0; col < 5; col++)
+            {
+                reelResults[row, col] = value;
+            }
+            isHorizontalMatchApplied = true;  // Í∞ÄÎ°úÎß§Ïπò Ï†ÅÏö©Îê® ÌëúÏãú
+        }
+    }
+
+    private void ApplyJackpot()
+    {
+        int jackpotSymbol = Random.Range(1, 8);
+
+        for (int row = 0; row < 3; row++)
+            for (int col = 0; col < 5; col++)
+                reelResults[row, col] = jackpotSymbol;
+    }
+
+    private void UpdateReelDisplay()
+    {
+        for (int row = 0; row < 3; row++)
+        {
+            for (int col = 0; col < 5; col++)
+            {
+                reelTexts[row, col].text = reelResults[row, col].ToString("D1");
+            }
+        }
     }
 
     private void ResetReels()
     {
-        foreach (var img in reelImages)
+        foreach (var img in reelImagesFlat)
             img.color = Color.white;
 
-        foreach (var txt in reelTexts)
+        foreach (var txt in reelTextsFlat)
             txt.color = Color.black;
 
         OnMessage(Color.white, string.Empty);
@@ -251,27 +175,78 @@ public class SloltMachine : MonoBehaviour
     public void OnClickpull()
     {
         ResetReels();
-
-        if (!int.TryParse(inputBetAmount.text.Trim(), out int parse) || parse <= 0)
+        horizontalMatchParticle.Stop();
+        if (!int.TryParse(inputBetAmount.text.Trim(), out int bet) || bet <= 0)
         {
             OnMessage(Color.red, "Invalid bet amount");
             return;
         }
 
-        if (credits - parse >= 0)
+        if (credits < bet)
         {
-            credits -= parse;
-            textCredits.text = $"Credits : {credits}";
-            isStartSpin = true;
+            OnMessage(Color.red, "You don't have enough money");
+            return;
+        }
 
-            pullButton.interactable = false;
+        credits -= bet;
+        textCredits.text = $"Credits : {credits}";
+    
+
+        StartSpin();
+        pullButton.interactable = false;
+    }
+
+    private void StartSpin()
+    {
+        isStartSpin = true;
+        pullButton.interactable = false;
+        elapsedTime = 0;
+        ResetReelSpins();
+
+        // Í∏∞Î≥∏ ÎûúÎç§ Í≤∞Í≥º ÏÉùÏÑ±
+        for (int row = 0; row < 3; row++)
+            for (int col = 0; col < 5; col++)
+                reelResults[row, col] = Random.Range(1, 8);
+
+        // ÏÑ∏Î°úÏ§Ñ Îß§Ïπò ÌôïÎ•† Ï†ÅÏö©
+        for (int col = 0; col < 5; col++)
+        {
+            if (Random.value < 0.1f)
+            {
+                int val = Random.Range(1, 8);
+                for (int row = 0; row < 3; row++)
+                    reelResults[row, col] = val;
+            }
+        }
+
+        float rand = Random.value;
+
+        if (rand < jackpotChance)
+        {
+            ApplyJackpot();
+            
+        }
+        else if (rand < jackpotChance + 0.5f)
+        {
+            ApplyHorizontalMatch();
+            jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
         }
         else
         {
-            OnMessage(Color.red, "You don't have enough money");
+            jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
         }
-    }
 
+        // Î¶¥ Ïä§ÌïÄ ÏãúÏûë
+        for (int col = 0; col < 5; col++)
+        {
+            if (reelSpinCoroutines[col] != null)
+                StopCoroutine(reelSpinCoroutines[col]);
+
+            reelSpinCoroutines[col] = StartCoroutine(SpinReelLoop(col));
+        }
+
+        StartCoroutine(StopReelsOneByOne());
+    }
     public void OnClickAllIn()
     {
         if (credits <= 0)
@@ -285,53 +260,32 @@ public class SloltMachine : MonoBehaviour
     }
 
     private void CheckBet()
-    {
+    { 
         int betAmount = int.Parse(inputBetAmount.text);
-        bool hasAnyMatch = false;
+        bool hasMatch = false;
 
-        // ¿ÃπÃ¡ˆ √ ±‚»≠
-        foreach (var img in reelImages)
+        foreach (var img in reelImagesFlat)
             img.color = Color.white;
 
-        //  ¿Ë∆Ã ∆«∫∞: ¿¸√º 3x5 ΩΩ∑‘¿Ã ∏µŒ ∞∞¿∫ ∞™¿Œ¡ˆ
-        int firstValue = reelResults[0, 0];
-        bool isJackpot = true;
-
-        for (int row = 0; row < 3; row++)
-        {
-            for (int col = 0; col < 5; col++)
-            {
-                if (reelResults[row, col] != firstValue)
-                {
-                    isJackpot = false;
-                    break;
-                }
-            }
-            if (!isJackpot)
-                break;
-        }
-
-        // ¿Ë∆Ã¿œ ∞ÊøÏ
-        if (isJackpot)
-        {
-            textResult.text = " JACKPOT!!! ";
-            credits += betAmount * 1000000;
-            textCredits.text = $"Credits : {credits}";
+        if (CheckJackpot(betAmount))
             return;
-        }
 
-        // ¿œπ› ∏≈ƒ° »Æ¿Œ
-        bool verticalMatched = CheckVertical(betAmount);
-        bool horizontalMatched = CheckHorizontal(betAmount);
+        bool vertical = CheckVertical(betAmount);
+        bool horizontal = CheckHorizontal(betAmount);
+        bool jackpot = CheckJackpot(betAmount);
+        hasMatch = vertical || horizontal;
 
-        hasAnyMatch = verticalMatched || horizontalMatched;
-
-        // ∞·∞˙ «•Ω√
         textCredits.text = $"Credits : {credits}";
-        textResult.text = hasAnyMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
+        textChance.text = $"Jackpot Chance \n {jackpotChance:F3}%";
+        textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
+
+
+        if (horizontal||jackpot)
+        {
+            StartCoroutine(PlayHorizontalMatchEffects());
+        }
     }
-
-
+    #region ÏΩîÎ£®Ìã¥
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
         float elapsed = 0f;
@@ -344,15 +298,145 @@ public class SloltMachine : MonoBehaviour
         text.enabled = true;
     }
 
+    private IEnumerator StartSpinSequence()
+    {
+        isStartSpin = true;
+        pullButton.interactable = false;
+
+        ResetReelSpins();
+
+        // Í≤∞Í≥º ÎûúÎç§ ÏÉùÏÑ±(ÌïÑÏöîÏãú)
+        for (int row = 0; row < 3; row++)
+            for (int col = 0; col < 5; col++)
+                reelResults[row, col] = Random.Range(1, 8);
+
+        for (int col = 0; col < 5; col++)
+        {
+            if (Random.value < 0.3f)
+            {
+                int val = Random.Range(1, 8);
+                for (int row = 0; row < 3; row++)
+                    reelResults[row, col] = val;
+            }
+        }
+
+        if (Random.value < 0.5f)
+            ApplyHorizontalMatch();
+
+        for (int col = 0; col < 5; col++)
+        {
+            yield return StartCoroutine(SpinReelCoroutine(col)); // Ìïú Î¶¥Ïî© ÏàúÏ∞®Ï†ÅÏúºÎ°ú Ïä§ÌïÄ & Î©àÏ∂§
+        }
+
+        isStartSpin = false;
+
+        yield return PlayHorizontalMatchEffects();
+
+        CheckBet();
+        pullButton.interactable = true;
+    }
+
+    private IEnumerator SpinReelCoroutine(int col)
+    {
+        float spinTime = 0.8f; // Î¶¥Îãπ Ïä§ÌïÄ ÏãúÍ∞Ñ Ï°∞Ï†à
+        float elapsed = 0f;
+        float interval = 0.05f;
+
+        while (elapsed < spinTime)
+        {
+            for (int row = 0; row < 3; row++)
+            {
+                int randVal = Random.Range(1, 8);
+                reelTexts[row, col].text = randVal.ToString();
+            }
+            yield return new WaitForSeconds(interval);
+            elapsed += interval;
+        }
+
+        // ÏµúÏ¢Ö Í≤∞Í≥º ÌëúÏãú
+        for (int row = 0; row < 3; row++)
+        {
+            reelTexts[row, col].text = reelResults[row, col].ToString("D1");
+        }
+
+        isReelSpinned[col] = true;
+    }
+
+
+    private IEnumerator SpinReelLoop(int col)
+    {
+        while (!isReelSpinned[col])
+        {
+            for (int row = 0; row < 3; row++)
+            {
+                int randVal = Random.Range(1, 8);
+                reelTexts[row, col].text = randVal.ToString();
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
+
+        // ÏµúÏ¢Ö Í≤∞Í≥º ÌëúÏãú
+        for (int row = 0; row < 3; row++)
+        {
+            reelTexts[row, col].text = reelResults[row, col].ToString("D1");
+        }
+    }
+    private IEnumerator StopReelsOneByOne()
+    {
+        for (int col = 0; col < 5; col++)
+        {
+            yield return new WaitForSeconds(0.2f); // Î¶¥ Í∞Ñ Î©àÏ∂îÎäî Í∞ÑÍ≤©
+            isReelSpinned[col] = true;             // Ïù¥ Î¶¥ Î©àÏ∂§
+        }
+
+        yield return new WaitForSeconds(0.2f);
+
+        isStartSpin = false;
+
+        CheckBet();
+        pullButton.interactable = true;
+    }
+
+    private IEnumerator PlayHorizontalMatchEffects()
+    {
+        if (isHorizontalMatchApplied)
+        {
+            // ÌååÌã∞ÌÅ¥ Ïû¨ÏÉù (Ïòà: particleSystem.Play();)
+            horizontalMatchParticle.Play();
+
+            // ÌôîÎ©¥ ÌùîÎì§Í∏∞ Ìö®Í≥º Ïã§Ìñâ
+            yield return StartCoroutine(ScreenShakeCoroutine(0.5f, 0.01f));
+        }
+    }
+
+    private IEnumerator ScreenShakeCoroutine(float duration, float magnitude)
+    {
+        Vector3 originalPos = cameraTransform.localPosition;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            cameraTransform.localPosition = originalPos + new Vector3(x, y, 0);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        cameraTransform.localPosition = originalPos;
+    }
+    #endregion
     private void OnMessage(Color color, string msg)
     {
         imageBetAmount.color = color;
         textResult.text = msg;
     }
-    private bool CheckVertical(int betting)
+
+    private bool CheckVertical(int bet)
     {
-        bool isMatched = false;
-        int matchCount = 0;
+        bool matched = false;
 
         for (int col = 0; col < 5; col++)
         {
@@ -362,32 +446,25 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c)
             {
-                isMatched = true;
-
-                matchCount++;
-                if (matchCount == 1)
-                    credits += betting * 5;
-                else if (matchCount >= 2)
-                    credits += betting * 10;
-               
+                matched = true;
+                credits += bet * 2;
 
                 for (int row = 0; row < 3; row++)
                 {
                     reelImages[row, col].color = customJackPot;
-                    StartCoroutine(BlinkText(reelTexts[row, col], 0.5f, 0.15f));
+                    StartCoroutine(BlinkText(reelTexts[row, col], 0.2f, 0.15f));
                 }
             }
         }
 
-        return isMatched;
+        return matched;
     }
-    private bool CheckHorizontal(int betting)
+
+    private bool CheckHorizontal(int bet)
     {
+        bool matched = false;
 
-        bool isMatched = false;
-
-        int matchCount = 0;
-        for (int row = 0; row < 3; row++)  // «‡ ±‚¡ÿ¿∏∑Œ
+        for (int row = 0; row < 3; row++)
         {
             int a = reelResults[row, 0];
             int b = reelResults[row, 1];
@@ -397,28 +474,47 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c && c == d && d == e)
             {
+                matched = true;
+                credits += bet * 4;
 
-                isMatched = true;
-
-                matchCount++;
-                if (matchCount == 1)
-                    credits += betting * 10;
-                else if (matchCount >= 2)
-                    credits += betting * 20;
-               
-
-
-
-                for (int col = 0; col < 5; col++)  // ø≠ º¯»∏
+                for (int col = 0; col < 5; col++)
                 {
                     reelImages[row, col].color = customJackPot;
                     StartCoroutine(BlinkText(reelTexts[row, col], 0.5f, 0.15f));
                 }
             }
-
         }
-        return isMatched;
+
+        return matched;
     }
 
+    private bool CheckJackpot(int betAmount)
+    {
+        int first = reelResults[0, 0];
 
+        for (int r = 0; r < 3; r++)
+            for (int c = 0; c < 5; c++)
+                if (reelResults[r, c] != first)
+                    return false;
+
+        jackpotChance = jackpotChanceInitial;
+        // Ïû≠Ìåü Ï≤òÎ¶¨
+        textResult.text = " JACKPOT!!! ";
+        credits += betAmount * 100;
+        textCredits.text = $"Credits : {credits}";
+        return true;
+    }
+
+    private void ResetReelSpins()
+    {
+        for (int i = 0; i < 5; i++)
+            isReelSpinned[i] = false;
+    }
+
+    private bool AllReelsSpinned()  
+    {
+        foreach (bool b in isReelSpinned)
+            if (!b) return false;
+        return true;
+    }
 }
