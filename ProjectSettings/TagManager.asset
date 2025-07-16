@@ -42,5 +42,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 2043353899
+    locked: 0
+  - name: Farmland
+    uniqueID: 3373113925
+    locked: 0
+  - name: Objects
+    uniqueID: 1069796451
+    locked: 0
+  - name: Player
+    uniqueID: 2697645161
+    locked: 0
   m_RenderingLayers:
   - Default
