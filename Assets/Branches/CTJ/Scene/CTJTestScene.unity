@@ -151,9 +151,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Test: {fileID: 2103039605}
+  miningDeley: 0.5
   lv1Dura: 8
   lv2Dura: 5
   lv3Dura: 2
+  collectiblesItem: {fileID: 3592620354905650320, guid: bba4bfdcf21626048a87efcd248ff557, type: 3}
+  maxDrop: 3
 --- !u!61 &129462718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -821,9 +824,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Test: {fileID: 571627369}
+  miningDeley: 0.5
   lv1Dura: 8
   lv2Dura: 5
   lv3Dura: 2
+  collectiblesItem: {fileID: 3592620354905650320, guid: bba4bfdcf21626048a87efcd248ff557, type: 3}
+  maxDrop: 3
 --- !u!1 &1265440294
 GameObject:
   m_ObjectHideFlags: 0
@@ -991,6 +997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b403a0b3f2f274797ff694d7300bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _currentObject: {fileID: 0}
+  _lastObject: {fileID: 0}
   selectRange: 2
 --- !u!4 &1463497671
 Transform:
