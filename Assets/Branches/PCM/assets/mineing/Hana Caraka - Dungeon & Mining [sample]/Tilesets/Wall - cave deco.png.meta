@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Wall - cave deco_0: -3904958120766038560
+      Wall - cave deco_1: 1844462532117687807
+      Wall - cave deco_2: 5820361865726508145
+      Wall - cave deco_3: -282565581583859529
+      Wall - cave deco_4: -616182403499179772
+      Wall - cave deco_5: 4153855044619529422
+      Wall - cave deco_6: -2759907947889364528
+      Wall - cave deco_7: 6811100242868066798
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
