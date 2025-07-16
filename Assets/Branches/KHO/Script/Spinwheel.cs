@@ -15,6 +15,6 @@ public class Spinwheel : MonoBehaviour
 
     public void StartRotation()
     {
-        _rb.AddTorque(30f);
+        _rb.AddTorque(50f,ForceMode2D.Impulse);
     }
 }
