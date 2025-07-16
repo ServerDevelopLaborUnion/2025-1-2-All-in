@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 447cee5a91e1fc9419120434c0cde6ff, type: 3}
+  m_Name: Radish
+  m_EditorClassIdentifier: 
+  time: 65
+  sprites:
+  - {fileID: -8487727550158247130, guid: 27b3c53f12870654c834b14067b6287f, type: 3}
+  - {fileID: 6803273183170742270, guid: 27b3c53f12870654c834b14067b6287f, type: 3}
+  - {fileID: 4655918075469977130, guid: 27b3c53f12870654c834b14067b6287f, type: 3}

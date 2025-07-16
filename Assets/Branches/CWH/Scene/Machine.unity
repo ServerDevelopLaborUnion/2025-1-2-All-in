@@ -5218,6 +5218,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1018185672 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6193673021307136432, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+  m_PrefabInstance: {fileID: 1191751642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1037133722 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 11134357149997753, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
@@ -5252,10 +5263,42 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 277108852}
+    - target: {fileID: 764580575760409361, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_Name
+      value: Minimum bet Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 277108852}
+    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickMinimumbet
+      objectReference: {fileID: 0}
+    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SloltMachine, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193673021307136432, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670881488517269079, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_text
+      value: Minimum bet
+      objectReference: {fileID: 0}
     - target: {fileID: 8885803325287427815, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
       propertyPath: m_Name
       value: SlotMachinePrefab
@@ -5807,6 +5850,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: _minBet
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: pullButton
       value: 
       objectReference: {fileID: 1897931699}
@@ -5878,6 +5925,10 @@ PrefabInstance:
       propertyPath: textResult
       value: 
       objectReference: {fileID: 1988880840}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: _minBetText
+      value: 
+      objectReference: {fileID: 1018185672}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: allInButton
       value: 
