@@ -1004,6 +1004,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 944281561438094282, guid: ed4bf08571de7924584eba56cbfa232e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6015701220619030920, guid: ef3983a5506846941a2363f35b249c66, type: 3}
     - target: {fileID: 3749713403917978617, guid: ed4bf08571de7924584eba56cbfa232e, type: 3}
       propertyPath: m_Name
       value: Square
