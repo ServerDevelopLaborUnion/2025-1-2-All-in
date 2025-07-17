@@ -11,6 +11,7 @@ public class SelectChecker : MonoBehaviour
     [SerializeField] float miningDeley = 0.5f;
 
     [Header("Durability")]
+    [SerializeField] bool noDurability = false;
     [SerializeField] int lv1Dura = 8;
     [SerializeField] int lv2Dura = 5;
     [SerializeField] int lv3Dura = 2;
@@ -48,9 +49,16 @@ public class SelectChecker : MonoBehaviour
 
     private void DurabilityChecker()
     {
-        lv1Dura--;
+        if (!noDurability)
+        {
+            lv1Dura--;
 
-        if (lv1Dura == 0 || lv2Dura == 0 || lv3Dura ==0)
+            if (lv1Dura == 0 || lv2Dura == 0 || lv3Dura == 0)
+            {
+                Droper();
+            }
+        }
+        else
         {
             Droper();
         }

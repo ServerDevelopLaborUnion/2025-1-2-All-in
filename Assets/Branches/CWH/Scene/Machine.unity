@@ -286,6 +286,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &454848035 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5048288137294911673, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+  m_PrefabInstance: {fileID: 1191751642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &456300412 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8214435376009010228, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
@@ -5263,42 +5274,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 277108852}
-    - target: {fileID: 764580575760409361, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_Name
-      value: Minimum bet Button
+    - target: {fileID: 100315477094970639, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 110
       objectReference: {fileID: 0}
-    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+    - target: {fileID: 704249990944480213, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_text
+      value: "Credits : \n"
       objectReference: {fileID: 0}
-    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+    - target: {fileID: 5048288137294911673, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 277108852}
+    - target: {fileID: 6055128065026250571, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 277108852}
     - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickMinimumbet
-      objectReference: {fileID: 0}
-    - target: {fileID: 6174095596575649417, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SloltMachine, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6193673021307136432, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_TextWrappingMode
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8670881488517269079, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
-      propertyPath: m_text
-      value: Minimum bet
-      objectReference: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 277108852}
     - target: {fileID: 8885803325287427815, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
       propertyPath: m_Name
       value: SlotMachinePrefab
@@ -5404,6 +5399,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1256433768 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6055128065026250571, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+  m_PrefabInstance: {fileID: 1191751642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1463495601 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6121177926761599537, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
@@ -5462,6 +5468,17 @@ MonoBehaviour:
 --- !u!114 &1664447449 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8236635478981648064, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
+  m_PrefabInstance: {fileID: 1191751642}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1685354850 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4932879791778839462, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
   m_PrefabInstance: {fileID: 1191751642}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -5583,8 +5600,8 @@ Camera:
   m_GameObject: {fileID: 1905326747}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.19496846, g: 0.19496846, b: 0.19496846, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5854,6 +5871,18 @@ PrefabInstance:
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: credits
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: mButton
+      value: 
+      objectReference: {fileID: 454848035}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: pButton
+      value: 
+      objectReference: {fileID: 1256433768}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: pullButton
       value: 
       objectReference: {fileID: 1897931699}
@@ -5998,6 +6027,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 387190732}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: magnification
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: imageBetAmount
       value: 
       objectReference: {fileID: 1710045430}
@@ -6009,6 +6042,10 @@ PrefabInstance:
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1905326750}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: _magnificationText
+      value: 
+      objectReference: {fileID: 1685354850}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: horizontalMatchParticle
       value: 
