@@ -35,10 +35,14 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private int magnification;
     [SerializeField] private TextMeshProUGUI _magnificationText;
 
+    [Header("남은 스핀 수")]
+    [SerializeField] private TMPro.TextMeshProUGUI _numberOfSpinsreMaining;
+    [SerializeField] private int _spin;
+
 
     #region 잭팟확률 관련
     private float jackpotChance = 0.05f;
-    private const float jackpotChanceMax = 1f;
+    private const float jackpotChanceMax = 0.5f;
     private const float jackpotChanceIncrement = 0.005f;
     private const float jackpotChanceInitial = 0.05f;
 
@@ -70,7 +74,7 @@ public class SloltMachine : MonoBehaviour
     private void Awake()
     {
         _minBet = credits / 20;
-        credits = Math.Clamp(credits, 0, long.MaxValue);
+        credits = Math.Clamp(credits, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
         {
             for (int col = 0; col < 5; col++)
@@ -87,7 +91,8 @@ public class SloltMachine : MonoBehaviour
                                   $" Vertical : {magnification * 3}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
-                                  $"\n Fall : {magnification * 2}x";
+                                  $"\n Fall : {magnification * 3}x";
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_spin}";
     }
 
     private void Update()
@@ -197,6 +202,9 @@ public class SloltMachine : MonoBehaviour
     public void OnClickpull()
     {
         ResetReels();
+        _spin -= 1;
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_spin}";
+
         horizontalMatchParticle.Stop();
         if (!long.TryParse(inputBetAmount.text.Trim(), out long bet) || bet < _minBet)
         {
@@ -213,14 +221,30 @@ public class SloltMachine : MonoBehaviour
         credits -= bet;
         textCredits.text = $"Credits : {credits.ToString("N0")}";
 
-
-        StartSpin();
-        pullButton.interactable = false;
-        allInButton.interactable = false;
+        EnoughSpin();
     }
+
+    public void EnoughSpin()
+    {
+
+        
+        if (_spin <= 0)
+        {
+            StartSpin();
+            pullButton.interactable = false;
+            allInButton.interactable = false;
+        }
+
+    }
+
     public void OnClickP()
     {
-        credits -= credits / 80;
+        if (credits < 10)
+        {
+            OnMessage(Color.white, "You don't have enough money");
+            return;
+        }
+        credits -= magnification * magnification;
         magnification = Mathf.Clamp(magnification + 1, 1, 20);
 
         UpdateMagnificationUI();
@@ -228,7 +252,12 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickM()
     {
-        credits -= credits / 80;
+        if (credits < 10)
+        {
+            OnMessage(Color.white, "You don't have enough money");
+            return;
+        }
+        credits -= magnification * 2;
         magnification = Mathf.Clamp(magnification - 1, 1, 20);
 
         UpdateMagnificationUI();
@@ -240,11 +269,18 @@ public class SloltMachine : MonoBehaviour
         mButton.interactable = magnification > 1;
         pButton.interactable = magnification < 20;
 
-        _magnificationText.text = $"Current Magnification\n" +
-                                  $" Vertical : {magnification * 3}x" +
-                                  $"\n Horizontal : {magnification * 4}x" +
-                                  $"\n Jackpot : {magnification * 1000}x" +
-                                  $"\n Fall : {magnification * 2}x";
+        if (magnification <= 2)
+            _magnificationText.text = $"Current Magnification\n" +
+                                      $" Vertical : {magnification * 3}x" +
+                                      $"\n Horizontal : {magnification * 4}x" +
+                                      $"\n Jackpot : {magnification * 1000}x" +
+                                      $"\n Fall : {magnification * 3}x";
+
+        else _magnificationText.text = $"Current Magnification\n" +
+                              $" Vertical : {magnification * 3}x" +
+                              $"\n Horizontal : {magnification * 4}x" +
+                              $"\n Jackpot : {magnification * 1000}x" +
+                              $"\n Fall : {(magnification + 5) * 3}x";
 
         textCredits.text = $"Credits : {credits:N0}";
     }
@@ -327,12 +363,19 @@ public class SloltMachine : MonoBehaviour
         bool vertical = CheckVertical(betAmount);
         bool horizontal = CheckHorizontal(betAmount);
         bool jackpot = CheckJackpot(betAmount);
-        bool fall = CheckFall(betAmount);
         hasMatch = vertical || horizontal;
 
-        _minBet = credits / 20;
+        _minBet = credits / 50;
         if (_minBet == 0)
             _minBet += 1;
+
+        if (credits >= long.MaxValue / 2)
+            CreditMaxOver();
+
+        if (!hasMatch)
+        {
+            CheckFall(betAmount);
+        }
 
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
 
@@ -569,9 +612,26 @@ public class SloltMachine : MonoBehaviour
     }
     private bool CheckFall(long betAmount)
     {
-        credits -= betAmount * (magnification * 2);
-        credits = Math.Clamp(credits, 0, long.MaxValue);
+        if (magnification <= 2)
+            credits -= betAmount * magnification * 3;
+        else
+            credits -= betAmount * (magnification + 5) * 3;
+        credits = Math.Clamp(credits, 0, long.MaxValue / 2);
+        if (credits < 0)
+        {
+            CreditMinOver();
+        }
         return true;
+    }
+
+    private void CreditMinOver()
+    {
+        credits = 0;
+    }
+
+    private void CreditMaxOver()
+    {
+        credits = long.MaxValue / 2;
     }
 
     private void ResetReelSpins()
