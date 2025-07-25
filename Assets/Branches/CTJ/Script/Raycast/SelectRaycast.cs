@@ -37,13 +37,15 @@ public class SelectRaycast : MonoBehaviour
             {
                 Farmland cHitLand = cHit.collider.gameObject.GetComponent<Farmland>();
 
-                if (!cHitLand.IsGrowing)
+                if (!cHitLand.IsGrowing) 
                 {
                     Vector2 spawnPos = cHit.collider.transform.position;
                     Instantiate(_growObj, spawnPos, Quaternion.identity);
                     cHitLand.IsGrowing = true;
+
+                    return;
                 }
-                return;
+                
             }
 
             if (_currentObject != null && _currentObject.IsActive)

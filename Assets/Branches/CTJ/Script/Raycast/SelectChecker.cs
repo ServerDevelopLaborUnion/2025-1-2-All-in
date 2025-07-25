@@ -3,25 +3,31 @@ using UnityEngine;
 
 public class SelectChecker : MonoBehaviour
 {
+    [SerializeField] SpriteRenderer _sr;
     [SerializeField] GameObject Test;
 
     public bool IsActive { get; private set; } = false;
-    bool canMining = true;
 
+    bool canMining = true;
     [SerializeField] float miningDeley = 0.5f;
 
-    [Header("Durability")]
-    [SerializeField] int lv1Dura = 8;
-    [SerializeField] int lv2Dura = 5;
-    [SerializeField] int lv3Dura = 2;
+    [Header("SOs")]
+    public int OreSONumber = 0;
+    [SerializeField] OreSO[] OreSOArray;
 
-    [Header("Collectibles")]
-    [SerializeField] GameObject collectiblesItem;
-    [SerializeField] int maxDrop = 3;
+
+
+    bool noDurability;
+    int lv1Dura;
+    int lv2Dura;
+    int lv3Dura;
+    GameObject collectiblesItem;
+    int maxDrop;
 
 
     private void Awake()
     {
+        SetingObject();
         Test.SetActive(false);
     }
 
@@ -48,9 +54,16 @@ public class SelectChecker : MonoBehaviour
 
     private void DurabilityChecker()
     {
-        lv1Dura--;
+        if (!noDurability)
+        {
+            lv1Dura--;
 
-        if (lv1Dura == 0 || lv2Dura == 0 || lv3Dura ==0)
+            if (lv1Dura == 0 || lv2Dura == 0 || lv3Dura == 0)
+            {
+                Droper();
+            }
+        }
+        else
         {
             Droper();
         }
@@ -77,5 +90,24 @@ public class SelectChecker : MonoBehaviour
         yield return new WaitForSeconds(miningDeley);
         canMining = true;
     }
-    
+
+    private void SetingObject()
+    {
+        OreSO thisOreSO = OreSOArray[OreSONumber];
+
+        gameObject.name = thisOreSO.oreName;
+        _sr.sprite = thisOreSO.OreSprite;
+
+        noDurability = thisOreSO.noDurability;
+        lv1Dura = thisOreSO.lv1Dura;
+        lv2Dura = thisOreSO.lv2Dura;
+        lv3Dura = thisOreSO.lv3Dura;
+        collectiblesItem = thisOreSO.collectiblesItem;
+        maxDrop = thisOreSO.maxDrop;
+    }
+
+    private void OnValidate()
+    {
+        SetingObject();
+    }
 }
