@@ -35,9 +35,10 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private int magnification;
     [SerializeField] private TextMeshProUGUI _magnificationText;
 
-    [Header("남은 스핀 수")]
+    [Header("남은 스핀 수 (보류)")]
     [SerializeField] private TMPro.TextMeshProUGUI _numberOfSpinsreMaining;
-    [SerializeField] private int _spin;
+    [SerializeField] private int _haveSpin;
+    [SerializeField] private int _spinCost = 1;
 
 
     #region 잭팟확률 관련
@@ -86,13 +87,13 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
-        textChance.text = $"Jackpot Chance \n {jackpotChance * 10:F1}%";
+        textChance.text = $"Probability Table\n Vertival : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F1}%";
         _magnificationText.text = $"Current Magnification\n" +
-                                  $" Vertical : {magnification * 3}x" +
+                                  $" Vertical : {magnification * 2}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
                                   $"\n Fall : {magnification * 3}x";
-        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_spin}";
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
     private void Update()
@@ -117,7 +118,7 @@ public class SloltMachine : MonoBehaviour
             isStartSpin = false;
             ResetReelSpins();
 
-            if (UnityEngine.Random.value < 0.1f)
+            if (UnityEngine.Random.value < 0.05f)
                 ApplyHorizontalMatch();
 
             UpdateReelDisplay();
@@ -129,7 +130,7 @@ public class SloltMachine : MonoBehaviour
     private void ApplyVerticalMatch(int col)
     {
         int baseSpin = UnityEngine.Random.Range(1, 8);
-        bool forceVerticalMatch = UnityEngine.Random.value < 0.2f;
+        bool forceVerticalMatch = UnityEngine.Random.value < 0.15f;
 
         for (int row = 0; row < 3; row++)
         {
@@ -202,8 +203,7 @@ public class SloltMachine : MonoBehaviour
     public void OnClickpull()
     {
         ResetReels();
-        _spin -= 1;
-        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_spin}";
+
 
         horizontalMatchParticle.Stop();
         if (!long.TryParse(inputBetAmount.text.Trim(), out long bet) || bet < _minBet)
@@ -220,21 +220,43 @@ public class SloltMachine : MonoBehaviour
 
         credits -= bet;
         textCredits.text = $"Credits : {credits.ToString("N0")}";
-
+        //StartSpin();
         EnoughSpin();
     }
 
     public void EnoughSpin()
     {
 
-        
-        if (_spin <= 0)
+        if (_haveSpin <= 0  || _haveSpin < _spinCost)
         {
-            StartSpin();
             pullButton.interactable = false;
             allInButton.interactable = false;
+            OnMessage(Color.white, "You don't have enough Spin");
+            return;
+        }
+        else
+        {
+            StartSpin();
+            _haveSpin -= _spinCost;
+            UpdateMagnificationUI();
         }
 
+    }
+
+    public void OnSpinP()
+    {
+        if (credits < 10000)
+        {
+            OnMessage(Color.white, "You don't have enough money");
+            return;
+        }
+
+        credits -= 10000;
+        _haveSpin += 1;
+        pullButton.interactable = true;
+        allInButton.interactable = true;
+        textCredits.text = $"Credits : {credits.ToString("N0")}";
+        UpdateMagnificationUI();
     }
 
     public void OnClickP()
@@ -245,6 +267,7 @@ public class SloltMachine : MonoBehaviour
             return;
         }
         credits -= magnification * magnification;
+        _spinCost = Mathf.Clamp(_spinCost += 2, 1, 20);
         magnification = Mathf.Clamp(magnification + 1, 1, 20);
 
         UpdateMagnificationUI();
@@ -258,6 +281,7 @@ public class SloltMachine : MonoBehaviour
             return;
         }
         credits -= magnification * 2;
+        _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 20);
         magnification = Mathf.Clamp(magnification - 1, 1, 20);
 
         UpdateMagnificationUI();
@@ -271,18 +295,19 @@ public class SloltMachine : MonoBehaviour
 
         if (magnification <= 2)
             _magnificationText.text = $"Current Magnification\n" +
-                                      $" Vertical : {magnification * 3}x" +
+                                      $" Vertical : {magnification * 2}x" +
                                       $"\n Horizontal : {magnification * 4}x" +
                                       $"\n Jackpot : {magnification * 1000}x" +
                                       $"\n Fall : {magnification * 3}x";
 
         else _magnificationText.text = $"Current Magnification\n" +
-                              $" Vertical : {magnification * 3}x" +
+                              $" Vertical : {magnification * 2}x" +
                               $"\n Horizontal : {magnification * 4}x" +
                               $"\n Jackpot : {magnification * 1000}x" +
                               $"\n Fall : {(magnification + 5) * 3}x";
 
         textCredits.text = $"Credits : {credits:N0}";
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
     private void StartSpin()
@@ -380,7 +405,7 @@ public class SloltMachine : MonoBehaviour
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
 
         textCredits.text = $"Credits : {credits.ToString("N0")}";
-        textChance.text = $"Jackpot Chance \n {jackpotChance * 10:F1}%";
+        textChance.text = $"Probability Table\n Vertival : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F1}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal || jackpot)
@@ -553,7 +578,7 @@ public class SloltMachine : MonoBehaviour
             if (a == b && b == c)
             {
                 matched = true;
-                credits += bet * (magnification * 3);
+                credits += bet * (magnification * 2);
 
                 for (int row = 0; row < 3; row++)
                 {
