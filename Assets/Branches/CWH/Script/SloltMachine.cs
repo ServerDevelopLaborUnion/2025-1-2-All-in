@@ -8,6 +8,26 @@ using UnityEngine.UI;
 
 public class SloltMachine : MonoBehaviour
 {
+    public long GetCredits() => credits;
+    public long GetMinimumBet() => _minBet;
+    public bool IsSpinning() => isStartSpin;
+  
+
+    public void SetBetAmount(long bet)
+    {
+        inputBetAmount.text = bet.ToString();
+    }
+
+    public bool IsJackpotHit(long betAmount)
+    {
+        return CheckJackpot(betAmount);
+    }
+
+
+    private long lastBetAmount;
+    private bool fallChecked;
+
+
     [Header("돈")]
     [SerializeField] private long credits = 100;
 
@@ -44,8 +64,8 @@ public class SloltMachine : MonoBehaviour
     #region 잭팟확률 관련
     private float jackpotChance = 0.05f;
     private const float jackpotChanceMax = 0.5f;
-    private const float jackpotChanceIncrement = 0.005f;
-    private const float jackpotChanceInitial = 0.05f;
+    private const float jackpotChanceIncrement = 0.0005f;
+    private const float jackpotChanceInitial = 0.005f;
 
     #endregion
     [SerializeField] private TextMeshProUGUI textResult;
@@ -87,12 +107,12 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
-        textChance.text = $"Probability Table\n Vertival : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F1}%";
+        textChance.text = $"Probability Table\n Vertical : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F4}%";
         _magnificationText.text = $"Current Magnification\n" +
                                   $" Vertical : {magnification * 2}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
-                                  $"\n Fall : {magnification * 3}x";
+                                  $"\n Fall : -{magnification * 3}x";
         _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
@@ -219,6 +239,9 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits -= bet;
+        lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
+        fallChecked = false;   // Fall 체크 초기화
+
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         //StartSpin();
         EnoughSpin();
@@ -298,13 +321,13 @@ public class SloltMachine : MonoBehaviour
                                       $" Vertical : {magnification * 2}x" +
                                       $"\n Horizontal : {magnification * 4}x" +
                                       $"\n Jackpot : {magnification * 1000}x" +
-                                      $"\n Fall : {magnification * 3}x";
+                                      $"\n Fall : -{magnification * 3}x";
 
         else _magnificationText.text = $"Current Magnification\n" +
                               $" Vertical : {magnification * 2}x" +
                               $"\n Horizontal : {magnification * 4}x" +
                               $"\n Jackpot : {magnification * 1000}x" +
-                              $"\n Fall : {(magnification + 5) * 3}x";
+                              $"\n Fall : -{(magnification + 5) * 3}x";
 
         textCredits.text = $"Credits : {credits:N0}";
         _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
@@ -376,18 +399,17 @@ public class SloltMachine : MonoBehaviour
 
     private void CheckBet()
     {
-        long betAmount = long.Parse(inputBetAmount.text);
         bool hasMatch = false;
 
         foreach (var img in reelImagesFlat)
             img.color = Color.white;
 
-        if (CheckJackpot(betAmount))
+        if (CheckJackpot(lastBetAmount))
             return;
 
-        bool vertical = CheckVertical(betAmount);
-        bool horizontal = CheckHorizontal(betAmount);
-        bool jackpot = CheckJackpot(betAmount);
+        bool vertical = CheckVertical(lastBetAmount);
+        bool horizontal = CheckHorizontal(lastBetAmount);
+        bool jackpot = CheckJackpot(lastBetAmount);
         hasMatch = vertical || horizontal;
 
         _minBet = credits / 50;
@@ -399,13 +421,12 @@ public class SloltMachine : MonoBehaviour
 
         if (!hasMatch)
         {
-            CheckFall(betAmount);
+            CheckFall(); // 여기서는 betAmount 파라미터 없이 실행
         }
 
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
-
         textCredits.text = $"Credits : {credits.ToString("N0")}";
-        textChance.text = $"Probability Table\n Vertival : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F1}%";
+        textChance.text = $"Probability Table\n Vertical : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance:F4}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal || jackpot)
@@ -413,6 +434,7 @@ public class SloltMachine : MonoBehaviour
             StartCoroutine(PlayHorizontalMatchEffects());
         }
     }
+
     #region 코루틴
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
@@ -564,7 +586,6 @@ public class SloltMachine : MonoBehaviour
         imageBetAmount.color = color;
         textResult.text = msg;
     }
-
     private bool CheckVertical(long bet)
     {
         bool matched = false;
@@ -635,12 +656,16 @@ public class SloltMachine : MonoBehaviour
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         return true;
     }
-    private bool CheckFall(long betAmount)
+    private bool CheckFall()
     {
+        if (fallChecked) return false; // 이미 체크했으면 중복 방지
+        fallChecked = true;
+
         if (magnification <= 2)
-            credits -= betAmount * magnification * 3;
+            credits -= lastBetAmount * 3;
         else
-            credits -= betAmount * (magnification + 5) * 3;
+            credits -= lastBetAmount * (magnification + 5) * 3;
+
         credits = Math.Clamp(credits, 0, long.MaxValue / 2);
         if (credits < 0)
         {
@@ -648,6 +673,7 @@ public class SloltMachine : MonoBehaviour
         }
         return true;
     }
+   
 
     private void CreditMinOver()
     {
