@@ -190,9 +190,7 @@ public class SloltMachine : MonoBehaviour
     {
         int baseSpin = UnityEngine.Random.Range(1, 8);
         bool forceVerticalMatch = UnityEngine.Random.value < _verticalChance;
-        Debug.Log("세로줄");
-
-        for (int row = 0; row < 3; row++)
+           for (int row = 0; row < 3; row++)
         {
             reelResults[row, col] = forceVerticalMatch ? baseSpin : UnityEngine.Random.Range(1, 8);
         }
@@ -200,8 +198,6 @@ public class SloltMachine : MonoBehaviour
 
     private void ApplyHorizontalMatch()
     {
-        Debug.Log("가로줄");
-
         int matchRowCount = UnityEngine.Random.Range(1, 3); // 1~2줄 매칭
         List<int> rows = new List<int> { 0, 1, 2 };
         for (int i = 0; i < rows.Count; i++)
@@ -250,13 +246,6 @@ public class SloltMachine : MonoBehaviour
 
         OnMessage(Color.white, string.Empty);
     }
-
-    public void OnMoney()
-    {
-        credits = 100000;
-        textCredits.text = $"Credits : {credits.ToString("N0")}";
-    }
-
     public void OnClickpull()
     {
         ResetReels();
