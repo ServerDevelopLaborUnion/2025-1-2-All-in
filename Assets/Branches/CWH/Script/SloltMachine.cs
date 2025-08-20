@@ -91,6 +91,9 @@ public class SloltMachine : MonoBehaviour
         }
     }
 
+    public int _spinCoststandard;
+
+
     #region 잭팟확률 관련
     [Header("잭팟")]
     [SerializeField] private float jackpotChance = 0.00001f;
@@ -302,13 +305,13 @@ public class SloltMachine : MonoBehaviour
 
     public void OnSpinP()
     {
-        if (credits < 10000)
+        if (credits < _spinCoststandard)
         {
             OnMessage(Color.white, "You don't have enough money");
             return;
         }
 
-        credits -= 10000;
+        credits -= _spinCoststandard;
         _haveSpin += 1;
         pullButton.interactable = true;
         allInButton.interactable = true;
