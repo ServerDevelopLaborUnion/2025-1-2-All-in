@@ -15,8 +15,6 @@ MonoBehaviour:
   oreName: Gold
   OreSprite: {fileID: 2102719323161831179, guid: d59675a958ed90a4d8a67f5ebd30e71d, type: 3}
   noDurability: 0
-  lv1Dura: 999
-  lv2Dura: 999
-  lv3Dura: 6
-  collectiblesItem: {fileID: 3592620354905650320, guid: bba4bfdcf21626048a87efcd248ff557, type: 3}
+  dura: 7
+  collectiblesItem: {fileID: 3592620354905650320, guid: 7c181c2c9cea1fc47b32be85f52859f4, type: 3}
   maxDrop: 3
