@@ -70,7 +70,7 @@ public class WindowUI : MonoBehaviour
     {
         Screen.SetResolution(resolutions[resolutionnum].width, resolutions[resolutionnum]
             .height, fullScreenMode);
-        SetScreen();
+        //SetScreen();
         //PlayerPrefs.Set
     }
 
@@ -80,6 +80,5 @@ public class WindowUI : MonoBehaviour
         PlayerPrefs.SetInt("height", resolutions[resolutionnum].height);
         PlayerPrefs.SetInt("Screen", togglebnt.isOn ? 1 : 0);
         PlayerPrefs.Save();
-        int a = UnityEngine.Random.Range(0, resolutionnum);
     }
 }
