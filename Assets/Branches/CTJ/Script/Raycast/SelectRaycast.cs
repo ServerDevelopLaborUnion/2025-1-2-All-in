@@ -13,10 +13,6 @@ public class SelectRaycast : MonoBehaviour
 
     [SerializeField] float selectRange = 5f;
 
-    [Header("Cultivation")]
-    [SerializeField] LayerMask _farmlandLayer;
-    [SerializeField] GameObject _growObj;
-
     private void Awake()
     {
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -32,22 +28,6 @@ public class SelectRaycast : MonoBehaviour
     {
         if (Mouse.current.leftButton.isPressed)
         {
-            RaycastHit2D cHit = Physics2D.Raycast(_worldmousePosition, Vector2.zero, Mathf.Infinity, _farmlandLayer);
-            if (cHit.collider != null)
-            {
-                Farmland cHitLand = cHit.collider.gameObject.GetComponent<Farmland>();
-
-                if (!cHitLand.IsGrowing) 
-                {
-                    Vector2 spawnPos = cHit.collider.transform.position;
-                    Instantiate(_growObj, spawnPos, Quaternion.identity);
-                    cHitLand.IsGrowing = true;
-
-                    return;
-                }
-                
-            }
-
             if (_currentObject != null && _currentObject.IsActive)
             {
                 _currentObject.Mining();
