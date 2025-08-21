@@ -39,7 +39,11 @@ public class AutoSpinUntilJackpot : MonoBehaviour
                 Debug.LogWarning("AutoSpin: Not enough credits.");
                 break;
             }
-
+            if (slotMachine.HaveSpin <= 0)
+            {
+                Debug.LogWarning("AutoSpin: Not enough spins.");
+                break;
+            }
             // 슬롯머신에 배팅금액 설정
             slotMachine.SetBetAmount(bet);
 
@@ -57,7 +61,7 @@ public class AutoSpinUntilJackpot : MonoBehaviour
             }
 
             // 약간의 텀
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.3f);
         }
 
         autoSpinCoroutine = null;
