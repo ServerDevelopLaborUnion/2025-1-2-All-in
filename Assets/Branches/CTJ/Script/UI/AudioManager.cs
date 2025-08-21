@@ -6,6 +6,13 @@ public class AudioManager : MonoBehaviour
     [SerializeField] SoundSetSO ssso;
     [SerializeField] AudioMixer am;
 
+    private void OnEnable()
+    {
+        am.SetFloat("Master", ssso.masterValue);
+        am.SetFloat("BGM", ssso.bgmValue);
+        am.SetFloat("SFX", ssso.sfxValue);
+    }
+
     public void SaveAudioSetingInSO()
     {
         am.GetFloat("Master", out float masterValue);
