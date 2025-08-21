@@ -8,9 +8,7 @@ public class OreSO : ScriptableObject
 
     [Header("Durability")]
     public bool noDurability;
-    public int lv1Dura;
-    public int lv2Dura;
-    public int lv3Dura;
+    public int dura;
 
     [Header("Collectibles")]
     public GameObject collectiblesItem;
