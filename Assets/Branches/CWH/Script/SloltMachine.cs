@@ -51,6 +51,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textCredits;
     [SerializeField] private TextMeshProUGUI _minBetText;
     [SerializeField] private long _minBet;
+    [SerializeField] private long _maxBet;
 
     [Header("릴 텍스트//게임에 보이는 것")]
     [SerializeField] private TextMeshProUGUI[] reelTextsFlat = new TextMeshProUGUI[15];
@@ -146,6 +147,7 @@ public class SloltMachine : MonoBehaviour
                 reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
+        EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
@@ -255,7 +257,7 @@ public class SloltMachine : MonoBehaviour
         lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
         fallChecked = false;   // Fall 체크 초기화
 
-        textCredits.text = $"Credits : {credits.ToString("N0")}";
+        UpdateMagnificationUI();
         EnoughSpin();
     }
 
