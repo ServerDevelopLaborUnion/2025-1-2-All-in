@@ -16,7 +16,7 @@ public class BackEndManager : MonoBehaviour
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();
         //BackEndRank.Instance.RankInsert(1000);
-        BackEndRank.Instance.RankGet();
-        //BackEndLogin.Instance.NickNameChage("¹ÚÃ¶¹Î");
+        //BackEndRank.Instance.RankGet();
+        //BackEndLogin.Instance.NickNameChage("¹ÚÃ¶¹Î");.
     }
 }

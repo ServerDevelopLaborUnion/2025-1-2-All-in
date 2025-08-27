@@ -4,7 +4,7 @@ using System.Text;
 
 public class MoneyData
 {
-    public long money = 1200;
+    public long money;
 
     public override string ToString()
     {
