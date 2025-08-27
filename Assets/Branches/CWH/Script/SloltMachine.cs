@@ -36,6 +36,7 @@ public class SloltMachine : MonoBehaviour
 
     [Header("돈")]
     [SerializeField] private MoneyMangaer credits;
+    [SerializeField] private long _startCredits;
 
     [SerializeField] private TMP_InputField inputBetAmount;
     [SerializeField] private Image imageBetAmount;
@@ -131,6 +132,7 @@ public class SloltMachine : MonoBehaviour
 
     private void Awake()
     {
+        credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
         {
@@ -140,7 +142,7 @@ public class SloltMachine : MonoBehaviour
                 reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
-        EnoughSpin();
+        //EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
@@ -349,7 +351,7 @@ public class SloltMachine : MonoBehaviour
                                    $"\n Bonus : 2x";
 
 
-        textCredits.text = $"Credits : {credits:N0}";
+        textCredits.text = $"Credits : {credits.Money:N0}";
         _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
@@ -440,7 +442,7 @@ public class SloltMachine : MonoBehaviour
     }
     public void OnClickMaximumbet()
     {
-        inputBetAmount.text = credits.ToString();
+        inputBetAmount.text = credits.Money.ToString();
         OnClickpull();
     }
 
