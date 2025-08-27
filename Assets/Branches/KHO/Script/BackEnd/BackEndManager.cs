@@ -11,12 +11,13 @@ public class BackEndManager : MonoBehaviour
 
     private void TestIntser()
     {
-        BackEndLogin.Instance.Login("user1", "1234");
+        BackEndLogin.Instance.SignUp("ur2","12345");
+        BackEndLogin.Instance.Login("ur2", "12345");
+        BackEndLogin.Instance.NickNameChage("Á¶ÅÂÁØ");
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();
         //BackEndRank.Instance.RankInsert(1000);
         //BackEndRank.Instance.RankGet();
-        //BackEndLogin.Instance.NickNameChage("¹ÚÃ¶¹Î");.
     }
 }

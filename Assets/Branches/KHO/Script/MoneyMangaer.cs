@@ -13,6 +13,7 @@ public class MoneyMangaer : MonoBehaviour
 
         set
         {
+            //MoneyGameData.Intance.UpdateDate();
             _money = value;
         }
     }
