@@ -104,9 +104,11 @@ public class SloltMachine : MonoBehaviour
 
     #endregion
     [Header("세로")]
-    [SerializeField] private float _verticalChance;
+    [field: SerializeField] private float _verticalChance;
+    public float VerticalChance { get; set; }
     [Header("가로")]
-    [SerializeField] private float _horizontalChance;
+    [field:SerializeField] private float _horizontalChance;
+    public float HorizonTalChance { get; set; }
 
     //텍스트, 버튼
     [SerializeField] private TextMeshProUGUI textResult;
@@ -239,9 +241,10 @@ public class SloltMachine : MonoBehaviour
     {
         ResetReels();
 
+        string input = inputBetAmount.text.Trim().Replace(",", "");
 
         horizontalMatchParticle.Stop();
-        if (!long.TryParse(inputBetAmount.text.Trim(), out long bet) || bet < _minBet)
+        if (!long.TryParse(input, out long bet) || bet < _minBet)
         {
             OnMessage(Color.red, "Invalid bet amount");
             return;

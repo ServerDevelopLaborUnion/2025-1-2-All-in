@@ -29,7 +29,8 @@ public class AutoSpinUntilJackpot : MonoBehaviour
 
     private IEnumerator AutoSpinLoop()
     {
-        long.TryParse(autoBetAmount.text.Trim(), out long autobet);
+        string input = autoBetAmount.text.Trim().Replace(",", "");
+        bool success = long.TryParse(input, out long autobet);
         bool jackpotHit = false;
         if (autoBetAmount == null)
             betAmountOverride = 0;
