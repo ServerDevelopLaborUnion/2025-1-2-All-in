@@ -18,9 +18,11 @@ public class VerticalPlus : ItemOn
     }
     private void verticalPlus()
     {
-        if(Random.Range(1,100)<= probability)
+        int final = probability + probabilityplus;
+        if(Random.Range(1,100)<= final)
         {
-            machine._verticalChance += 0.5f;
+            Debug.Log(final);
+            machine.VerticalChance += 0.5f;
         }
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class MoneyPlus : ItemOn
 {
-    public override int probability { get; set; } = 100;
+    public override int probability { get; set; } = 60;
     [SerializeField]private SloltMachine machine;
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField]private int moneyplus;
@@ -24,7 +24,8 @@ public class MoneyPlus : ItemOn
     }
     public void moneyPlus()
     {
-        if (Random.Range(0, 100) <= 60)
+        int final = probability + probabilityplus;
+        if (Random.Range(0, 100) <= final)
         {
             machine.Credits += moneyplus;
             creditsText.text = "Credits :" + machine.Credits;

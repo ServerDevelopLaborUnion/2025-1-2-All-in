@@ -26,10 +26,17 @@ public class ShopBuyTicket : MonoBehaviour
     public void Buy3()
     {
         BuyTicket(3, 300);
+            machine.pullButton.interactable = true;
+            machine.minBetButton.interactable = true;
+            machine.maxBetButton.interactable = true;
     }
     public void Buy7()
     {
+
         BuyTicket(7, 600);
+        machine.pullButton.interactable = true;
+        machine.minBetButton.interactable = true;
+        machine.maxBetButton.interactable = true;
     }
 
 }

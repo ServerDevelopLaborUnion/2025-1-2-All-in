@@ -104,18 +104,18 @@ public class SloltMachine : MonoBehaviour
 
     #endregion
     [Header("세로")]
-    [field: SerializeField] private float _verticalChance;
+    [field: SerializeField] public float _verticalChance;
     public float VerticalChance { get; set; }
     [Header("가로")]
-    [field:SerializeField] private float _horizontalChance;
+    [field:SerializeField] public float _horizontalChance;
     public float HorizonTalChance { get; set; }
 
     //텍스트, 버튼
     [SerializeField] private TextMeshProUGUI textResult;
     [SerializeField] private TextMeshProUGUI textChance;
-    [SerializeField] private Button pullButton;
-    [SerializeField] private Button minBetButton;
-    [SerializeField] private Button maxBetButton;
+    [field: SerializeField] public Button pullButton { get; set; }
+    [field:SerializeField] public Button minBetButton {get; set; }
+    [field: SerializeField] public Button maxBetButton {  get; set; }
     [SerializeField] private Button pButton;
     [SerializeField] private Button mButton;
 
