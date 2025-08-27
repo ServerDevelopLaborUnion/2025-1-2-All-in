@@ -3,18 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI.Table;
 
 public class SloltMachine : MonoBehaviour
 {
+    public enum SpinPattern
+    {
+        Jackpot, Horizontal, Vertical, Normal
+    }
     //오토 스핀용코드는 임시로 사용중 -원희
     #region 오토 스핀용 코드 
     public long GetCredits() => credits;
     public long GetMinimumBet() => _minBet;
     public bool IsSpinning() => isStartSpin;
-
 
     public void SetBetAmount(long bet)
     {
@@ -29,7 +33,6 @@ public class SloltMachine : MonoBehaviour
 
     private long lastBetAmount;
     private bool fallChecked;
-
 
     [Header("돈")]
     [SerializeField] private long credits = 100;
@@ -47,7 +50,8 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private Image imageBetAmount;
     [SerializeField] private TextMeshProUGUI textCredits;
     [SerializeField] private TextMeshProUGUI _minBetText;
-    private long _minBet;
+    [SerializeField] private long _minBet;
+    [SerializeField] private long _maxBet;
 
     [Header("릴 텍스트//게임에 보이는 것")]
     [SerializeField] private TextMeshProUGUI[] reelTextsFlat = new TextMeshProUGUI[15];
@@ -55,10 +59,8 @@ public class SloltMachine : MonoBehaviour
     [Header("릴 이미지//게임에 보이는 것")]
     [SerializeField] private Image[] reelImagesFlat = new Image[15];
 
-
     [Header("카메라")]
     [SerializeField] private Transform cameraTransform;
-
 
     [Header("파티클")]
     [SerializeField] private ParticleSystem horizontalMatchParticle;
@@ -73,11 +75,11 @@ public class SloltMachine : MonoBehaviour
     public int HaveSpin
     {
         get { return _haveSpin; }
-        set 
+        set
         {
             if (value < 0) _haveSpin = 0;
             _haveSpin = value;
-            
+
         }
     }
     [SerializeField] private int _spinCost = 1;
@@ -86,13 +88,12 @@ public class SloltMachine : MonoBehaviour
         get { return _spinCost; }
         set
         {
-            if(value < 0) _spinCost = 0;
+            if (value < 0) _spinCost = 0;
             _spinCost = value;
         }
     }
 
     public int _spinCoststandard;
-
 
     #region 잭팟확률 관련
     [Header("잭팟")]
@@ -103,19 +104,20 @@ public class SloltMachine : MonoBehaviour
 
     #endregion
     [Header("세로")]
-    [field:SerializeField] public float _verticalChance { get; set; }
+    [field: SerializeField] private float _verticalChance;
+    public float VerticalChance { get; set; }
     [Header("가로")]
-    [field:SerializeField] public float _horizontalChance {  get; set; }
+    [field:SerializeField] private float _horizontalChance;
+    public float HorizonTalChance { get; set; }
 
     //텍스트, 버튼
     [SerializeField] private TextMeshProUGUI textResult;
     [SerializeField] private TextMeshProUGUI textChance;
     [SerializeField] private Button pullButton;
-    [SerializeField] private Button allInButton;
+    [SerializeField] private Button minBetButton;
+    [SerializeField] private Button maxBetButton;
     [SerializeField] private Button pButton;
     [SerializeField] private Button mButton;
-
-
 
     //릴 내부적으로 돌아가는 거
     private int[,] reelResults = new int[3, 5];
@@ -138,7 +140,6 @@ public class SloltMachine : MonoBehaviour
 
     private void Awake()
     {
-        _minBet = credits / 50;
         credits = Math.Clamp(credits, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
         {
@@ -148,15 +149,17 @@ public class SloltMachine : MonoBehaviour
                 reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
+        EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
-        textChance.text = $"Probability Table\n Vertical : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance * 100:F4}%";
+        textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         _magnificationText.text = $"Current Magnification\n" +
                                   $" Vertical : {magnification * 2}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
-                                  $"\n Fall : -{magnification * 3}x";
+                                  $"\n Fall : 0x" +
+                                  $"\n Bonus : 2x";
         _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
@@ -170,7 +173,6 @@ public class SloltMachine : MonoBehaviour
         {
             if (!isReelSpinned[col] && elapsedTime >= spinDuration)
             {
-                ApplyVerticalMatch(col);
                 isReelSpinned[col] = true;
                 elapsedTime = 0f;
                 break;
@@ -185,23 +187,8 @@ public class SloltMachine : MonoBehaviour
             CheckBet();
         }
     }
-
-    private void ApplyVerticalMatch(int col)
-    {
-        int baseSpin = UnityEngine.Random.Range(1, 8);
-        bool forceVerticalMatch = UnityEngine.Random.value < _verticalChance;
-        Debug.Log("세로줄");
-
-        for (int row = 0; row < 3; row++)
-        {
-            reelResults[row, col] = forceVerticalMatch ? baseSpin : UnityEngine.Random.Range(1, 8);
-        }
-    }
-
     private void ApplyHorizontalMatch()
     {
-        Debug.Log("가로줄");
-
         int matchRowCount = UnityEngine.Random.Range(1, 3); // 1~2줄 매칭
         List<int> rows = new List<int> { 0, 1, 2 };
         for (int i = 0; i < rows.Count; i++)
@@ -250,20 +237,14 @@ public class SloltMachine : MonoBehaviour
 
         OnMessage(Color.white, string.Empty);
     }
-
-    public void OnMoney()
-    {
-        credits = 100000;
-        textCredits.text = $"Credits : {credits.ToString("N0")}";
-    }
-
     public void OnClickpull()
     {
         ResetReels();
 
+        string input = inputBetAmount.text.Trim().Replace(",", "");
 
         horizontalMatchParticle.Stop();
-        if (!long.TryParse(inputBetAmount.text.Trim(), out long bet) || bet < _minBet)
+        if (!long.TryParse(input, out long bet) || bet < _minBet)
         {
             OnMessage(Color.red, "Invalid bet amount");
             return;
@@ -279,8 +260,7 @@ public class SloltMachine : MonoBehaviour
         lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
         fallChecked = false;   // Fall 체크 초기화
 
-        textCredits.text = $"Credits : {credits.ToString("N0")}";
-        //StartSpin();
+        UpdateMagnificationUI();
         EnoughSpin();
     }
 
@@ -290,7 +270,8 @@ public class SloltMachine : MonoBehaviour
         if (_haveSpin <= 0 || _haveSpin < _spinCost)
         {
             pullButton.interactable = false;
-            allInButton.interactable = false;
+            minBetButton.interactable = false;
+            maxBetButton.interactable = false;
             OnMessage(Color.white, "You don't have enough Spin");
             return;
         }
@@ -314,7 +295,8 @@ public class SloltMachine : MonoBehaviour
         credits -= _spinCoststandard;
         _haveSpin += 1;
         pullButton.interactable = true;
-        allInButton.interactable = true;
+        minBetButton.interactable = true;
+        maxBetButton.interactable = true;
         textCredits.text = $"Credits : {credits.ToString("N0")}";
         UpdateMagnificationUI();
     }
@@ -327,8 +309,8 @@ public class SloltMachine : MonoBehaviour
             return;
         }
         credits -= magnification * magnification;
-        _spinCost = Mathf.Clamp(_spinCost += 2, 1, 20);
-        magnification = Mathf.Clamp(magnification + 1, 1, 20);
+        _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
+        magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
         UpdateMagnificationUI();
     }
@@ -341,8 +323,8 @@ public class SloltMachine : MonoBehaviour
             return;
         }
         credits -= magnification * 2;
-        _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 20);
-        magnification = Mathf.Clamp(magnification - 1, 1, 20);
+        _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
+        magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
         UpdateMagnificationUI();
     }
@@ -351,20 +333,30 @@ public class SloltMachine : MonoBehaviour
     {
         // 버튼 상태 갱신
         mButton.interactable = magnification > 1;
-        pButton.interactable = magnification < 20;
+        pButton.interactable = magnification < 10;
 
-        if (magnification <= 2)
+        if (magnification <= 1)
             _magnificationText.text = $"Current Magnification\n" +
                                       $" Vertical : {magnification * 2}x" +
                                       $"\n Horizontal : {magnification * 4}x" +
                                       $"\n Jackpot : {magnification * 1000}x" +
-                                      $"\n Fall : -{magnification * 3}x";
+                                      $"\n Fall : 0x" +
+                                      $"\n Bonus : 2x";
+        else if (magnification == 2)
+            _magnificationText.text = $"Current Magnification\n" +
+                                   $" Vertical : {magnification * 2}x" +
+                                   $"\n Horizontal : {magnification * 4}x" +
+                                   $"\n Jackpot : {magnification * 1000}x" +
+                                   $"\n Fall : {magnification * 2}x" +
+                                   $"\n Bonus : 2x";
+        else if (magnification >= 3)
+            _magnificationText.text = $"Current Magnification\n" +
+                                   $" Vertical : {magnification * 2}x" +
+                                   $"\n Horizontal : {magnification * 4}x" +
+                                   $"\n Jackpot : {magnification * 1000}x" +
+                                   $"\n Fall : {magnification * 5}x" +
+                                   $"\n Bonus : 2x";
 
-        else _magnificationText.text = $"Current Magnification\n" +
-                              $" Vertical : {magnification * 2}x" +
-                              $"\n Horizontal : {magnification * 4}x" +
-                              $"\n Jackpot : {magnification * 1000}x" +
-                              $"\n Fall : -{(magnification + 5) * 3}x";
 
         textCredits.text = $"Credits : {credits:N0}";
         _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
@@ -374,54 +366,76 @@ public class SloltMachine : MonoBehaviour
     {
         isStartSpin = true;
         pullButton.interactable = false;
-        allInButton.interactable = false;
-        elapsedTime = 0;
+        minBetButton.interactable = false;
+        maxBetButton.interactable = false;
         ResetReelSpins();
 
-        // 기본 랜덤 결과 생성
-        for (int row = 0; row < 3; row++)
-            for (int col = 0; col < 5; col++)
-                reelResults[row, col] = UnityEngine.Random.Range(1, 8);
+        // 0) 항상 전체 기본 랜덤 채우기
+        for (int r = 0; r < 3; r++)
+            for (int c = 0; c < 5; c++)
+                reelResults[r, c] = UnityEngine.Random.Range(1, 8);
 
-        // 세로줄 매치 확률 적용
-        //for (int col = 0; col < 5; col++)
-        //{
-        //    if (UnityEngine.Random.value < 0.1f)
-        //    {
-        //        int val = UnityEngine.Random.Range(1, 8);
-        //        for (int row = 0; row < 3; row++)
-        //            reelResults[row, col] = val;
-        //    }
-        //}
+        // 1) 패턴 결정
+        SpinPattern pattern = DecidePattern();
 
-        float rand = UnityEngine.Random.value;
-
-        if (rand < jackpotChance)
+        // 2) 패턴 오버레이
+        switch (pattern)
         {
-            ApplyJackpot();
+            case SpinPattern.Jackpot:
+                ApplyJackpot();
+                break;
 
-        }
-        else if (rand < _horizontalChance)
-        {
-            ApplyHorizontalMatch();
-            jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
-        }
-        else
-        {
-            jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
+            case SpinPattern.Horizontal:
+                ApplyHorizontalMatch();
+                jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
+                break;
+
+            case SpinPattern.Vertical:
+                int col = UnityEngine.Random.Range(0, 5);
+                ForceVerticalColumn(col);  // 아래 새 함수 사용
+                jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
+                break;
+
+            case SpinPattern.Normal:
+                jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
+                break;
         }
 
-        // 릴 스핀 시작
-        for (int col = 0; col < 5; col++)
+        // 3) 스핀 코루틴 시작
+        for (int c = 0; c < 5; c++)
         {
-            if (reelSpinCoroutines[col] != null)
-                StopCoroutine(reelSpinCoroutines[col]);
-
-            reelSpinCoroutines[col] = StartCoroutine(SpinReelLoop(col));
+            if (reelSpinCoroutines[c] != null) StopCoroutine(reelSpinCoroutines[c]);
+            reelSpinCoroutines[c] = StartCoroutine(SpinReelLoop(c));
         }
 
         StartCoroutine(StopReelsOneByOne());
     }
+
+
+    private SpinPattern DecidePattern()
+    {
+
+        float r = UnityEngine.Random.value;
+        float pJ = jackpotChance;
+        float pH = _horizontalChance;
+        float pV = _verticalChance;
+
+        if (r < pJ) return SpinPattern.Jackpot;
+        r -= pJ;
+        if (r < pH) return SpinPattern.Horizontal;
+        r -= pH;
+        if (r < pV) return SpinPattern.Vertical;
+        return SpinPattern.Normal;
+    }
+    private void ForceVerticalColumn(int col)
+    {
+        int v = UnityEngine.Random.Range(1, 8);
+        for (int row = 0; row < 3; row++)
+            reelResults[row, col] = v;
+    }
+
+
+
     public void OnClickMinimumbet()
     {
         if (credits <= 0)
@@ -431,6 +445,11 @@ public class SloltMachine : MonoBehaviour
         }
 
         inputBetAmount.text = _minBet.ToString();
+        OnClickpull();
+    }
+    public void OnClickMaximumbet()
+    {
+        inputBetAmount.text = credits.ToString();
         OnClickpull();
     }
 
@@ -449,7 +468,6 @@ public class SloltMachine : MonoBehaviour
         bool jackpot = CheckJackpot(lastBetAmount);
         hasMatch = vertical || horizontal;
 
-        _minBet = credits / 50;
         if (_minBet == 0)
             _minBet += 1;
 
@@ -458,12 +476,11 @@ public class SloltMachine : MonoBehaviour
 
         if (!hasMatch)
         {
-            CheckFall();
+            Fall();
         }
-
         _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.ToString("N0")}";
-        textChance.text = $"Probability Table\n Vertical : 15% \n Horizontal : 5% \n Jackpot : {jackpotChance * 100:F4}%";
+        textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
@@ -519,10 +536,14 @@ public class SloltMachine : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         isStartSpin = false;
-
-        CheckBet();
-        pullButton.interactable = true;
-        allInButton.interactable = true;
+        if (isStartSpin)
+            CheckBet();
+        if (_haveSpin > 0)
+        {
+            pullButton.interactable = true;
+            minBetButton.interactable = true;
+            maxBetButton.interactable = true;
+        }
     }
 
     private IEnumerator PlayHorizontalMatchEffects()
@@ -571,13 +592,19 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c)
             {
+                long reward = bet * (magnification * 2);
                 matched = true;
-                AddCredits(bet * (magnification * 2));
+                if (a == 7)
+                {
+                    reward *= 2;
+                    textResult.text = "777 BONUS!!! ";
+                }
+                AddCredits(reward);
 
                 for (int row = 0; row < 3; row++)
                 {
                     reelImages[row, col].color = customMatch;
-                    StartCoroutine(BlinkText(reelTexts[row, col], 0.2f, 0.15f));
+                    StartCoroutine(BlinkText(reelTexts[row, col], 0.5f, 0.1f));
                 }
             }
         }
@@ -599,13 +626,18 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c && c == d && d == e)
             {
+                long reward = bet * (magnification * 4);
                 matched = true;
-                AddCredits(bet * (magnification * 4));
-
+                if (a == 7)
+                {
+                    reward *= 2;
+                    textResult.text = "777 BONUS!!! ";
+                }
+                AddCredits(reward);
                 for (int col = 0; col < 5; col++)
                 {
                     reelImages[row, col].color = customMatch;
-                    StartCoroutine(BlinkText(reelTexts[row, col], 0.5f, 0.15f));
+                    StartCoroutine(BlinkText(reelTexts[row, col], 0.5f, 0.1f));
                 }
             }
         }
@@ -623,10 +655,19 @@ public class SloltMachine : MonoBehaviour
                     return false;
 
 
+        long reward = betAmount * (magnification * 1000);
         jackpotChance = jackpotChanceInitial;
-        // 잭팟 처리
-        textResult.text = " JACKPOT!!! ";
-        AddCredits(betAmount * (magnification * 1000));
+
+        if (first == 7)
+        {
+            reward *= 2;
+            textResult.text = " JACKPOT 777 BONUS!!! ";
+        }
+        else
+        {
+            textResult.text = " JACKPOT!!! ";
+        }
+        AddCredits(reward);
         textCredits.text = $"Credits : {credits.ToString("N0")}";
 
         for (int r = 0; r < 3; r++)
@@ -637,23 +678,27 @@ public class SloltMachine : MonoBehaviour
             }
         return true;
     }
-    private bool CheckFall()
+
+    private bool Fall()
     {
         if (fallChecked) return false; // 이미 체크했으면 중복 방지
         fallChecked = true;
 
-        if (magnification <= 2)
-            credits -= lastBetAmount * 3;
-        else
-            credits -= lastBetAmount * (magnification + 5) * 3;
+        if (magnification <= 1)
+            credits -= lastBetAmount * (magnification * 0);
+        else if (magnification == 2)
+            credits -= lastBetAmount * (magnification * 2);
+        else if (magnification >= 3)
+            credits -= lastBetAmount * (magnification * 5);
 
         credits = Math.Clamp(credits, 0, long.MaxValue / 2);
-        if (credits < 0)
+        if (credits <= 0)
         {
-            CreditMinOver();
+            credits = 0;
         }
         return true;
     }
+
     private void AddCredits(long amount)
     {
         try
@@ -669,12 +714,6 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits = Math.Clamp(credits, 0, long.MaxValue);
-    }
-
-
-    private void CreditMinOver()
-    {
-        credits = 0;
     }
 
     private void CreditMaxOver()

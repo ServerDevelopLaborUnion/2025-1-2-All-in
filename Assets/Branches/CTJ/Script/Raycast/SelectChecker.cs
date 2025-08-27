@@ -18,9 +18,7 @@ public class SelectChecker : MonoBehaviour
 
 
     bool noDurability;
-    int lv1Dura;
-    int lv2Dura;
-    int lv3Dura;
+    int dura;
     GameObject collectiblesItem;
     int maxDrop;
 
@@ -56,9 +54,9 @@ public class SelectChecker : MonoBehaviour
     {
         if (!noDurability)
         {
-            lv1Dura--;
+            dura--;
 
-            if (lv1Dura == 0 || lv2Dura == 0 || lv3Dura == 0)
+            if (dura == 0)
             {
                 Droper();
             }
@@ -99,9 +97,7 @@ public class SelectChecker : MonoBehaviour
         _sr.sprite = thisOreSO.OreSprite;
 
         noDurability = thisOreSO.noDurability;
-        lv1Dura = thisOreSO.lv1Dura;
-        lv2Dura = thisOreSO.lv2Dura;
-        lv3Dura = thisOreSO.lv3Dura;
+        dura = thisOreSO.dura;
         collectiblesItem = thisOreSO.collectiblesItem;
         maxDrop = thisOreSO.maxDrop;
     }

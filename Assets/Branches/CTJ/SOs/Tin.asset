@@ -15,8 +15,6 @@ MonoBehaviour:
   oreName: Tin
   OreSprite: {fileID: 4070711571765519852, guid: d59675a958ed90a4d8a67f5ebd30e71d, type: 3}
   noDurability: 0
-  lv1Dura: 999
-  lv2Dura: 7
-  lv3Dura: 3
-  collectiblesItem: {fileID: 3592620354905650320, guid: bba4bfdcf21626048a87efcd248ff557, type: 3}
+  dura: 4
+  collectiblesItem: {fileID: 3592620354905650320, guid: 3a2abb1599680cb4c98b94b884e8a485, type: 3}
   maxDrop: 3

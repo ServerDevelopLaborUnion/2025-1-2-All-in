@@ -15,8 +15,6 @@ MonoBehaviour:
   oreName: Stone
   OreSprite: {fileID: 5315769673457585129, guid: ec0ad314a88d4fd4ea60fabd00f6fb66, type: 3}
   noDurability: 0
-  lv1Dura: 8
-  lv2Dura: 5
-  lv3Dura: 2
+  dura: 3
   collectiblesItem: {fileID: 3592620354905650320, guid: bba4bfdcf21626048a87efcd248ff557, type: 3}
   maxDrop: 3
