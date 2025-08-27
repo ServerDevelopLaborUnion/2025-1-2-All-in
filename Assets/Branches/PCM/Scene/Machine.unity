@@ -774,6 +774,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &409253271
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 456196904621715675, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_Name
+      value: MoneyManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.11119642
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.3620386
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.31591728
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4355121875098390971, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
 --- !u!1 &470357393 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5212800602263580491, guid: a8566e0275712e640a4283f80896722c, type: 3}
@@ -6923,6 +6980,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1159506169 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
+  m_PrefabInstance: {fileID: 409253271}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e017383c2a8a4c64bab17784e74ff706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1171219944 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5549543289629670764, guid: 3d2e98d30602fa448830ca4d42330e50, type: 3}
@@ -6952,8 +7020,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: credits
-      value: 10000
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 1159506169}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: mButton
       value: 
@@ -9560,6 +9628,10 @@ PrefabInstance:
       propertyPath: creditsText
       value: 
       objectReference: {fileID: 2093545018}
+    - target: {fileID: 3510671728711816423, guid: 63b872dd0e142b54ebda3c243ff4e8c5, type: 3}
+      propertyPath: moneyManager
+      value: 
+      objectReference: {fileID: 1159506169}
     - target: {fileID: 7582071095683181722, guid: 63b872dd0e142b54ebda3c243ff4e8c5, type: 3}
       propertyPath: m_Name
       value: ShopManager
@@ -9665,6 +9737,10 @@ PrefabInstance:
       propertyPath: creditsText
       value: 
       objectReference: {fileID: 2093545018}
+    - target: {fileID: 1160265059765418692, guid: 420f8dc5fa5941649a84c0cc336b1864, type: 3}
+      propertyPath: moneyManager
+      value: 
+      objectReference: {fileID: 1159506169}
     - target: {fileID: 1798013206884280540, guid: 420f8dc5fa5941649a84c0cc336b1864, type: 3}
       propertyPath: m_Name
       value: MoneyPlus
@@ -9916,3 +9992,4 @@ SceneRoots:
   - {fileID: 184270818}
   - {fileID: 3530698987257446113}
   - {fileID: 1486579317}
+  - {fileID: 409253271}

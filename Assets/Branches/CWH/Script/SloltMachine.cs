@@ -104,11 +104,11 @@ public class SloltMachine : MonoBehaviour
     //텍스트, 버튼
     [SerializeField] private TextMeshProUGUI textResult;
     [SerializeField] private TextMeshProUGUI textChance;
-    [SerializeField] private Button pullButton;
-    [SerializeField] private Button minBetButton;
-    [SerializeField] private Button maxBetButton;
-    [SerializeField] private Button pButton;
-    [SerializeField] private Button mButton;
+    public Button pullButton;
+    public Button minBetButton;
+    public Button maxBetButton;
+    public Button pButton;
+    public Button mButton;
 
     //릴 내부적으로 돌아가는 거
     private int[,] reelResults = new int[3, 5];
