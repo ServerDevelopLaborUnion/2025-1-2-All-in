@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Target
+  - 3Buy
+  - 7Buy
+  - Common
+  - Bag
   layers:
   - Default
   - TransparentFX
