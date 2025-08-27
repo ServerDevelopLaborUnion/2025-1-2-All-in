@@ -130,7 +130,7 @@ public class SloltMachine : MonoBehaviour
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
-    private void Awake()
+    private void Start()
     {
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
@@ -145,7 +145,7 @@ public class SloltMachine : MonoBehaviour
         //EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
+        _minBetText.text = $"Minimum bet {_minBet.ToString("N0")}";
         textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         _magnificationText.text = $"Current Magnification\n" +
                                   $" Vertical : {magnification * 2}x" +
