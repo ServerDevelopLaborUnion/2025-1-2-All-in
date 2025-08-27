@@ -12,15 +12,13 @@ public class WindowUI : MonoBehaviour
     FullScreenMode fullScreenMode = FullScreenMode.FullScreenWindow;
     [SerializeField] private Toggle togglebnt;
     [SerializeField] private int resolutionnum;
+    [SerializeField] private WindowScreenSO SavaScreen;
     private int optionnum;
     int _width;
     int _height;
     void Start()
     {
         IntiUI();
-        Screen.SetResolution(1920, 1080, togglebnt.isOn ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed);
-        _width = PlayerPrefs.GetInt("widht", 1920);
-        _height = PlayerPrefs.GetInt("height", 1080);
 
         Screen.SetResolution(_width, _height, fullScreenMode);
     }
@@ -69,16 +67,14 @@ public class WindowUI : MonoBehaviour
     public void OkbtnCilck()
     {
         Screen.SetResolution(resolutions[resolutionnum].width, resolutions[resolutionnum]
-            .height, fullScreenMode);
-        //SetScreen();
-        //PlayerPrefs.Set
+            .height, fullScreenMode, resolutions[resolutionnum].refreshRateRatio);
+        SaveDate();
     }
 
-    public void SetScreen()
+    public void SaveDate()
     {
-        PlayerPrefs.SetInt("widht", resolutions[resolutionnum].width);
-        PlayerPrefs.SetInt("height", resolutions[resolutionnum].height);
-        PlayerPrefs.SetInt("Screen", togglebnt.isOn ? 1 : 0);
-        PlayerPrefs.Save();
+        SavaScreen.Height = resolutions[resolutionnum].height;
+        SavaScreen.Widht = resolutions[resolutionnum].width;
+        SavaScreen.ScreenMode = fullScreenMode;
     }
 }

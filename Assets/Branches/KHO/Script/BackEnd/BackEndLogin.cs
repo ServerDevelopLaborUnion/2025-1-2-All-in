@@ -1,7 +1,5 @@
 using UnityEngine;
 using BackEnd;
-using JetBrains.Annotations;
-using UnityEditor.Experimental.GraphView;
 
 public class BackEndLogin
 {
@@ -33,13 +31,21 @@ public class BackEndLogin
 
         if (bro.IsSuccess())
         {
-            Debug.Log("로그인 성공");
+            MoneyGameData.Intance.GetData();
         }
 
     }
 
     public void NickNameChage(string nickname)
     {
-        var bro = Backend.BMember.UpdateNickname(nickname);
+        var bro = Backend.BMember.CheckNicknameDuplication(nickname);
+        if (bro.IsSuccess())
+        {
+            var setNicknamebro = Backend.BMember.UpdateNickname(nickname);
+        }
+        else
+        {
+            Debug.Log("중복된 닉네임입니다");
+        }
     }
 }

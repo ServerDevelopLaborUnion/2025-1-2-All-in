@@ -4,7 +4,7 @@ using System.Text;
 
 public class MoneyData
 {
-    public long money = 1200;
+    public long money => MoneyMangaer.Instance.Money;
 
     public override string ToString()
     {
@@ -72,14 +72,23 @@ public class MoneyGameData
             if (gameDataJson.Count <= 0)
             {
                 Debug.LogWarning("데이터가 존재하지 않습니다.");
+                
+                Param param = new Param();
+                param.Add("Money",0);
+                var broInIt = Backend.GameData.Insert("Money", param);
+                if (bro.IsSuccess())
+                {
+                    gameDataRowInDate = bro.GetInDate();
+                }
             }
             else
             {
-                gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
+                
+                //gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
 
-                moneyData = new MoneyData();
+                //moneyData = new MoneyData();
 
-                moneyData.money = long.Parse(gameDataJson[0]["Money"].ToString());
+                //moneyData.money = long.Parse(gameDataJson[0]["Money"].ToString());
             }
         }
         else
