@@ -145,7 +145,7 @@ public class SloltMachine : MonoBehaviour
         //EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        _minBetText.text = $"Minimum bet {_minBet.ToString("N0")}";
+        _minBetText.text = $"Minimum bet : {_minBet.ToString("N0")}";
         textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         _magnificationText.text = $"Current Magnification\n" +
                                   $" Vertical : {magnification * 2}x" +
@@ -471,7 +471,7 @@ public class SloltMachine : MonoBehaviour
         {
             Fall();
         }
-        _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
+        _minBetText.text = $"Minimum bet : {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
