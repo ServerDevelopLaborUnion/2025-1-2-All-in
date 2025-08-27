@@ -18,7 +18,7 @@ public class MoneyData
 
 public class MoneyGameData
 {
-    private static MoneyGameData _instance = null;
+    private static MoneyGameData _instance = new MoneyGameData();
 
     public static MoneyGameData Intance
     {
