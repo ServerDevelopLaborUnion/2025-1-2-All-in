@@ -104,10 +104,10 @@ public class SloltMachine : MonoBehaviour
 
     #endregion
     [Header("세로")]
-    [field: SerializeField] private float _verticalChance;
+    [field: SerializeField] public float _verticalChance;
     public float VerticalChance { get; set; }
     [Header("가로")]
-    [field:SerializeField] private float _horizontalChance;
+    [field:SerializeField] public float _horizontalChance;
     public float HorizonTalChance { get; set; }
 
     //텍스트, 버튼
