@@ -7785,6 +7785,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1954541296}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: _startCredits
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: jackpotChance
       value: 0.0001
       objectReference: {fileID: 0}
