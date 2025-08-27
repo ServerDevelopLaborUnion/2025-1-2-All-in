@@ -19,7 +19,8 @@ public class HorizontalPlus : ItemOn
     }
     public void horizontalPlus()
     {
-        if (Random.Range(1,100)<=probability)
+        int final = probability + probabilityplus;
+        if (Random.Range(1,100)<=final)
         {
             Debug.Log("Áõ°¡!");
             machine._horizontalChance += 0.5f;

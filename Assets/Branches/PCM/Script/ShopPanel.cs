@@ -17,12 +17,12 @@ public class ShopPanel : MonoBehaviour
 
         if (!panelopen)
         {
-            rect.DOAnchorPosY(-38, 1).SetEase(Ease.OutExpo);// 위로 열기
+            rect.DOAnchorPosY(-56f, 1).SetEase(Ease.OutExpo);// 위로 열기
             panelopen = true; 
         }
         else if(panelopen)
         {
-            rect.DOAnchorPosY(-300, 1).SetEase(Ease.OutExpo);// 아래로 닫기
+            rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
             panelopen = false;
         }
     }

@@ -30,8 +30,8 @@ public class TicketPlus : ItemOn
 
     private void TicketsPlus()
     {
-        
-        if (Random.Range(1, 100) <= probability ) // 1~4 범위 주의!
+        int final = probability + probabilityplus;
+        if (Random.Range(1, 100) <= final) // 1~4 범위 주의!
         {
             ticketText.text = "SPIN:" + machine.HaveSpin;
             machine.HaveSpin += 2;
