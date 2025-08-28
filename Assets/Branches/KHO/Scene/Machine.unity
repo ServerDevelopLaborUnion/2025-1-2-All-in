@@ -432,6 +432,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 155298076720918236, guid: 302d9c532f96ca640aad7e0088ae150d, type: 3}
+      propertyPath: id
+      value: user1
+      objectReference: {fileID: 0}
+    - target: {fileID: 155298076720918236, guid: 302d9c532f96ca640aad7e0088ae150d, type: 3}
+      propertyPath: pin
+      value: 1234
+      objectReference: {fileID: 0}
     - target: {fileID: 840857472285188295, guid: 302d9c532f96ca640aad7e0088ae150d, type: 3}
       propertyPath: m_Name
       value: BackEndMangaer

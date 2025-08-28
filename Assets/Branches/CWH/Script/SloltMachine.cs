@@ -62,7 +62,8 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _magnificationText;
 
     [Header("남은 스핀 수 (보류)")]
-    [SerializeField] private TMPro.TextMeshProUGUI _numberOfSpinsreMaining;
+    [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
+    [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
     public int HaveSpin
     {
@@ -152,7 +153,8 @@ public class SloltMachine : MonoBehaviour
                                   $"\n Jackpot : {magnification * 1000}x" +
                                   $"\n Fall : 0x" +
                                   $"\n Bonus : 2x";
-        _numberOfSpinsreMaining.text = $" {_haveSpin} \n Spin Cost {_spinCost}";
+        _remainSpins.text = $"{_haveSpin}";
+        _SpinCosts.text =   $"{_spinCost}";
     }
 
     private void Update()
@@ -350,7 +352,8 @@ public class SloltMachine : MonoBehaviour
 
 
         textCredits.text = $"Credits : {credits.Money:N0}";
-        _numberOfSpinsreMaining.text = $"{_haveSpin} \n Spin Cost {_spinCost}";
+        _remainSpins.text = $"{_haveSpin}";
+        _SpinCosts.text = $"{_spinCost}";
     }
 
     private void StartSpin()
