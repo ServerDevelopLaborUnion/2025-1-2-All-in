@@ -32,6 +32,11 @@ public class BackEndLogin
         if (bro.IsSuccess())
         {
             MoneyGameData.Intance.GetData();
+            Debug.Log(1);
+        }
+        else
+        {
+            Debug.Log(2);
         }
 
     }

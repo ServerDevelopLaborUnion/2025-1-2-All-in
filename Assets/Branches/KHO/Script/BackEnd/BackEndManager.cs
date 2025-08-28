@@ -3,6 +3,9 @@ using BackEnd;
 
 public class BackEndManager : MonoBehaviour
 {
+    public string id = string.Empty;
+    public string pin = string.Empty;
+
     void Start()
     {
         var bro = Backend.Initialize();
@@ -11,9 +14,7 @@ public class BackEndManager : MonoBehaviour
 
     private void TestIntser()
     {
-        BackEndLogin.Instance.SignUp("ur2","12345");
-        BackEndLogin.Instance.Login("ur2", "12345");
-        BackEndLogin.Instance.NickNameChage("¡∂≈¬¡ÿ");
+        BackEndLogin.Instance.Login(id, pin);
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();
