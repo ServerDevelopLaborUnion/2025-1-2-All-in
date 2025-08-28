@@ -146,7 +146,7 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
-        textChance.text = $"Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         _magnificationText.text = $" Vertical : {magnification * 2}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
@@ -471,7 +471,7 @@ public class SloltMachine : MonoBehaviour
         }
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        textChance.text = $"Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
