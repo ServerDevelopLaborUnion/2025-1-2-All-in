@@ -123,12 +123,7 @@ public class MoneyGameData
 
         if (bro.IsSuccess())
         {
-            Debug.Log("수정 성공");
             BackEndRank.Instance.RankInsert(moneyData.money);
-        }
-        else
-        {
-            Debug.Log("수정 실패 ");
         }
     }
 }
