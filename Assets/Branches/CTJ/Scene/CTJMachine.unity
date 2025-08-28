@@ -6872,6 +6872,50 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!1 &1950984761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950984763}
+  - component: {fileID: 1950984762}
+  m_Layer: 0
+  m_Name: MoneyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1950984762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950984761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e017383c2a8a4c64bab17784e74ff706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1950984763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950984761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 852.20044, y: 501.96588, z: -5.367908}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1963427271
 GameObject:
   m_ObjectHideFlags: 0
@@ -7474,8 +7518,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: credits
-      value: 10000
-      objectReference: {fileID: 0}
+      value: 
+      objectReference: {fileID: 1950984762}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: mButton
       value: 
@@ -7644,6 +7688,10 @@ PrefabInstance:
       propertyPath: minBetButton
       value: 
       objectReference: {fileID: 6174095597666648403}
+    - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
+      propertyPath: _startCredits
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
       propertyPath: jackpotChance
       value: 0.0001
@@ -14313,3 +14361,4 @@ SceneRoots:
   - {fileID: 846910874}
   - {fileID: 937681488}
   - {fileID: 1081392772}
+  - {fileID: 1950984763}
