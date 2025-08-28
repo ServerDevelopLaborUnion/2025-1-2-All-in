@@ -131,6 +131,8 @@ public class SloltMachine : MonoBehaviour
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
+    bool _startSpinbug = true;
+
     private void Start()
     {
         credits.Money = _startCredits;
@@ -143,7 +145,7 @@ public class SloltMachine : MonoBehaviour
                 reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
-        //EnoughSpin();
+        EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
@@ -155,6 +157,7 @@ public class SloltMachine : MonoBehaviour
                                   $"\n Bonus : 2x";
         _remainSpins.text = $"{_haveSpin}";
         _SpinCosts.text =   $"{_spinCost}";
+        _startSpinbug = false;
     }
 
     private void Update()
@@ -271,6 +274,7 @@ public class SloltMachine : MonoBehaviour
         }
         else
         {
+            if (_startSpinbug) return;
             StartSpin();
             _haveSpin -= _spinCost;
             UpdateMagnificationUI();
