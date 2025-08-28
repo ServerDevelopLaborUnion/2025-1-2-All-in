@@ -145,15 +145,14 @@ public class SloltMachine : MonoBehaviour
         //EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        _minBetText.text = $"Minimum bet : {_minBet.ToString("N0")}";
-        textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-        _magnificationText.text = $"Current Magnification\n" +
-                                  $" Vertical : {magnification * 2}x" +
+        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
+        textChance.text = $"Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        _magnificationText.text = $" Vertical : {magnification * 2}x" +
                                   $"\n Horizontal : {magnification * 4}x" +
                                   $"\n Jackpot : {magnification * 1000}x" +
                                   $"\n Fall : 0x" +
                                   $"\n Bonus : 2x";
-        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
+        _numberOfSpinsreMaining.text = $" {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
     private void Update()
