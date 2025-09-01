@@ -1,21 +1,18 @@
-ï»¿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.ExceptionServices;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI.Table;
 
-public class SloltMachine : MonoBehaviour
+public class SloltMachine2 : MonoBehaviour
 {
     public enum SpinPattern
     {
         Jackpot, Horizontal, Vertical, Normal
     }
-    //ì˜¤í†  ìŠ¤í•€ìš©ì½”ë“œëŠ” ì„ì‹œë¡œ ì‚¬ìš©ì¤‘ -ì›í¬
-    #region ì˜¤í†  ìŠ¤í•€ìš© ì½”ë“œ 
+    //¿ÀÅä ½ºÇÉ¿ëÄÚµå´Â ÀÓ½Ã·Î »ç¿ëÁß -¿øÈñ
+    #region ¿ÀÅä ½ºÇÉ¿ë ÄÚµå 
     public long GetCredits() => credits.Money;
     public long GetMinimumBet() => _minBet;
     public bool IsSpinning() => isStartSpin;
@@ -34,7 +31,7 @@ public class SloltMachine : MonoBehaviour
     private long lastBetAmount;
     private bool fallChecked;
 
-    [Header("ëˆ")]
+    [Header("µ·")]
     [SerializeField] private MoneyMangaer credits;
     [SerializeField] private long _startCredits;
 
@@ -45,23 +42,23 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private long _minBet;
     [SerializeField] private long _maxBet;
 
-    [Header("ë¦´ í…ìŠ¤íŠ¸//ê²Œì„ì— ë³´ì´ëŠ” ê²ƒ")]
+    [Header("¸± ÅØ½ºÆ®//°ÔÀÓ¿¡ º¸ÀÌ´Â °Í")]
     [SerializeField] private TextMeshProUGUI[] reelTextsFlat = new TextMeshProUGUI[15];
 
-    [Header("ë¦´ ì´ë¯¸ì§€//ê²Œì„ì— ë³´ì´ëŠ” ê²ƒ")]
+    [Header("¸± ÀÌ¹ÌÁö//°ÔÀÓ¿¡ º¸ÀÌ´Â °Í")]
     [SerializeField] private Image[] reelImagesFlat = new Image[15];
 
-    [Header("ì¹´ë©”ë¼")]
+    [Header("Ä«¸Ş¶ó")]
     [SerializeField] private Transform cameraTransform;
 
-    [Header("íŒŒí‹°í´")]
+    [Header("ÆÄÆ¼Å¬")]
     [SerializeField] private ParticleSystem horizontalMatchParticle;
 
-    [Header("ë°°íŒ… ë°°ìœ¨")]
+    [Header("¹èÆÃ ¹èÀ²")]
     [SerializeField] private int magnification;
     [SerializeField] private TextMeshProUGUI _magnificationText;
 
-    [Header("ë‚¨ì€ ìŠ¤í•€ ìˆ˜ (ë³´ë¥˜)")]
+    [Header("³²Àº ½ºÇÉ ¼ö (º¸·ù)")]
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
@@ -88,22 +85,22 @@ public class SloltMachine : MonoBehaviour
 
     public int _spinCoststandard;
 
-    #region ì­íŒŸí™•ë¥  ê´€ë ¨
-    [Header("ì­íŒŸ")]
+    #region ÀèÆÌÈ®·ü °ü·Ã
+    [Header("ÀèÆÌ")]
     [SerializeField] private float jackpotChance = 0.00001f;
     private const float jackpotChanceMax = 0.5f;
     private const float jackpotChanceIncrement = 0.0000001f;
     private const float jackpotChanceInitial = 0.000000005f;
 
     #endregion
-    [Header("ì„¸ë¡œ")]
+    [Header("¼¼·Î")]
     [field: SerializeField] public float _verticalChance;
     public float VerticalChance { get; set; }
-    [Header("ê°€ë¡œ")]
+    [Header("°¡·Î")]
     [field: SerializeField] public float _horizontalChance;
     public float HorizonTalChance { get; set; }
 
-    //í…ìŠ¤íŠ¸, ë²„íŠ¼
+    //ÅØ½ºÆ®, ¹öÆ°
     [SerializeField] private TextMeshProUGUI textResult;
     [SerializeField] private TextMeshProUGUI textChance;
     public Button pullButton;
@@ -112,22 +109,22 @@ public class SloltMachine : MonoBehaviour
     public Button pButton;
     public Button mButton;
 
-    //ë¦´ ë‚´ë¶€ì ìœ¼ë¡œ ëŒì•„ê°€ëŠ” ê±°
+    //¸± ³»ºÎÀûÀ¸·Î µ¹¾Æ°¡´Â °Å
     private int[,] reelResults = new int[3, 5];
     private Image[,] reelImages = new Image[3, 5];
     private TextMeshProUGUI[,] reelTexts = new TextMeshProUGUI[3, 5];
 
-    //ìŠ¤í•€ ëŒì•„ê°€ëŠ”ì‹œê°„,ê²½ê³¼ ì‹œê°„ , ìŠ¤í•€ ê°€ëŠ¥ ìœ ë¬´
+    //½ºÇÉ µ¹¾Æ°¡´Â½Ã°£,°æ°ú ½Ã°£ , ½ºÇÉ °¡´É À¯¹«
     private float spinDuration = 0.2f;
     private float elapsedTime = 0f;
     private bool isStartSpin = false;
 
-    //ê° ë¦´ì´ ëŒë¼ê°€ëŠ” ê²ƒ
+    //°¢ ¸±ÀÌ µ¹¶ó°¡´Â °Í
     private Coroutine[] reelSpinCoroutines = new Coroutine[5];
-    //ê° ë¦´ì˜ ë©ˆì¶¤
+    //°¢ ¸±ÀÇ ¸ØÃã
     private bool[] isReelSpinned = new bool[5];
 
-    //ìƒ‰ê¹”ë“¤
+    //»ö±òµé
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
@@ -186,7 +183,7 @@ public class SloltMachine : MonoBehaviour
     }
     private void ApplyHorizontalMatch()
     {
-        int matchRowCount = UnityEngine.Random.Range(1, 3); // 1~2ì¤„ ë§¤ì¹­
+        int matchRowCount = GetRandomSymbol(); // 1~2ÁÙ ¸ÅÄª
         List<int> rows = new List<int> { 0, 1, 2 };
         for (int i = 0; i < rows.Count; i++)
         {
@@ -254,8 +251,8 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits.Money -= bet;
-        lastBetAmount = bet;   // ì´ë²ˆ ìŠ¤í•€ì˜ ë² íŒ… ê¸ˆì•¡ ì €ì¥
-        fallChecked = false;   // Fall ì²´í¬ ì´ˆê¸°í™”
+        lastBetAmount = bet;   // ÀÌ¹ø ½ºÇÉÀÇ º£ÆÃ ±İ¾× ÀúÀå
+        fallChecked = false;   // Fall Ã¼Å© ÃÊ±âÈ­
 
         UpdateMagnificationUI();
         EnoughSpin();
@@ -329,7 +326,7 @@ public class SloltMachine : MonoBehaviour
 
     private void UpdateMagnificationUI()
     {
-        // ë²„íŠ¼ ìƒíƒœ ê°±ì‹ 
+        // ¹öÆ° »óÅÂ °»½Å
         mButton.interactable = magnification > 1;
         pButton.interactable = magnification < 10;
 
@@ -374,15 +371,15 @@ public class SloltMachine : MonoBehaviour
         maxBetButton.interactable = false;
         ResetReelSpins();
 
-        // 0) í•­ìƒ ì „ì²´ ê¸°ë³¸ ëœë¤ ì±„ìš°ê¸°
+        // 0) Ç×»ó ÀüÃ¼ ±âº» ·£´ı Ã¤¿ì±â
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 5; c++)
                 reelResults[r, c] = GetRandomSymbol();
 
-        // 1) íŒ¨í„´ ê²°ì •
+        // 1) ÆĞÅÏ °áÁ¤
         SpinPattern pattern = DecidePattern();
 
-        // 2) íŒ¨í„´ ì˜¤ë²„ë ˆì´
+        // 2) ÆĞÅÏ ¿À¹ö·¹ÀÌ
         switch (pattern)
         {
             case SpinPattern.Jackpot:
@@ -396,7 +393,7 @@ public class SloltMachine : MonoBehaviour
 
             case SpinPattern.Vertical:
                 int col = UnityEngine.Random.Range(0, 5);
-                ForceVerticalColumn(col);  // ì•„ë˜ ìƒˆ í•¨ìˆ˜ ì‚¬ìš©
+                ForceVerticalColumn(col);  // ¾Æ·¡ »õ ÇÔ¼ö »ç¿ë
                 jackpotChance = Mathf.Min(jackpotChance + jackpotChanceIncrement, jackpotChanceMax);
                 break;
 
@@ -405,7 +402,7 @@ public class SloltMachine : MonoBehaviour
                 break;
         }
 
-        // 3) ìŠ¤í•€ ì½”ë£¨í‹´ ì‹œì‘
+        // 3) ½ºÇÉ ÄÚ·çÆ¾ ½ÃÀÛ
         for (int c = 0; c < 5; c++)
         {
             if (reelSpinCoroutines[c] != null) StopCoroutine(reelSpinCoroutines[c]);
@@ -497,7 +494,7 @@ public class SloltMachine : MonoBehaviour
         }
     }
 
-    #region ì½”ë£¨í‹´
+    #region ÄÚ·çÆ¾
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
         float elapsed = 0f;
@@ -523,7 +520,7 @@ public class SloltMachine : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        // ìµœì¢… ê²°ê³¼ í‘œì‹œ
+        // ÃÖÁ¾ °á°ú Ç¥½Ã
         for (int row = 0; row < 3; row++)
         {
             reelTexts[row, col].text = reelResults[row, col].ToString("D1");
@@ -533,8 +530,8 @@ public class SloltMachine : MonoBehaviour
     {
         for (int col = 0; col < 5; col++)
         {
-            yield return new WaitForSeconds(0.2f); // ë¦´ ê°„ ë©ˆì¶”ëŠ” ê°„ê²©
-            isReelSpinned[col] = true;             // ì´ ë¦´ ë©ˆì¶¤
+            yield return new WaitForSeconds(0.2f); // ¸± °£ ¸ØÃß´Â °£°İ
+            isReelSpinned[col] = true;             // ÀÌ ¸± ¸ØÃã
         }
 
         yield return new WaitForSeconds(0.2f);
@@ -552,10 +549,10 @@ public class SloltMachine : MonoBehaviour
 
     private IEnumerator PlayHorizontalMatchEffects()
     {
-        // íŒŒí‹°í´ ì¬ìƒ (ì˜ˆ: particleSystem.Play();)
+        // ÆÄÆ¼Å¬ Àç»ı (¿¹: particleSystem.Play();)
         horizontalMatchParticle.Play();
 
-        // í™”ë©´ í”ë“¤ê¸° íš¨ê³¼ ì‹¤í–‰
+        // È­¸é Èçµé±â È¿°ú ½ÇÇà
         yield return StartCoroutine(ScreenShakeCoroutine(0.5f, 0.01f));
 
     }
@@ -694,7 +691,7 @@ public class SloltMachine : MonoBehaviour
 
     private bool Fall()
     {
-        if (fallChecked) return false; // ì´ë¯¸ ì²´í¬í–ˆìœ¼ë©´ ì¤‘ë³µ ë°©ì§€
+        if (fallChecked) return false; // ÀÌ¹Ì Ã¼Å©ÇßÀ¸¸é Áßº¹ ¹æÁö
         fallChecked = true;
 
         if (magnification <= 1)
@@ -723,10 +720,10 @@ public class SloltMachine : MonoBehaviour
         }
         catch (OverflowException)
         {
-            credits.Money = long.MaxValue / 2; // ìƒí•œìœ¼ë¡œ ê³ ì •
+            credits.Money = long.MaxValue / 2; // »óÇÑÀ¸·Î °íÁ¤
         }
 
-        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue /2);
+        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
     }
 
     private void CreditMaxOver()
@@ -748,7 +745,7 @@ public class SloltMachine : MonoBehaviour
     }
     private int GetRandomSymbol()
     {
-        int rand = UnityEngine.Random.Range(0, 100); // 0~99 ì‚¬ì´ ì •ìˆ˜
+        int rand = UnityEngine.Random.Range(0, 100); // 0~99 »çÀÌ Á¤¼ö
 
         if (rand < 20) return 1;
         else if (rand < 40) return 2;
@@ -756,6 +753,6 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
         else if (rand < 98) return 6;
-        else return 7; // 10% í™•ë¥ 
+        else return 7; // 10% È®·ü
     }
 }
