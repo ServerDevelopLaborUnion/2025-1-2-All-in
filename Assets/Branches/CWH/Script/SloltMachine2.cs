@@ -32,7 +32,7 @@ public class SloltMachine2 : MonoBehaviour
     private bool fallChecked;
 
     [Header("µ·")]
-    [SerializeField] private MoneyMangaer credits;
+    [SerializeField] private MoneyManager credits;
     [SerializeField] private long _startCredits;
 
     [SerializeField] private TMP_InputField inputBetAmount;
