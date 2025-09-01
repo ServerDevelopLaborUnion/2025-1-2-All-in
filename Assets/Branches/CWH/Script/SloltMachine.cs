@@ -131,6 +131,8 @@ public class SloltMachine : MonoBehaviour
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
+    bool _startSpinbug = true;
+
     private void Start()
     {
         credits.Money = _startCredits;
@@ -143,7 +145,7 @@ public class SloltMachine : MonoBehaviour
                 reelTexts[row, col] = reelTextsFlat[row * 5 + col];
             }
         }
-        //EnoughSpin();
+        EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
@@ -154,7 +156,8 @@ public class SloltMachine : MonoBehaviour
                                   $"\n Fall : 0x" +
                                   $"\n Bonus : 2x";
         _remainSpins.text = $"{_haveSpin}";
-        _SpinCosts.text =   $"{_spinCost}";
+        _SpinCosts.text = $"{_spinCost}";
+        _startSpinbug = false;
     }
 
     private void Update()
@@ -271,6 +274,7 @@ public class SloltMachine : MonoBehaviour
         }
         else
         {
+            if (_startSpinbug) return;
             StartSpin();
             _haveSpin -= _spinCost;
             UpdateMagnificationUI();
@@ -336,20 +340,26 @@ public class SloltMachine : MonoBehaviour
                                       $"\n Fall : 0x" +
                                       $"\n Bonus : 2x";
         else if (magnification == 2)
-            _magnificationText.text = 
+            _magnificationText.text =
                                    $" Vertical : {magnification * 2}x" +
                                    $"\n Horizontal : {magnification * 4}x" +
                                    $"\n Jackpot : {magnification * 1000}x" +
                                    $"\n Fall : {magnification * 2}x" +
                                    $"\n Bonus : 2x";
         else if (magnification >= 3)
-            _magnificationText.text = 
+            _magnificationText.text =
                                    $" Vertical : {magnification * 2}x" +
                                    $"\n Horizontal : {magnification * 4}x" +
                                    $"\n Jackpot : {magnification * 1000}x" +
                                    $"\n Fall : {magnification * 5}x" +
                                    $"\n Bonus : 2x";
-
+        if (_haveSpin == 777 && credits.Money == 777000)
+            _magnificationText.text =
+                                  $" Vertical : {magnification * 2}x" +
+                                  $"\n Horizontal : {magnification * 4}x" +
+                                  $"\n Jackpot : {magnification * 1000}x" +
+                                  $"\n Fall : {magnification * 0}x" +
+                                  $"\n Bonus : 7x";
 
         textCredits.text = $"Credits : {credits.Money:N0}";
         _remainSpins.text = $"{_haveSpin}";
@@ -590,7 +600,10 @@ public class SloltMachine : MonoBehaviour
                 matched = true;
                 if (a == 7)
                 {
-                    reward *= 2;
+                    if (_haveSpin == 777 && credits.Money == 777000)
+                        reward *= 7;
+                    else
+                        reward *= 2;
                     textResult.text = "777 BONUS!!! ";
                 }
                 AddCredits(reward);
@@ -624,7 +637,10 @@ public class SloltMachine : MonoBehaviour
                 matched = true;
                 if (a == 7)
                 {
-                    reward *= 2;
+                    if (_haveSpin == 777 && credits.Money == 777000)
+                        reward *= 7;
+                    else
+                        reward *= 2;
                     textResult.text = "777 BONUS!!! ";
                 }
                 AddCredits(reward);
@@ -654,7 +670,10 @@ public class SloltMachine : MonoBehaviour
 
         if (first == 7)
         {
-            reward *= 2;
+            if (_haveSpin == 777 && credits.Money == 777000)
+                reward *= 7;
+            else
+                reward *= 2;
             textResult.text = " JACKPOT 777 BONUS!!! ";
         }
         else
@@ -704,10 +723,10 @@ public class SloltMachine : MonoBehaviour
         }
         catch (OverflowException)
         {
-            credits.Money = long.MaxValue; // 상한으로 고정
+            credits.Money = long.MaxValue / 2; // 상한으로 고정
         }
 
-        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue);
+        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue /2);
     }
 
     private void CreditMaxOver()
