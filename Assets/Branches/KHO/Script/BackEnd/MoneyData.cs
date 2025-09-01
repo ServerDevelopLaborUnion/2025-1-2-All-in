@@ -4,12 +4,12 @@ using System.Text;
 
 public class MoneyData
 {
-    public long money => MoneyMangaer.Instance.Money;
+    public long bestmoney => MoneyManager.Instance.BestMoney;
 
     public override string ToString()
     {
         StringBuilder result = new StringBuilder();
-        result.AppendLine($"Money {money}");
+        result.AppendLine($"Money {bestmoney}");
 
         return result.ToString();
     }
@@ -18,6 +18,7 @@ public class MoneyData
 
 public class MoneyGameData
 {
+
     private static MoneyGameData _instance = new MoneyGameData();
 
     public static MoneyGameData Intance
@@ -44,7 +45,7 @@ public class MoneyGameData
         }
 
         Param param = new Param();
-        param.Add("Money", moneyData.money);
+        param.Add("Money", moneyData.bestmoney);
 
         var bro = Backend.GameData.Insert("Money", param);
 
@@ -74,11 +75,11 @@ public class MoneyGameData
                 Debug.LogWarning("데이터가 존재하지 않습니다.");
                 
                 Param param = new Param();
-                param.Add("Money",0);
+                param.Add("Money", 0);
                 var broInIt = Backend.GameData.Insert("Money", param);
-                if (bro.IsSuccess())
+                if (broInIt.IsSuccess())
                 {
-                    gameDataRowInDate = bro.GetInDate();
+                    gameDataRowInDate = broInIt.GetInDate();
                 }
             }
             else
@@ -110,7 +111,7 @@ public class MoneyGameData
 
         BackendReturnObject bro = null;
 
-        param.Add("Money", moneyData.money);
+        param.Add("Money", moneyData.bestmoney);
 
         if (string.IsNullOrEmpty(gameDataRowInDate))
         {
@@ -123,9 +124,7 @@ public class MoneyGameData
 
         if (bro.IsSuccess())
         {
-            BackEndRank.Instance.RankInsert(moneyData.money);
+            BackEndRank.Instance.RankInsert(moneyData.bestmoney);
         }
     }
 }
-
-

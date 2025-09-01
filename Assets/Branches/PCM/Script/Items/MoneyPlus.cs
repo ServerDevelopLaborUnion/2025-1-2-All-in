@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class MoneyPlus : ItemOn
 {
     public override int probability { get; set; } = 60;
-    [SerializeField]private MoneyMangaer moneyManager;
+    [SerializeField]private MoneyManager moneyManager;
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField]private int moneyplus;
 

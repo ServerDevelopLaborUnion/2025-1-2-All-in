@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6722beedca0b58f4db0e115504fae5f1
+guid: 5a1482866a1665a4fb4b9bdfa125a13d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 359832929130258495
-    second: AllinSliderFill 2_0
+      213: -3241431823743005476
+    second: PostIt_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: AllinSliderFill 2_0
+      name: PostIt_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1
-        width: 87
-        height: 58
+        x: 0
+        y: 0
+        width: 90
+        height: 90
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 8, y: 9, z: 7, w: 10}
+      border: {x: 19, y: 20, z: 20, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f302c4f74226ef400800000000000000
-      internalID: 359832929130258495
+      spriteID: cdcc62e1eee1403d0800000000000000
+      internalID: -3241431823743005476
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2b75f345dec0ae34b9f242ac77c16a95
+    spriteID: 336e74566bfecaf478b2c999cebd9542
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      AllinSliderFill 2_0: 359832929130258495
+      PostIt_0: -3241431823743005476
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

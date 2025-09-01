@@ -35,7 +35,7 @@ public class SloltMachine : MonoBehaviour
     private bool fallChecked;
 
     [Header("돈")]
-    [SerializeField] private MoneyMangaer credits;
+    [SerializeField] private MoneyManager credits;
     [SerializeField] private long _startCredits;
 
     [SerializeField] private TMP_InputField inputBetAmount;
