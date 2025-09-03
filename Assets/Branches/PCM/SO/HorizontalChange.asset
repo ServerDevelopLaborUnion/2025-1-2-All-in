@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee36b42c56218b4da64dba9d6cbc3d3, type: 3}
+  m_Name: HorizontalChange
+  m_EditorClassIdentifier: 
+  image: {fileID: -3657797322666465400, guid: ea6a3e550fc5a5c4cbd2bb1d5f0da02c, type: 3}
+  itemPrefab: {fileID: 6574214847582126811, guid: d38dd4299010eda46a10a127d1fc914f, type: 3}
+  money: 1000

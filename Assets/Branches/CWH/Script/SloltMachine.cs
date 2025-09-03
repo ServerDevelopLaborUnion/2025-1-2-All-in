@@ -10,6 +10,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class SloltMachine : MonoBehaviour
 {
+    
     public enum SpinPattern
     {
         Jackpot, Horizontal, Vertical, Normal
@@ -30,8 +31,8 @@ public class SloltMachine : MonoBehaviour
         return CheckJackpot(betAmount);
     }
     #endregion
-
-    private long lastBetAmount;
+    private ItemOn itemOn; //박철민: 내가 넣은건데 포크하고 나서 다시 넣주셈
+    public long lastBetAmount { get; set; }
     private bool fallChecked;
 
     [Header("돈")]
@@ -88,7 +89,7 @@ public class SloltMachine : MonoBehaviour
 
     #region 잭팟확률 관련
     [Header("잭팟")]
-    [SerializeField] private float jackpotChance = 0.00001f;
+    public float jackpotChance = 0.00001f;
     private const float jackpotChanceMax = 0.5f;
     private const float jackpotChanceIncrement = 0.0000001f;
     private const float jackpotChanceInitial = 0.000000005f;
@@ -253,6 +254,14 @@ public class SloltMachine : MonoBehaviour
 
         UpdateMagnificationUI();
         EnoughSpin();
+
+        JackpotOrDie jackpotItem = FindAnyObjectByType<JackpotOrDie>();
+        if (jackpotItem != null && jackpotItem.onAbility)
+        {
+            jackpotItem.JackpotOrDieAction();
+        }
+
+
     }
 
     public void EnoughSpin()
@@ -459,6 +468,13 @@ public class SloltMachine : MonoBehaviour
         bool jackpot = CheckJackpot(lastBetAmount);
         hasMatch = vertical || horizontal;
 
+        ItemOn[] items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None);
+        foreach (var item in items)
+        {
+            item.OnAbilityCast?.Invoke();
+        }
+
+
         if (_minBet == 0)
             _minBet += 1;
 
@@ -636,7 +652,7 @@ public class SloltMachine : MonoBehaviour
         return matched;
     }
 
-    private bool CheckJackpot(long betAmount)
+    public bool CheckJackpot(long betAmount)
     {
         int first = reelResults[0, 0];
 
