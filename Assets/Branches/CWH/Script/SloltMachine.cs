@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI.Table;
@@ -102,6 +103,8 @@ public class SloltMachine : MonoBehaviour
     [Header("가로")]
     [field: SerializeField] public float _horizontalChance;
     public float HorizonTalChance { get; set; }
+
+    public MoneyLogUI logUI;
 
     //텍스트, 버튼
     [SerializeField] private TextMeshProUGUI textResult;
@@ -254,6 +257,7 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits.Money -= bet;
+        logUI.AddLog($"-{bet.ToString("N0")} balance : {credits.Money.ToString("N0")}",Color.red);
         lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
         fallChecked = false;   // Fall 체크 초기화
 
@@ -301,12 +305,14 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickP()
     {
+       long a =  magnification* magnification;
         if (credits.Money < 10)
         {
             OnMessage(Color.white, "You don't have enough money");
             return;
         }
-        credits.Money -= magnification * magnification;
+        credits.Money -= a;
+        logUI.AddLog($"-{a.ToString("N0")} balance : {credits.Money.ToString("N0")}",Color.red);
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -315,19 +321,21 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickM()
     {
+        long a = magnification * magnification;
         if (credits.Money < 10)
         {
             OnMessage(Color.white, "You don't have enough money");
             return;
         }
-        credits.Money -= magnification * 2;
+        credits.Money -= a;
+        logUI.AddLog($"-{a.ToString("N0")} balance : {credits.Money.ToString("N0")}", Color.red);
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
         UpdateMagnificationUI();
     }
 
-    private void UpdateMagnificationUI()
+    public void UpdateMagnificationUI()
     {
         // 버튼 상태 갱신
         mButton.interactable = magnification > 1;
@@ -599,6 +607,10 @@ public class SloltMachine : MonoBehaviour
             {
                 long reward = (long)(bet * (magnification * aa));
                 matched = true;
+                if (a == 6)
+                {
+                    reward = -reward;
+                }
                 if (a == 7)
                 {
                     if (_haveSpin == 777 && credits.Money == 777000)
@@ -636,6 +648,10 @@ public class SloltMachine : MonoBehaviour
             {
                 long reward = (long)(bet * (magnification * aa));
                 matched = true;
+                if (a == 6)
+                {
+                    reward = -reward;
+                }
                 if (a == 7)
                 {
                     if (_haveSpin == 777 && credits.Money == 777000)
@@ -668,7 +684,10 @@ public class SloltMachine : MonoBehaviour
 
         long reward = betAmount * (magnification * 100);
         jackpotChance = jackpotChanceInitial;
-
+        if (first == 6)
+        {
+            reward = -reward;
+        }
         if (first == 7)
         {
             if (_haveSpin == 777 && credits.Money == 777000)
@@ -727,7 +746,8 @@ public class SloltMachine : MonoBehaviour
             credits.Money = long.MaxValue / 2; // 상한으로 고정
         }
 
-        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue /2);
+        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
+        logUI.AddLog($"+{amount.ToString("N0")} balance : {credits.Money.ToString("N0")}",Color.green);
     }
 
     private void CreditMaxOver()
@@ -757,6 +777,6 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
         else if (rand < 98) return 6;
-        else return 7; // 10% 확률
+        else return 7; // 2% 확률
     }
 }
