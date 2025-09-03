@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class RandomItem : MonoBehaviour
 {
     [SerializeField] private ItemListSO _so;
-    [SerializeField] private MoneyMangaer moneymahine;
+    [SerializeField] private MoneyManager moneymahine;
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
