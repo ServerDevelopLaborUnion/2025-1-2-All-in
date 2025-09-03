@@ -13,6 +13,7 @@ public class ShopBuyTicket : MonoBehaviour
     {
         if (moneyManager.Money >= cost)
         {
+            Debug.Log("µÇ¾î");
             moneyManager.Money -= cost;
             creditsText.text = "Credits :" + moneyManager.Money;
             machine.HaveSpin += amount;

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee36b42c56218b4da64dba9d6cbc3d3, type: 3}
+  m_Name: DeathCount
+  m_EditorClassIdentifier: 
+  image: {fileID: 3013467233978981376, guid: 0c4b10f7a74b79a4fb3fe6a7519f1d26, type: 3}
+  itemPrefab: {fileID: 231489786468669705, guid: dc0f65023d04f064faf2002000fcb112, type: 3}
+  money: 1000
