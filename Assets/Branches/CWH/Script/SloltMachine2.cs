@@ -584,6 +584,7 @@ public class SloltMachine2 : MonoBehaviour
     private bool CheckVertical(long bet)
     {
         bool matched = false;
+        float aa = 1.2f;
 
         for (int col = 0; col < 5; col++)
         {
@@ -593,7 +594,7 @@ public class SloltMachine2 : MonoBehaviour
 
             if (a == b && b == c)
             {
-                long reward = bet * (magnification * 2);
+                long reward =(long)(  bet * (magnification * aa));
                 matched = true;
                 if (a == 7)
                 {
