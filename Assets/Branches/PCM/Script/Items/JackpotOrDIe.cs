@@ -6,7 +6,7 @@ public class JackpotOrDie : ItemOn
 {
     public override int probability { get; set; }
     [SerializeField] private SloltMachine machine;
-    [SerializeField] private MoneyMangaer moneyManager;
+    [SerializeField] private MoneyManager moneyManager;
     [SerializeField] private TextMeshProUGUI creditsText;
     public bool onAbility { get; set; } = false;
     private void Update()

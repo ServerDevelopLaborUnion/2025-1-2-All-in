@@ -4,7 +4,7 @@ using UnityEngine;
 public class RandomMoney : ItemOn
 {
     public override int probability { get; set; }
-    [SerializeField] private MoneyMangaer moneyManager;
+    [SerializeField] private MoneyManager moneyManager;
     [SerializeField] private TextMeshProUGUI creditsText;
 
     public override void Itemon()

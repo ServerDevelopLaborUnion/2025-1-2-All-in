@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Insurance : ItemOn
 {
-    [SerializeField]private MoneyMangaer moneymachine;   
+    [SerializeField]private MoneyManager moneymachine;   
     [SerializeField]private TextMeshProUGUI ticketText;
     [SerializeField] private TextMeshProUGUI creditText;
     [SerializeField]private SloltMachine machine;
