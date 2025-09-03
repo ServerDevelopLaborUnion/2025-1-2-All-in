@@ -1,9 +1,12 @@
-using UnityEngine;
 using BackEnd;
+using UnityEngine;
 
 public class BackEndManager : MonoBehaviour
 {
-    void Start()
+    public string id = string.Empty;
+    public string pin = string.Empty;
+
+    private void Awake()
     {
         var bro = Backend.Initialize();
         TestIntser();
@@ -11,9 +14,9 @@ public class BackEndManager : MonoBehaviour
 
     private void TestIntser()
     {
-        BackEndLogin.Instance.SignUp("ur2","12345");
-        BackEndLogin.Instance.Login("ur2", "12345");
-        BackEndLogin.Instance.NickNameChage("조태준");
+        //BackEndLogin.Instance.SignUp(id, pin);
+        BackEndLogin.Instance.Login(id, pin);
+        //BackEndLogin.Instance.NickNameChage("김한울");
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();

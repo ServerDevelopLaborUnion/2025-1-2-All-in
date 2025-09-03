@@ -6,7 +6,7 @@ public class ShopBuyTicket : MonoBehaviour
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField]private TextMeshProUGUI ticketText;
     [SerializeField]private SloltMachine machine;
-    [SerializeField] private MoneyMangaer moneyManager;
+    [SerializeField] private MoneyManager moneyManager;
 
     // 버튼 클릭 시 몇 개를 살지 매개변수로 받음
     public void BuyTicket(int amount , long cost)

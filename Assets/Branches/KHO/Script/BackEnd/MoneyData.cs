@@ -4,12 +4,12 @@ using System.Text;
 
 public class MoneyData
 {
-    public long money => MoneyMangaer.Instance.Money;
+    public long bestmoney => MoneyManager.Instance.BestMoney;
 
     public override string ToString()
     {
         StringBuilder result = new StringBuilder();
-        result.AppendLine($"Money {money}");
+        result.AppendLine($"Money {bestmoney}");
 
         return result.ToString();
     }
@@ -18,7 +18,8 @@ public class MoneyData
 
 public class MoneyGameData
 {
-    private static MoneyGameData _instance = null;
+
+    private static MoneyGameData _instance = new MoneyGameData();
 
     public static MoneyGameData Intance
     {
@@ -44,7 +45,7 @@ public class MoneyGameData
         }
 
         Param param = new Param();
-        param.Add("Money", moneyData.money);
+        param.Add("Money", moneyData.bestmoney);
 
         var bro = Backend.GameData.Insert("Money", param);
 
@@ -55,7 +56,7 @@ public class MoneyGameData
 
     }
 
-    public void GetData()
+    public void GetData(ref long a)
     {
         Debug.Log("게임 정보 조회 함수를 호출합니다.");
 
@@ -74,21 +75,23 @@ public class MoneyGameData
                 Debug.LogWarning("데이터가 존재하지 않습니다.");
                 
                 Param param = new Param();
-                param.Add("Money",0);
+                param.Add("Money", 0);
                 var broInIt = Backend.GameData.Insert("Money", param);
-                if (bro.IsSuccess())
+                if (broInIt.IsSuccess())
                 {
-                    gameDataRowInDate = bro.GetInDate();
+                    gameDataRowInDate = broInIt.GetInDate();
                 }
+
+                a = 0;
             }
             else
             {
                 
-                //gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
+                gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
 
-                //moneyData = new MoneyData();
+                moneyData = new MoneyData();
 
-                //moneyData.money = long.Parse(gameDataJson[0]["Money"].ToString());
+                a = long.Parse(gameDataJson[0]["Money"].ToString());
             }
         }
         else
@@ -110,7 +113,7 @@ public class MoneyGameData
 
         BackendReturnObject bro = null;
 
-        param.Add("Money", moneyData.money);
+        param.Add("Money", moneyData.bestmoney);
 
         if (string.IsNullOrEmpty(gameDataRowInDate))
         {
@@ -123,14 +126,7 @@ public class MoneyGameData
 
         if (bro.IsSuccess())
         {
-            Debug.Log("수정 성공");
-            BackEndRank.Instance.RankInsert(moneyData.money);
-        }
-        else
-        {
-            Debug.Log("수정 실패 ");
+            BackEndRank.Instance.RankInsert(moneyData.bestmoney);
         }
     }
 }
-
-

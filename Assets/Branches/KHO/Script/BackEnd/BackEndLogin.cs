@@ -21,19 +21,13 @@ public class BackEndLogin
 
     public void SignUp(string id, string pin)
     {
-        var bro = Backend.BMember.CustomSignUp(id, pin);
+        var bro = Backend.BMember.CustomSignUp(id.Trim(), pin.Trim());
     }
 
 
     public void Login(string id, string pin)
     {
-        var bro = Backend.BMember.CustomLogin(id, pin);
-
-        if (bro.IsSuccess())
-        {
-            MoneyGameData.Intance.GetData();
-        }
-
+        var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
     }
 
     public void NickNameChage(string nickname)
