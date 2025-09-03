@@ -28,17 +28,6 @@ public class BackEndLogin
     public void Login(string id, string pin)
     {
         var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
-
-        if (bro.IsSuccess())
-        {
-            MoneyGameData.Intance.GetData();
-            Debug.Log(1);
-        }
-        else
-        {
-            Debug.Log(bro);
-        }
-
     }
 
     public void NickNameChage(string nickname)

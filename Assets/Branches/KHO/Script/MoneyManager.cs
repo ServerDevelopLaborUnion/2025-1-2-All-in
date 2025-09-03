@@ -4,7 +4,6 @@ public class MoneyManager : MonoBehaviour
 {
     private long _money = 0;
     private long _bestMoney;
-
     public long Money
     {
         get => _money;
@@ -52,9 +51,19 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        MoneyGameData.Intance.GetData(ref _bestMoney);
+    }
+
+
 
     public void SetBset(long money)
     {
         _bestMoney = money;
+    }
+    private void Update()
+    {
+        Debug.Log(_bestMoney);
     }
 }
