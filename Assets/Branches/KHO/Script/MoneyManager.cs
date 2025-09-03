@@ -19,8 +19,8 @@ public class MoneyManager : MonoBehaviour
             else
                 _money = value;
 
-            if (_money > _bestMoney)
-                _bestMoney = _money;
+            if (_money > _bestMoney && _money >= 100000)
+               BestMoney = _money;
         }
     }
 
@@ -33,14 +33,8 @@ public class MoneyManager : MonoBehaviour
 
         set
         {
-            if (_money > _bestMoney)
-            {
-                _bestMoney = value;
-            }
-            else
-            {
-                return;
-            }
+            _bestMoney = value;
+            MoneyGameData.Intance.UpdateDate();
         }
     }
 
