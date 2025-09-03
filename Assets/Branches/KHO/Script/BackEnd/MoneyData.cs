@@ -56,7 +56,7 @@ public class MoneyGameData
 
     }
 
-    public void GetData()
+    public void GetData(ref long a)
     {
         Debug.Log("게임 정보 조회 함수를 호출합니다.");
 
@@ -81,15 +81,17 @@ public class MoneyGameData
                 {
                     gameDataRowInDate = broInIt.GetInDate();
                 }
+
+                a = 0;
             }
             else
             {
                 
-                //gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
+                gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
 
-                //moneyData = new MoneyData();
+                moneyData = new MoneyData();
 
-                //moneyData.money = long.Parse(gameDataJson[0]["Money"].ToString());
+                a = long.Parse(gameDataJson[0]["Money"].ToString());
             }
         }
         else

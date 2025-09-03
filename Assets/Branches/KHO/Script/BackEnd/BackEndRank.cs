@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using BackEnd;
 using UnityEngine;
@@ -64,25 +64,28 @@ public class BackEndRank
     }
 
 
-    public void RankGet()
+    public List<string> RankGet()
     {
         string rankUUID = "0198c64d-0138-78e2-876a-7b16b01d5ae1";
         var bro = Backend.URank.User.GetRankList(rankUUID);
-
+        List<string> rank = new List<string>();
+ 
         if (bro.IsSuccess() == false)
         {
             Debug.Log("랭킹 조회오류");
-            return;
+            return null;
         }
 
         foreach (LitJson.JsonData json in bro.FlattenRows())
         {
             StringBuilder info = new StringBuilder();
+            long money = long.Parse(json["score"].ToString());
+            info.AppendLine($"{json["rank"].ToString()} 위 {json["nickname"].ToString()} 점수: {money:N0}");
 
-            info.AppendLine("순위 : " + json["rank"].ToString());
-            info.AppendLine("닉네임" + json["nickname"].ToString());
-
+            rank.Add(info.ToString());
             Debug.Log(info);
         }
+
+        return rank;
     }
 }

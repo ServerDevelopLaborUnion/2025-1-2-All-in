@@ -4,7 +4,6 @@ public class MoneyManager : MonoBehaviour
 {
     private long _money = 0;
     private long _bestMoney;
-
     public long Money
     {
         get => _money;
@@ -19,8 +18,8 @@ public class MoneyManager : MonoBehaviour
             else
                 _money = value;
 
-            if (_money > _bestMoney)
-                _bestMoney = _money;
+            if (_money > _bestMoney && _money >= 100000)
+               BestMoney = _money;
         }
     }
 
@@ -33,14 +32,8 @@ public class MoneyManager : MonoBehaviour
 
         set
         {
-            if (_money > _bestMoney)
-            {
-                _bestMoney = value;
-            }
-            else
-            {
-                return;
-            }
+            _bestMoney = value;
+            MoneyGameData.Intance.UpdateDate();
         }
     }
 
@@ -58,9 +51,19 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        MoneyGameData.Intance.GetData(ref _bestMoney);
+    }
+
+
 
     public void SetBset(long money)
     {
         _bestMoney = money;
+    }
+    private void Update()
+    {
+        Debug.Log(_bestMoney);
     }
 }
