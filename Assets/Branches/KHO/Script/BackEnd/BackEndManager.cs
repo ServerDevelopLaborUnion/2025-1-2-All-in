@@ -1,6 +1,5 @@
 using BackEnd;
 using UnityEngine;
-using static UnityEditor.LightingExplorerTableColumn;
 
 public class BackEndManager : MonoBehaviour
 {
@@ -17,8 +16,7 @@ public class BackEndManager : MonoBehaviour
     {
         //BackEndLogin.Instance.SignUp(id, pin);
         BackEndLogin.Instance.Login(id, pin);
-        BackEndLogin.Instance.NickNameChage("±èÇÑ¿ï");
-        MoneyGameData.Intance.GetData();
+        //BackEndLogin.Instance.NickNameChage("±èÇÑ¿ï");
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();
