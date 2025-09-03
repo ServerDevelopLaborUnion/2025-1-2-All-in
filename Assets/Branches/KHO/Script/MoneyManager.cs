@@ -5,24 +5,22 @@ public class MoneyManager : MonoBehaviour
     private long _money = 0;
     private long _bestMoney;
 
-    public long Money 
-    { 
-        get
-        {
-            return _money;
-        }
-
+    public long Money
+    {
+        get => _money;
         set
         {
-            if (value > _money)
-            {
-                BestMoney = value;
-                _money = value;
-            }
+            long max = long.MaxValue;
+
+            if (value < 0)
+                _money = 0;
+            else if (value > max)
+                _money = max;
             else
-            {
                 _money = value;
-            }
+
+            if (_money > _bestMoney)
+                _bestMoney = _money;
         }
     }
 

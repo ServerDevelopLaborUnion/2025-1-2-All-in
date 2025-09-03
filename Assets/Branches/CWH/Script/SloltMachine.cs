@@ -150,9 +150,9 @@ public class SloltMachine : MonoBehaviour
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-        _magnificationText.text = $" Vertical : {magnification * 2}x" +
-                                  $"\n Horizontal : {magnification * 4}x" +
-                                  $"\n Jackpot : {magnification * 1000}x" +
+        _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
+                                  $"\n Horizontal : {magnification * 1.5}x" +
+                                  $"\n Jackpot : {magnification * 100}x" +
                                   $"\n Fall : 0x" +
                                   $"\n Bonus : 2x";
         _remainSpins.text = $"{_haveSpin}";
@@ -334,30 +334,30 @@ public class SloltMachine : MonoBehaviour
         pButton.interactable = magnification < 10;
 
         if (magnification <= 1)
-            _magnificationText.text = $" Vertical : {magnification * 2}x" +
-                                      $"\n Horizontal : {magnification * 4}x" +
-                                      $"\n Jackpot : {magnification * 1000}x" +
+            _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
+                                      $"\n Horizontal : {magnification * 1.5}x" +
+                                      $"\n Jackpot : {magnification * 100}x" +
                                       $"\n Fall : 0x" +
                                       $"\n Bonus : 2x";
         else if (magnification == 2)
             _magnificationText.text =
-                                   $" Vertical : {magnification * 2}x" +
-                                   $"\n Horizontal : {magnification * 4}x" +
-                                   $"\n Jackpot : {magnification * 1000}x" +
+                                   $" Vertical : {magnification * 1.2}x" +
+                                   $"\n Horizontal : {magnification * 1.5}x" +
+                                   $"\n Jackpot : {magnification * 100}x" +
                                    $"\n Fall : {magnification * 2}x" +
                                    $"\n Bonus : 2x";
         else if (magnification >= 3)
             _magnificationText.text =
-                                   $" Vertical : {magnification * 2}x" +
-                                   $"\n Horizontal : {magnification * 4}x" +
-                                   $"\n Jackpot : {magnification * 1000}x" +
+                                   $" Vertical : {magnification * 1.2}x" +
+                                   $"\n Horizontal : {magnification * 1.5}x" +
+                                   $"\n Jackpot : {magnification * 100}x" +
                                    $"\n Fall : {magnification * 5}x" +
                                    $"\n Bonus : 2x";
         if (_haveSpin == 777 && credits.Money == 777000)
             _magnificationText.text =
-                                  $" Vertical : {magnification * 2}x" +
-                                  $"\n Horizontal : {magnification * 4}x" +
-                                  $"\n Jackpot : {magnification * 1000}x" +
+                                  $" Vertical : {magnification * 1.2}x" +
+                                  $"\n Horizontal : {magnification * 1.5}x" +
+                                  $"\n Jackpot : {magnification * 100}x" +
                                   $"\n Fall : {magnification * 0}x" +
                                   $"\n Bonus : 7x";
 
@@ -587,6 +587,7 @@ public class SloltMachine : MonoBehaviour
     private bool CheckVertical(long bet)
     {
         bool matched = false;
+        float aa = 1.2f;
 
         for (int col = 0; col < 5; col++)
         {
@@ -596,7 +597,7 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c)
             {
-                long reward = bet * (magnification * 2);
+                long reward = (long)(bet * (magnification * aa));
                 matched = true;
                 if (a == 7)
                 {
@@ -622,7 +623,7 @@ public class SloltMachine : MonoBehaviour
     private bool CheckHorizontal(long bet)
     {
         bool matched = false;
-
+        float aa = 1.5f;
         for (int row = 0; row < 3; row++)
         {
             int a = reelResults[row, 0];
@@ -633,7 +634,7 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c && c == d && d == e)
             {
-                long reward = bet * (magnification * 4);
+                long reward = (long)(bet * (magnification * aa));
                 matched = true;
                 if (a == 7)
                 {
@@ -665,13 +666,13 @@ public class SloltMachine : MonoBehaviour
                     return false;
 
 
-        long reward = betAmount * (magnification * 1000);
+        long reward = betAmount * (magnification * 100);
         jackpotChance = jackpotChanceInitial;
 
         if (first == 7)
         {
             if (_haveSpin == 777 && credits.Money == 777000)
-                reward *= 7;
+                reward *= 777;
             else
                 reward *= 2;
             textResult.text = " JACKPOT 777 BONUS!!! ";
