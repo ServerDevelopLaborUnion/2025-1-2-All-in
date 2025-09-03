@@ -1,12 +1,13 @@
-using UnityEngine;
 using BackEnd;
+using UnityEngine;
+using static UnityEditor.LightingExplorerTableColumn;
 
 public class BackEndManager : MonoBehaviour
 {
     public string id = string.Empty;
     public string pin = string.Empty;
 
-    void Start()
+    private void Awake()
     {
         var bro = Backend.Initialize();
         TestIntser();
@@ -14,7 +15,10 @@ public class BackEndManager : MonoBehaviour
 
     private void TestIntser()
     {
+        //BackEndLogin.Instance.SignUp(id, pin);
         BackEndLogin.Instance.Login(id, pin);
+        BackEndLogin.Instance.NickNameChage("±èÇÑ¿ï");
+        MoneyGameData.Intance.GetData();
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();
         //MoneyGameData.Intance.UpdateDate();
