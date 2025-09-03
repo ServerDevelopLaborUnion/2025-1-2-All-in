@@ -20,6 +20,7 @@ public class MoneyManager : MonoBehaviour
 
             if (_money > _bestMoney && _money >= 100000)
                BestMoney = _money;
+                
         }
     }
 
@@ -49,11 +50,12 @@ public class MoneyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        MoneyGameData.Intance.GetData(ref _bestMoney);
     }
 
     private void Start()
     {
-        MoneyGameData.Intance.GetData(ref _bestMoney);
+        //MoneyGameData.Intance.GetData(ref _bestMoney);
     }
 
 
