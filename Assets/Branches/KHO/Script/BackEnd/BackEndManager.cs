@@ -17,7 +17,7 @@ public class BackEndManager : MonoBehaviour
     {
         //BackEndLogin.Instance.SignUp(id, pin);
         BackEndLogin.Instance.Login(id, pin);
-        BackEndLogin.Instance.NickNameChage("±èÇÑ¿ï");
+        //BackEndLogin.Instance.NickNameChage("±èÇÑ¿ï");
         MoneyGameData.Intance.GetData();
         // MoneyGameData.Intance.GameDateInsert();
         //MoneyGameData.Intance.GetData();

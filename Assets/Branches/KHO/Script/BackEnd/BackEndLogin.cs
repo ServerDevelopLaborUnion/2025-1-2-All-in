@@ -21,13 +21,13 @@ public class BackEndLogin
 
     public void SignUp(string id, string pin)
     {
-        var bro = Backend.BMember.CustomSignUp(id, pin);
+        var bro = Backend.BMember.CustomSignUp(id.Trim(), pin.Trim());
     }
 
 
     public void Login(string id, string pin)
     {
-        var bro = Backend.BMember.CustomLogin(id, pin);
+        var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
 
         if (bro.IsSuccess())
         {
@@ -36,7 +36,7 @@ public class BackEndLogin
         }
         else
         {
-            Debug.Log(2);
+            Debug.Log(bro);
         }
 
     }
