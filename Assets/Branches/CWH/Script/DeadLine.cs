@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class DeadLine : MonoBehaviour
 {
-    [SerializeField] private MoneyManager _moneyManager;
+    private MoneyManager _moneyManager;
     [SerializeField] private SloltMachine _sloltMahcin;
     public MoneyLogUI logUI;
 
@@ -24,6 +24,11 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _creditsText;
     [SerializeField] private TextMeshProUGUI _conditionText;
     [SerializeField] private TextMeshProUGUI _currentBankText;
+
+    private void Awake()
+    {
+        _moneyManager = MoneyManager.Instance;
+    }
     private void Start()
     {
         _conditionText.text = $"DeadLine : {_condition.ToString("N0")}";//데드라인 조건 표시
@@ -72,7 +77,7 @@ public class DeadLine : MonoBehaviour
 
     private void MoneyP()
     {
-        long abc =_bankBook * aa / 100;
+        long abc = _bankBook * aa / 100;
         bool async = false;
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
@@ -81,9 +86,9 @@ public class DeadLine : MonoBehaviour
                 //남은 라운드 수 차감
                 _rounds--;
                 //현재 입금된 금액의 x%만큼 돈 지급
-                _moneyManager.Money +=abc;
+                _moneyManager.Money += abc;
                 _creditsText.text = $"Credits : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
-                logUI.AddLog($"+{abc.ToString("N0")} balance : {_moneyManager.Money.ToString("N0")}",Color.green);
+                logUI.AddLog($"+{abc.ToString("N0")} balance : {_moneyManager.Money.ToString("N0")}", Color.green);
 
 
                 //다음 라운드 실행 => 음.. 어떻게 만들지?
