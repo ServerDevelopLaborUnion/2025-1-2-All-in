@@ -14,6 +14,7 @@ public abstract class ItemOn : MonoBehaviour
     }
     private void Start()
     {
+        SloltMachine slolt = FindAnyObjectByType<SloltMachine>();
         probability += probabilityplus;
     }
     // 아이템이 가방에 들어있는지 확인
