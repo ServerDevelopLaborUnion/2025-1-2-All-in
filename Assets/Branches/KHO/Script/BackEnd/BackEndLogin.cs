@@ -31,8 +31,7 @@ public class BackEndLogin
 
         if (bro.IsSuccess())
         {
-            // JSON에서 nickname 값 가져오기
-            string nickname = bro.GetReturnValuetoJSON()["nickname"].ToString();
+            string nickname = Backend.UserNickName;
 
             if (string.IsNullOrEmpty(nickname))
             {
