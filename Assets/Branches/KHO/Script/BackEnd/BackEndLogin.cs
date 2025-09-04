@@ -28,6 +28,17 @@ public class BackEndLogin
     public void Login(string id, string pin)
     {
         var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
+
+        if (bro.IsSuccess())
+        {
+            // JSON에서 nickname 값 가져오기
+            string nickname = bro.GetReturnValuetoJSON()["nickname"].ToString();
+
+            if (string.IsNullOrEmpty(nickname))
+            {
+                //나중에 UI 쪽에서 해결 후 기제
+            }
+        }
     }
 
     public void NickNameChage(string nickname)

@@ -10,6 +10,11 @@ public class ShopPanel : MonoBehaviour
     {
         rect = GetComponent<RectTransform>();
     }
+    private void Start()
+    {
+        rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// ¾Æ·¡·Î ´Ý±â
+        panelopen = false;
+    }
 
     public void OnClick()
     {

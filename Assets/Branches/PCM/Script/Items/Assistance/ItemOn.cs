@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class ItemOn : MonoBehaviour
 {
     public abstract int probability { get; set; } 
-    private Action OnAbilityCast;
+    public Action OnAbilityCast;
     public static int probabilityplus;
     private void Awake()
     {    

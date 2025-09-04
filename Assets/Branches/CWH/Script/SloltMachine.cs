@@ -10,6 +10,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class SloltMachine : MonoBehaviour
 {
+    
     public enum SpinPattern
     {
         Jackpot, Horizontal, Vertical, Normal
@@ -30,13 +31,12 @@ public class SloltMachine : MonoBehaviour
         return CheckJackpot(betAmount);
     }
     #endregion
-
-    private long lastBetAmount;
+    private ItemOn itemOn; //박철민: 내가 넣은건데 포크하고 나서 다시 넣주셈
+    public long lastBetAmount { get; set; }
     private bool fallChecked;
 
     [Header("돈")]
     [SerializeField] private MoneyManager credits;
-    [SerializeField] private long _startCredits;
 
     [SerializeField] private TMP_InputField inputBetAmount;
     [SerializeField] private Image imageBetAmount;
@@ -62,8 +62,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _magnificationText;
 
     [Header("남은 스핀 수 (보류)")]
-    [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
-    [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
+    [SerializeField] private TMPro.TextMeshProUGUI _numberOfSpinsreMaining;
     [SerializeField] private int _haveSpin;
     public int HaveSpin
     {
@@ -90,7 +89,7 @@ public class SloltMachine : MonoBehaviour
 
     #region 잭팟확률 관련
     [Header("잭팟")]
-    [SerializeField] private float jackpotChance = 0.00001f;
+    public float jackpotChance = 0.00001f;
     private const float jackpotChanceMax = 0.5f;
     private const float jackpotChanceIncrement = 0.0000001f;
     private const float jackpotChanceInitial = 0.000000005f;
@@ -131,11 +130,8 @@ public class SloltMachine : MonoBehaviour
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
-    bool _startSpinbug = true;
-
-    private void Start()
+    private void Awake()
     {
-        credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
         {
@@ -148,16 +144,15 @@ public class SloltMachine : MonoBehaviour
         EnoughSpin();
         UpdateMagnificationUI();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
-        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-        _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
-                                  $"\n Horizontal : {magnification * 1.5}x" +
-                                  $"\n Jackpot : {magnification * 100}x" +
+        _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
+        textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        _magnificationText.text = $"Current Magnification\n" +
+                                  $" Vertical : {magnification * 2}x" +
+                                  $"\n Horizontal : {magnification * 4}x" +
+                                  $"\n Jackpot : {magnification * 1000}x" +
                                   $"\n Fall : 0x" +
                                   $"\n Bonus : 2x";
-        _remainSpins.text = $"{_haveSpin}";
-        _SpinCosts.text = $"{_spinCost}";
-        _startSpinbug = false;
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
     private void Update()
@@ -196,7 +191,7 @@ public class SloltMachine : MonoBehaviour
         for (int i = 0; i < matchRowCount; i++)
         {
             int row = rows[i];
-            int value = GetRandomSymbol();
+            int value = UnityEngine.Random.Range(1, 8);
             for (int col = 0; col < 5; col++)
             {
                 reelResults[row, col] = value;
@@ -207,7 +202,7 @@ public class SloltMachine : MonoBehaviour
 
     private void ApplyJackpot()
     {
-        int jackpotSymbol = GetRandomSymbol();
+        int jackpotSymbol = UnityEngine.Random.Range(1, 8);
         for (int row = 0; row < 3; row++)
             for (int col = 0; col < 5; col++)
                 reelResults[row, col] = jackpotSymbol;
@@ -259,6 +254,14 @@ public class SloltMachine : MonoBehaviour
 
         UpdateMagnificationUI();
         EnoughSpin();
+
+        JackpotOrDie jackpotItem = FindAnyObjectByType<JackpotOrDie>();
+        if (jackpotItem != null && jackpotItem.onAbility)
+        {
+            jackpotItem.JackpotOrDieAction();
+        }
+
+
     }
 
     public void EnoughSpin()
@@ -274,7 +277,6 @@ public class SloltMachine : MonoBehaviour
         }
         else
         {
-            if (_startSpinbug) return;
             StartSpin();
             _haveSpin -= _spinCost;
             UpdateMagnificationUI();
@@ -327,43 +329,37 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
     }
 
-    private void UpdateMagnificationUI()
+    public void UpdateMagnificationUI()
     {
         // 버튼 상태 갱신
         mButton.interactable = magnification > 1;
         pButton.interactable = magnification < 10;
 
         if (magnification <= 1)
-            _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
-                                      $"\n Horizontal : {magnification * 1.5}x" +
-                                      $"\n Jackpot : {magnification * 100}x" +
+            _magnificationText.text = $"Current Magnification\n" +
+                                      $" Vertical : {magnification * 2}x" +
+                                      $"\n Horizontal : {magnification * 4}x" +
+                                      $"\n Jackpot : {magnification * 1000}x" +
                                       $"\n Fall : 0x" +
                                       $"\n Bonus : 2x";
         else if (magnification == 2)
-            _magnificationText.text =
-                                   $" Vertical : {magnification * 1.2}x" +
-                                   $"\n Horizontal : {magnification * 1.5}x" +
-                                   $"\n Jackpot : {magnification * 100}x" +
+            _magnificationText.text = $"Current Magnification\n" +
+                                   $" Vertical : {magnification * 2}x" +
+                                   $"\n Horizontal : {magnification * 4}x" +
+                                   $"\n Jackpot : {magnification * 1000}x" +
                                    $"\n Fall : {magnification * 2}x" +
                                    $"\n Bonus : 2x";
         else if (magnification >= 3)
-            _magnificationText.text =
-                                   $" Vertical : {magnification * 1.2}x" +
-                                   $"\n Horizontal : {magnification * 1.5}x" +
-                                   $"\n Jackpot : {magnification * 100}x" +
+            _magnificationText.text = $"Current Magnification\n" +
+                                   $" Vertical : {magnification * 2}x" +
+                                   $"\n Horizontal : {magnification * 4}x" +
+                                   $"\n Jackpot : {magnification * 1000}x" +
                                    $"\n Fall : {magnification * 5}x" +
                                    $"\n Bonus : 2x";
-        if (_haveSpin == 777 && credits.Money == 777000)
-            _magnificationText.text =
-                                  $" Vertical : {magnification * 1.2}x" +
-                                  $"\n Horizontal : {magnification * 1.5}x" +
-                                  $"\n Jackpot : {magnification * 100}x" +
-                                  $"\n Fall : {magnification * 0}x" +
-                                  $"\n Bonus : 7x";
 
-        textCredits.text = $"Credits : {credits.Money:N0}";
-        _remainSpins.text = $"{_haveSpin}";
-        _SpinCosts.text = $"{_spinCost}";
+
+        textCredits.text = $"Credits : {credits:N0}";
+        _numberOfSpinsreMaining.text = $"Number of spins remaining \n {_haveSpin} \n Spin Cost {_spinCost}";
     }
 
     private void StartSpin()
@@ -377,7 +373,7 @@ public class SloltMachine : MonoBehaviour
         // 0) 항상 전체 기본 랜덤 채우기
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 5; c++)
-                reelResults[r, c] = GetRandomSymbol();
+                reelResults[r, c] = UnityEngine.Random.Range(1, 8);
 
         // 1) 패턴 결정
         SpinPattern pattern = DecidePattern();
@@ -433,7 +429,7 @@ public class SloltMachine : MonoBehaviour
     }
     private void ForceVerticalColumn(int col)
     {
-        int v = GetRandomSymbol();
+        int v = UnityEngine.Random.Range(1, 8);
         for (int row = 0; row < 3; row++)
             reelResults[row, col] = v;
     }
@@ -453,7 +449,7 @@ public class SloltMachine : MonoBehaviour
     }
     public void OnClickMaximumbet()
     {
-        inputBetAmount.text = credits.Money.ToString();
+        inputBetAmount.text = credits.ToString();
         OnClickpull();
     }
 
@@ -472,6 +468,13 @@ public class SloltMachine : MonoBehaviour
         bool jackpot = CheckJackpot(lastBetAmount);
         hasMatch = vertical || horizontal;
 
+        ItemOn[] items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); //이거 내가 바꾼거임 없애고 코드 복사
+        foreach (var item in items)
+        {
+            item.OnAbilityCast?.Invoke();
+        }
+
+
         if (_minBet == 0)
             _minBet += 1;
 
@@ -482,9 +485,9 @@ public class SloltMachine : MonoBehaviour
         {
             Fall();
         }
-        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
+        _minBetText.text = $"Minimum bet \n {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        textChance.text = $"Probability Table\n Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
@@ -517,7 +520,7 @@ public class SloltMachine : MonoBehaviour
         {
             for (int row = 0; row < 3; row++)
             {
-                int randVal = GetRandomSymbol();
+                int randVal = UnityEngine.Random.Range(1, 8);
                 reelTexts[row, col].text = randVal.ToString();
             }
             yield return new WaitForSeconds(0.05f);
@@ -587,7 +590,6 @@ public class SloltMachine : MonoBehaviour
     private bool CheckVertical(long bet)
     {
         bool matched = false;
-        float aa = 1.2f;
 
         for (int col = 0; col < 5; col++)
         {
@@ -597,14 +599,11 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c)
             {
-                long reward = (long)(bet * (magnification * aa));
+                long reward = bet * (magnification * 2);
                 matched = true;
                 if (a == 7)
                 {
-                    if (_haveSpin == 777 && credits.Money == 777000)
-                        reward *= 7;
-                    else
-                        reward *= 2;
+                    reward *= 2;
                     textResult.text = "777 BONUS!!! ";
                 }
                 AddCredits(reward);
@@ -623,7 +622,7 @@ public class SloltMachine : MonoBehaviour
     private bool CheckHorizontal(long bet)
     {
         bool matched = false;
-        float aa = 1.5f;
+
         for (int row = 0; row < 3; row++)
         {
             int a = reelResults[row, 0];
@@ -634,14 +633,11 @@ public class SloltMachine : MonoBehaviour
 
             if (a == b && b == c && c == d && d == e)
             {
-                long reward = (long)(bet * (magnification * aa));
+                long reward = bet * (magnification * 4);
                 matched = true;
                 if (a == 7)
                 {
-                    if (_haveSpin == 777 && credits.Money == 777000)
-                        reward *= 7;
-                    else
-                        reward *= 2;
+                    reward *= 2;
                     textResult.text = "777 BONUS!!! ";
                 }
                 AddCredits(reward);
@@ -656,7 +652,7 @@ public class SloltMachine : MonoBehaviour
         return matched;
     }
 
-    private bool CheckJackpot(long betAmount)
+    public bool CheckJackpot(long betAmount)
     {
         int first = reelResults[0, 0];
 
@@ -666,15 +662,12 @@ public class SloltMachine : MonoBehaviour
                     return false;
 
 
-        long reward = betAmount * (magnification * 100);
+        long reward = betAmount * (magnification * 1000);
         jackpotChance = jackpotChanceInitial;
 
         if (first == 7)
         {
-            if (_haveSpin == 777 && credits.Money == 777000)
-                reward *= 777;
-            else
-                reward *= 2;
+            reward *= 2;
             textResult.text = " JACKPOT 777 BONUS!!! ";
         }
         else
@@ -724,10 +717,10 @@ public class SloltMachine : MonoBehaviour
         }
         catch (OverflowException)
         {
-            credits.Money = long.MaxValue / 2; // 상한으로 고정
+            credits.Money = long.MaxValue; // 상한으로 고정
         }
 
-        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue /2);
+        credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue);
     }
 
     private void CreditMaxOver()
@@ -746,17 +739,5 @@ public class SloltMachine : MonoBehaviour
         foreach (bool b in isReelSpinned)
             if (!b) return false;
         return true;
-    }
-    private int GetRandomSymbol()
-    {
-        int rand = UnityEngine.Random.Range(0, 100); // 0~99 사이 정수
-
-        if (rand < 20) return 1;
-        else if (rand < 40) return 2;
-        else if (rand < 60) return 3;
-        else if (rand < 75) return 4;
-        else if (rand < 95) return 5;
-        else if (rand < 98) return 6;
-        else return 7; // 10% 확률
     }
 }
