@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Branches/KHO/Scene/UIMaker.unity
     guid: 008efcc9f9cb3324c81a23ed10962146
-  - enabled: 1
+  - enabled: 0
     path: Assets/Branches/KHO/Scene/Machine.unity
     guid: eae67502d56ccf6478cf80eec8c5c7b8
+  - enabled: 1
+    path: Assets/Branches/CTJ/Scene/CTJMachine.unity
+    guid: 3a0854329bb971e4aaf46a671d62bc65
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
