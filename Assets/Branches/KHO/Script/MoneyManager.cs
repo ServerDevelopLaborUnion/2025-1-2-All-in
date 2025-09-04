@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class MoneyManager : MonoBehaviour
 {
@@ -50,13 +51,11 @@ public class MoneyManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        MoneyGameData.Intance.GetData(ref _bestMoney);
+
+        //_bestMoney = GetComponent<BackEndManager>().best;
     }
 
-    private void Start()
-    {
-        //MoneyGameData.Intance.GetData(ref _bestMoney);
-    }
+
 
 
 
@@ -67,5 +66,11 @@ public class MoneyManager : MonoBehaviour
     private void Update()
     {
         Debug.Log(_bestMoney);
+    }
+
+
+    public void Setbeest(long best)
+    {
+        _bestMoney = best;
     }
 }
