@@ -37,7 +37,7 @@ public class SloltMachine : MonoBehaviour
     private bool fallChecked;
 
     [Header("돈")]
-    [SerializeField] private MoneyManager credits;
+    private MoneyManager credits;
     [SerializeField] private long _startCredits;
 
     [SerializeField] private TMP_InputField inputBetAmount;
@@ -136,6 +136,11 @@ public class SloltMachine : MonoBehaviour
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
     bool _startSpinbug = true;
+
+    private void Awake()
+    {
+        credits = MoneyManager.Instance;
+    }
 
     private void Start()
     {
@@ -259,7 +264,7 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits.Money -= bet;
-        logUI.AddLog($"-{bet.ToString("N0")} balance : {credits.Money.ToString("N0")}", Color.red);
+        logUI.AddLog($"-{bet.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.red);
         lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
         fallChecked = false;   // Fall 체크 초기화
 
@@ -753,7 +758,14 @@ public class SloltMachine : MonoBehaviour
         }
 
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
-        logUI.AddLog($"+{amount.ToString("N0")} balance : {credits.Money.ToString("N0")}", Color.green);
+        if (amount > 0)
+        {
+            logUI.AddLog($"+{amount.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.green);
+        }
+        else
+        {
+            logUI.AddLog($"-{amount.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.red);
+        }
     }
 
     private void CreditMaxOver()
