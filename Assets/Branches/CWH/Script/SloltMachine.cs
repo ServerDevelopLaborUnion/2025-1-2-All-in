@@ -665,10 +665,15 @@ public class SloltMachine : MonoBehaviour
         long reward = betAmount * (magnification * 1000);
         jackpotChance = jackpotChanceInitial;
 
+        NoBagDouble db = FindAnyObjectByType<NoBagDouble>();
         if (first == 7)
         {
             reward *= 2;
             textResult.text = " JACKPOT 777 BONUS!!! ";
+        }
+        else if (db.Nobagdouble()==true)
+        {
+            reward *= 2;
         }
         else
         {
