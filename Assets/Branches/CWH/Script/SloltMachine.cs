@@ -33,7 +33,7 @@ public class SloltMachine : MonoBehaviour
     #endregion
 
     ItemOn[] items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); // 철민이의 코드
-    private long lastBetAmount;
+    public long lastBetAmount;
     private bool fallChecked;
 
     [Header("돈")]
@@ -92,7 +92,7 @@ public class SloltMachine : MonoBehaviour
 
     #region 잭팟확률 관련
     [Header("잭팟")]
-    [SerializeField] private float jackpotChance = 0.00001f;
+    public float jackpotChance = 0.00001f;
     private const float jackpotChanceMax = 0.5f;
     private const float jackpotChanceIncrement = 0.0000001f;
     private const float jackpotChanceInitial = 0.000000005f;
@@ -677,7 +677,7 @@ public class SloltMachine : MonoBehaviour
         return matched;
     }
 
-    private bool CheckJackpot(long betAmount)
+    public bool CheckJackpot(long betAmount)
     {
         int first = reelResults[0, 0];
 
