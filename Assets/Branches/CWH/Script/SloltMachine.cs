@@ -32,7 +32,7 @@ public class SloltMachine : MonoBehaviour
     }
     #endregion
 
-    ItemOn[] items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); // 철민이의 코드
+    ItemOn[] items;
     public long lastBetAmount;
     private bool fallChecked;
 
@@ -139,6 +139,7 @@ public class SloltMachine : MonoBehaviour
 
     private void Start()
     {
+        items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); // 철민이의 코드
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
