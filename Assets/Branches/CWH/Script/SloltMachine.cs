@@ -672,6 +672,7 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 BONUS!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
+                Debug.Log(noBag.Nobagdouble());
                 if (noBag.Nobagdouble())
                 {
                     reward *= 2;
@@ -733,13 +734,16 @@ public class SloltMachine : MonoBehaviour
     {
         if (fallChecked) return false; // 이미 체크했으면 중복 방지
         fallChecked = true;
-
+        long aa = lastBetAmount;
         if (magnification <= 1)
-            credits.Money -= lastBetAmount * (magnification * 0);
+            aa *= -(magnification * 0);
         else if (magnification == 2)
-            credits.Money -= lastBetAmount * (magnification * 2);
+            aa *= -(magnification * 2);
         else if (magnification >= 3)
-            credits.Money -= lastBetAmount * (magnification * 5);
+            aa *= -(magnification * 5);
+
+        if (magnification > 1)
+            AddCredits(aa);
 
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         if (credits.Money <= 0)
@@ -800,7 +804,7 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 60) return 3;
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
-        else if (rand < 98) return 6;
+        else if (rand < 99) return 6;
         else return 7; // 2% 확률
     }
 }
