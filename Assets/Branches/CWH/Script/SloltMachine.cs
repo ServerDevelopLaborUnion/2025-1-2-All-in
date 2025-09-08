@@ -35,7 +35,7 @@ public class SloltMachine : MonoBehaviour
     ItemOn[] items;
     public long lastBetAmount;
     private bool fallChecked;
-    
+
     [Header("돈")]
     private MoneyManager credits;
     [SerializeField] private long _startCredits;
@@ -67,7 +67,6 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
-
     public int HaveSpin
     {
         get { return _haveSpin; }
@@ -472,11 +471,10 @@ public class SloltMachine : MonoBehaviour
         inputBetAmount.text = credits.Money.ToString();
         OnClickpull();
     }
-    [SerializeField] private GameObject bag;
-    public bool hasMatch { get; set; }
+
     private void CheckBet()
     {
-        hasMatch = false; // 외부에서 불려오기 위해 밖에서 선언 하고 프로퍼티함 - 박철민
+        bool hasMatch = false;
 
         foreach (var img in reelImagesFlat)
             img.color = Color.white;
@@ -499,12 +497,13 @@ public class SloltMachine : MonoBehaviour
         {
             Fall();
         }
-        
+        foreach (var item in items)
+        {
+            item.OnAbilityCast?.Invoke();
+        }
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-
-
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
@@ -515,29 +514,8 @@ public class SloltMachine : MonoBehaviour
         {
             StartCoroutine(PlayHorizontalMatchEffects());
         }
-
-
-        foreach (var item in items)
-        {
-            if (item.transform.IsChildOf(bag.transform))
-            {
-                Debug.Log($"Invoke 시도: {item.name}");
-                var itemOn = item.GetComponent<ItemOn>();
-                if (itemOn != null)
-                {
-                    itemOn.OnAbilityCast?.Invoke();
-                }
-            }
-            else
-            {
-                return;
-            }
-
-        }
-        // 아마도 내가 추가함 - 박철민
-
     }
-    
+
     #region 코루틴
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
@@ -694,13 +672,11 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 BONUS!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
-                if (noBag != null)
+                Debug.Log(noBag.Nobagdouble());
+                if (noBag.Nobagdouble())
                 {
-                    if (noBag.Nobagdouble())
-                    {
-                        reward *= 2;
-                        Debug.Log("된다");
-                    }
+                    reward *= 2;
+                    Debug.Log("된다");
                 }
                 AddCredits(reward);
                 for (int col = 0; col < 5; col++)
@@ -758,13 +734,16 @@ public class SloltMachine : MonoBehaviour
     {
         if (fallChecked) return false; // 이미 체크했으면 중복 방지
         fallChecked = true;
-
+        long aa = lastBetAmount;
         if (magnification <= 1)
-            credits.Money -= lastBetAmount * (magnification * 0);
+            aa *= -(magnification * 0);
         else if (magnification == 2)
-            credits.Money -= lastBetAmount * (magnification * 2);
+            aa *= -(magnification * 2);
         else if (magnification >= 3)
-            credits.Money -= lastBetAmount * (magnification * 5);
+            aa *= -(magnification * 5);
+
+        if (magnification > 1)
+            AddCredits(aa);
 
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         if (credits.Money <= 0)
@@ -825,7 +804,7 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 60) return 3;
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
-        else if (rand < 98) return 6;
+        else if (rand < 99) return 6;
         else return 7; // 2% 확률
     }
 }
