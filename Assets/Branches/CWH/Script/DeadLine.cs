@@ -9,13 +9,16 @@ public class DeadLine : MonoBehaviour
     private MoneyManager _moneyManager;
     [SerializeField] private SloltMachine _sloltMahcin;
     public MoneyLogUI logUI;
+    private InterestRate rate;
+    private bool oninterRest = false;
 
+    [Header("이자율 ex)10 ->10%")]
+    [field: SerializeField] public long aa { get; set; } = 2;
 
     [Header("현재까지 입금된 금액")]
     [SerializeField] private long _bankBook;
     private long aaa;
-    [Header("이자율 ex)10 ->10%")]
-    [SerializeField] private long aa;
+
     [Header("데드라인 조건")]
     [SerializeField] private long _condition;
 
@@ -28,6 +31,7 @@ public class DeadLine : MonoBehaviour
     private void Awake()
     {
         _moneyManager = MoneyManager.Instance;
+        rate = FindAnyObjectByType<InterestRate>();
     }
     private void Start()
     {
@@ -42,6 +46,12 @@ public class DeadLine : MonoBehaviour
             CheckMoney();
 
         MoneyP();
+        
+        if(rate != null&& oninterRest== false)
+        {
+            aa += rate.Interest();
+            oninterRest = true;
+        }
     }
     public void InMoney()//버튼에 이벤트
     {

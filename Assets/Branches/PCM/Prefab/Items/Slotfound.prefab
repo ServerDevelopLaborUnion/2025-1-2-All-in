@@ -90,4 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   machine: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
   moneyManager: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  creditsText: {fileID: 0}
+  creditsText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}

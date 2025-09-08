@@ -89,6 +89,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneymachine: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  ticketText: {fileID: 0}
-  creditText: {fileID: 0}
+  ticketText: {fileID: 3441484887649339717, guid: 2cb38f6c4f32de447a1aa2987e58715b, type: 3}
+  creditText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}
   machine: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8112841704024964372}
   - component: {fileID: 4978231945205878487}
   - component: {fileID: 5438395005367538263}
-  - component: {fileID: 9155415889841267262}
+  - component: {fileID: 4659733799052921578}
   m_Layer: 5
   m_Name: RandomMoney
   m_TagString: Common
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &9155415889841267262
+--- !u!114 &4659733799052921578
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89,4 +89,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyManager: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  creditsText: {fileID: 0}
+  creditsText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}

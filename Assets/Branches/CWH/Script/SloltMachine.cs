@@ -35,7 +35,7 @@ public class SloltMachine : MonoBehaviour
     ItemOn[] items;
     public long lastBetAmount;
     private bool fallChecked;
-
+    
     [Header("돈")]
     private MoneyManager credits;
     [SerializeField] private long _startCredits;
@@ -67,6 +67,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
+
     public int HaveSpin
     {
         get { return _haveSpin; }
@@ -471,10 +472,11 @@ public class SloltMachine : MonoBehaviour
         inputBetAmount.text = credits.Money.ToString();
         OnClickpull();
     }
-
+    [SerializeField] private GameObject bag;
+    public bool hasMatch { get; set; }
     private void CheckBet()
     {
-        bool hasMatch = false;
+        hasMatch = false; // 외부에서 불려오기 위해 밖에서 선언 하고 프로퍼티함 - 박철민
 
         foreach (var img in reelImagesFlat)
             img.color = Color.white;
@@ -497,13 +499,12 @@ public class SloltMachine : MonoBehaviour
         {
             Fall();
         }
-        foreach (var item in items)
-        {
-            item.OnAbilityCast?.Invoke();
-        }
+        
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+
+
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
@@ -514,8 +515,29 @@ public class SloltMachine : MonoBehaviour
         {
             StartCoroutine(PlayHorizontalMatchEffects());
         }
-    }
 
+
+        foreach (var item in items)
+        {
+            if (item.transform.IsChildOf(bag.transform))
+            {
+                Debug.Log($"Invoke 시도: {item.name}");
+                var itemOn = item.GetComponent<ItemOn>();
+                if (itemOn != null)
+                {
+                    itemOn.OnAbilityCast?.Invoke();
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        // 아마도 내가 추가함 - 박철민
+
+    }
+    
     #region 코루틴
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
@@ -672,10 +694,13 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 BONUS!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
-                if (noBag.Nobagdouble())
+                if (noBag != null)
                 {
-                    reward *= 2;
-                    Debug.Log("된다");
+                    if (noBag.Nobagdouble())
+                    {
+                        reward *= 2;
+                        Debug.Log("된다");
+                    }
                 }
                 AddCredits(reward);
                 for (int col = 0; col < 5; col++)
