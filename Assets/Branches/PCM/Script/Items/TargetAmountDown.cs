@@ -10,7 +10,6 @@ public class TargetAmountDown : ItemOn
     {
         if (gameObject.activeSelf)
         {
-            Console.WriteLine("sdsagadgdasgasdfasfdasadfdasfadfads");
             return true;
         }
         else

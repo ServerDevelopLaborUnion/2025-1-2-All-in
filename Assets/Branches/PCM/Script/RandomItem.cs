@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class RandomItem : MonoBehaviour
 {
     [SerializeField] private ItemListSO _so;
-    [SerializeField] private MoneyManager moneymahine;
     [SerializeField] private TextMeshProUGUI creditsText;
+    private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
 
@@ -21,6 +21,7 @@ public class RandomItem : MonoBehaviour
     private void Awake()
     {
         _skillimage = GetComponent<Image>();
+        moneymahine = MoneyManager.Instance;
     }
 
     private void Start()
@@ -36,21 +37,23 @@ public class RandomItem : MonoBehaviour
         RandAllSlots();
     }
 
-    private void Update()
+    public void OnClick()
     {
-        if (Keyboard.current.fKey.wasPressedThisFrame)
-        {
-            RandAllSlots();
-        }
-    }
+        RandAllSlots();
+        Debug.Log(moneymahine.Money + "됨");
+        moneymahine.Money -= 1000;
+        Debug.Log(moneymahine.Money + "됨");
+        creditsText.text = "Credit:" + moneymahine.Money;
 
+    }
     // 모든 슬롯이 동시에 랜덤 돌리는 함수
     public static void RandAllSlots()
     {
+        Debug.Log("asdas");
         // 사용된 인덱스 초기화
         HashSet<int> usedIndexes = new HashSet<int>();
 
-        
+
         RandomItem[] slots = Object.FindObjectsByType<RandomItem>(FindObjectsSortMode.None);
         foreach (var slot in slots)
         {
@@ -58,7 +61,7 @@ public class RandomItem : MonoBehaviour
         }
     }
 
-    
+
     private void Rand(HashSet<int> usedIndexes)
     {
         List<int> availableIndexes = new List<int>();

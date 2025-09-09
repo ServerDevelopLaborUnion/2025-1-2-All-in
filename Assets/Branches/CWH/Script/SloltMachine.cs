@@ -693,11 +693,13 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 BONUS!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
-                Debug.Log(noBag.Nobagdouble());
-                if (noBag.Nobagdouble())
+                if (noBag != null)
                 {
-                    reward *= 2;
-                    Debug.Log("된다");
+                    if (noBag.Nobagdouble())
+                    {
+                        reward *= 2;
+                        Debug.Log("된다");
+                    }
                 }
                 AddCredits(reward);
                 for (int col = 0; col < 5; col++)
