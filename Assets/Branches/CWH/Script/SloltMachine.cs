@@ -472,51 +472,7 @@ public class SloltMachine : MonoBehaviour
         OnClickpull();
     }
 
-    private void CheckBet()
-    {
-        bool hasMatch = false;
-
-        foreach (var img in reelImagesFlat)
-            img.color = Color.white;
-
-        if (CheckJackpot(lastBetAmount))
-            return;
-
-        bool vertical = CheckVertical(lastBetAmount);
-        bool horizontal = CheckHorizontal(lastBetAmount);
-        bool jackpot = CheckJackpot(lastBetAmount);
-        hasMatch = vertical || horizontal;
-
-        if (_minBet == 0)
-            _minBet += 1;
-
-        if (credits.Money >= long.MaxValue / 2)
-            CreditMaxOver();
-
-        if (!hasMatch)
-        {
-            Fall();
-        }
-        foreach (var item in items)
-        {
-            item.OnAbilityCast?.Invoke();
-        }
-        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
-        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-        textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
-
-        if (horizontal)
-        {
-            StartCoroutine(PlayHorizontalMatchEffects());
-        }
-        else if (jackpot)
-        {
-            StartCoroutine(PlayHorizontalMatchEffects());
-        }
-    }
-
-    #region 코루틴
+      #region 코루틴
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
         float elapsed = 0f;
@@ -602,6 +558,71 @@ public class SloltMachine : MonoBehaviour
     {
         imageBetAmount.color = color;
         textResult.text = msg;
+    }
+    public bool hasMatch { get; set; }
+    [SerializeField] private GameObject bag;
+    private void CheckBet()
+    {
+        hasMatch = false; // 외부에서 불려오기 위해 밖에서 선언 하고 프로퍼티함 - 박철민
+
+        foreach (var img in reelImagesFlat)
+            img.color = Color.white;
+
+        if (CheckJackpot(lastBetAmount))
+            return;
+
+        bool vertical = CheckVertical(lastBetAmount);
+        bool horizontal = CheckHorizontal(lastBetAmount);
+        bool jackpot = CheckJackpot(lastBetAmount);
+        hasMatch = vertical || horizontal;
+
+        if (_minBet == 0)
+            _minBet += 1;
+
+        if (credits.Money >= long.MaxValue / 2)
+            CreditMaxOver();
+
+        if (!hasMatch)
+        {
+            Fall();
+        }
+
+        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
+        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
+        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+
+
+        textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
+
+        if (horizontal)
+        {
+            StartCoroutine(PlayHorizontalMatchEffects());
+        }
+        else if (jackpot)
+        {
+            StartCoroutine(PlayHorizontalMatchEffects());
+        }
+
+
+        foreach (var item in items)
+        {
+            if (item.transform.IsChildOf(bag.transform))
+            {
+                Debug.Log($"Invoke 시도: {item.name}");
+                var itemOn = item.GetComponent<ItemOn>();
+                if (itemOn != null)
+                {
+                    itemOn.OnAbilityCast?.Invoke();
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
+        // 아마도 내가 추가함 - 박철민
+
     }
     private bool CheckVertical(long bet)
     {

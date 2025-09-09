@@ -20,7 +20,7 @@ public class DeadLine : MonoBehaviour
     private long aaa;
 
     [Header("데드라인 조건")]
-    [SerializeField] private long _condition;
+    [field:SerializeField] public long _condition { get; set; } =100000;
 
     public int _rounds = 3;
     private bool a;
@@ -28,10 +28,13 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _conditionText;
     [SerializeField] private TextMeshProUGUI _currentBankText;
 
+    private TargetAmountDown _amountDown;
+    private bool _onActived;
     private void Awake()
     {
         _moneyManager = MoneyManager.Instance;
         rate = FindAnyObjectByType<InterestRate>();
+        _amountDown = FindAnyObjectByType<TargetAmountDown>();
     }
     private void Start()
     {
@@ -52,7 +55,25 @@ public class DeadLine : MonoBehaviour
             aa += rate.Interest();
             oninterRest = true;
         }
+        targetAmount();
     }
+    private void targetAmount()
+    {
+        if (_amountDown.TargetDown()&& !_onActived)
+        {
+            _condition /= 20;
+            _condition *= 19;
+            _onActived = true;
+            _conditionText.text = "DeadLine" + _condition;
+        }
+        else if (!_amountDown.TargetDown() && _onActived)
+        {
+            _condition /= 19;
+            _condition *= 20;
+            _onActived = false;
+            _conditionText.text = "DeadLine" + _condition;
+        }
+    } //56번 줄 부터 내가 추가
     public void InMoney()//버튼에 이벤트
     {
         //현재 소지금에 x%만큼 차감
