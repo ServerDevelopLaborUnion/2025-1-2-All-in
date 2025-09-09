@@ -9,10 +9,7 @@ public class NoBagDouble : ItemOn
     {
         if (bag.transform.childCount >= 1)
         {
-            foreach (Transform child in bag.transform)
-            {
-                Destroy(child);
-            }
+            Destroy(gameObject);
         }
         return true;
     }
