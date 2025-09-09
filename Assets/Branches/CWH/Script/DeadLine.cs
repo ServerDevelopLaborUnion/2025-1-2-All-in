@@ -66,14 +66,14 @@ public class DeadLine : MonoBehaviour
                 _condition /= 20;
                 _condition *= 19;
                 _onActived = true;
-                _conditionText.text = $"DeadLine : {_condition.ToString("N0")}";
+                _conditionText.text = "DeadLine" + _condition;
             }
             else if (!_amountDown.TargetDown() && _onActived)
             {
                 _condition /= 19;
                 _condition *= 20;
                 _onActived = false;
-                _conditionText.text = $"DeadLine : {_condition.ToString("N0")}";
+                _conditionText.text = "DeadLine" + _condition;
             }
         }
     } //56번 줄 부터 내가 추가
