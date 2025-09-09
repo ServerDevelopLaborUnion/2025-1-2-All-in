@@ -9,12 +9,15 @@ public class RandomMoney : ItemOn
 
     public override void Itemon()
     {
-        RandMoney();
+        if (gameObject != null)
+        {
+            RandMoney();
+        }
     }
     private void RandMoney()
     {
-        long money = Random.Range(4000, 15000);
-        moneyManager.Money += money;
+
+        moneyManager.Money += Random.Range(4000, 15000);
         creditsText.text = "Credits :" + moneyManager.Money;
 
     }

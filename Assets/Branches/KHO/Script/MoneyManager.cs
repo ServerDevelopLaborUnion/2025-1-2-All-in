@@ -65,7 +65,7 @@ public class MoneyManager : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(_bestMoney);
+        //Debug.Log(_bestMoney);
     }
 
 

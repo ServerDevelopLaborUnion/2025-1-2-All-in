@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7968396235677131205
+--- !u!1 &78924591665800206
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,51 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5351112267398322725}
-  - component: {fileID: 4477386529492600603}
-  - component: {fileID: 5862532479728655366}
-  - component: {fileID: 1916868089746351944}
+  - component: {fileID: 7518614614439790691}
+  - component: {fileID: 5930999464878555845}
+  - component: {fileID: 4070081652437729102}
+  - component: {fileID: 8620553518789638043}
   m_Layer: 5
-  m_Name: JackpotOrDie
+  m_Name: FailTicket
   m_TagString: Common
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &5351112267398322725
+  m_IsActive: 1
+--- !u!224 &7518614614439790691
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968396235677131205}
+  m_GameObject: {fileID: 78924591665800206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 3.018383}
+  m_LocalScale: {x: 0.5158681, y: 0.73695445, z: 3.555806}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 250, y: -50}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4477386529492600603
+--- !u!222 &5930999464878555845
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968396235677131205}
+  m_GameObject: {fileID: 78924591665800206}
   m_CullTransparentMesh: 1
---- !u!114 &5862532479728655366
+--- !u!114 &4070081652437729102
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968396235677131205}
+  m_GameObject: {fileID: 78924591665800206}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 537161937832113372, guid: 9e5476416cb7a5247aa062d9ea6233b6, type: 3}
+  m_Sprite: {fileID: 3950598897847936683, guid: c42391ce47ea3c64b836fc8644855053, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,18 +76,16 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1916868089746351944
+--- !u!114 &8620553518789638043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968396235677131205}
+  m_GameObject: {fileID: 78924591665800206}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 612b2c568bc6a3649aeb2b76ef7564a0, type: 3}
+  m_Script: {fileID: 11500000, guid: a81a3931f7d62154db3a23bf22a015e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  machine: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
-  moneyManager: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  creditsText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}
+  ticketText: {fileID: 3441484887649339717, guid: 2cb38f6c4f32de447a1aa2987e58715b, type: 3}

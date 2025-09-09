@@ -89,5 +89,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyManager: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  creditsText: {fileID: 0}
+  creditsText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}
   moneyplus: 1500
