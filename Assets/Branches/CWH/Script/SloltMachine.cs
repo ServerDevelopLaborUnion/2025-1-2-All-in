@@ -6,7 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI.Table;
 
@@ -33,7 +33,7 @@ public class SloltMachine : MonoBehaviour
     }
     #endregion
 
-    public List<ItemOn> items = new List<ItemOn>();
+    ItemOn[] items;
     public long lastBetAmount;
     private bool fallChecked;
 
@@ -145,7 +145,7 @@ public class SloltMachine : MonoBehaviour
 
     private void Start()
     {
-      
+        items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); // 철민이의 코드
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
@@ -173,7 +173,6 @@ public class SloltMachine : MonoBehaviour
 
     private void Update()
     {
-        
         if (!isStartSpin) return;
 
         elapsedTime += Time.deltaTime;
@@ -187,8 +186,6 @@ public class SloltMachine : MonoBehaviour
                 break;
             }
         }
-        
-
 
         if (AllReelsSpinned())
         {
@@ -197,8 +194,6 @@ public class SloltMachine : MonoBehaviour
             UpdateReelDisplay();
             CheckBet();
         }
-      
-
     }
     private void ApplyHorizontalMatch()
     {
@@ -277,15 +272,12 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
         EnoughSpin();
     }
-
     public void EnoughSpin()
     {
 
         if (_haveSpin <= 0 || _haveSpin < _spinCost)
         {
-            pullButton.interactable = false;
-            minBetButton.interactable = false;
-            maxBetButton.interactable = false;
+            ButtonFlase();
             OnMessage(Color.white, "You don't have enough Spin");
             return;
         }
@@ -298,6 +290,19 @@ public class SloltMachine : MonoBehaviour
         }
 
     }
+    public void ButtonTrue()
+    {
+        pullButton.interactable = true;
+        minBetButton.interactable = true;
+        maxBetButton.interactable = true;
+    }
+
+    public void ButtonFlase()
+    {
+        pullButton.interactable = false;
+        minBetButton.interactable = false;
+        maxBetButton.interactable = false;
+    }
 
     public void OnSpinP()
     {
@@ -309,9 +314,7 @@ public class SloltMachine : MonoBehaviour
 
         credits.Money -= _spinCoststandard;
         _haveSpin += 1;
-        pullButton.interactable = true;
-        minBetButton.interactable = true;
-        maxBetButton.interactable = true;
+        ButtonTrue();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         UpdateMagnificationUI();
     }
@@ -390,9 +393,7 @@ public class SloltMachine : MonoBehaviour
     private void StartSpin()
     {
         isStartSpin = true;
-        pullButton.interactable = false;
-        minBetButton.interactable = false;
-        maxBetButton.interactable = false;
+        ButtonFlase();
         ResetReelSpins();
 
         // 0) 항상 전체 기본 랜덤 채우기
@@ -525,9 +526,7 @@ public class SloltMachine : MonoBehaviour
             CheckBet();
         if (_haveSpin > 0)
         {
-            pullButton.interactable = true;
-            minBetButton.interactable = true;
-            maxBetButton.interactable = true;
+            ButtonTrue();
         }
     }
 
@@ -597,17 +596,6 @@ public class SloltMachine : MonoBehaviour
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
 
-        foreach (var item in items)
-        {
-            Debug.Log("들어옴");
-            if (!item.transform.IsChildOf(bag.transform))
-                continue;
-
-            Debug.Log($"Invoke 시도: {item.name}");
-            var itemOn = item.GetComponent<ItemOn>();
-            itemOn.OnAbilityCast?.Invoke();
-        }
-
 
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
@@ -621,7 +609,23 @@ public class SloltMachine : MonoBehaviour
         }
 
 
-      
+        foreach (var item in items)
+        {
+            if (item.transform.IsChildOf(bag.transform))
+            {
+                Debug.Log($"Invoke 시도: {item.name}");
+                var itemOn = item.GetComponent<ItemOn>();
+                if (itemOn != null)
+                {
+                    itemOn.OnAbilityCast?.Invoke();
+                }
+            }
+            else
+            {
+                return;
+            }
+
+        }
         // 아마도 내가 추가함 - 박철민
 
     }
@@ -829,6 +833,6 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
         else if (rand < 99) return 6;
-        else return 7; // 2% 확률
+        else return 7; // 1% 확률
     }
 }
