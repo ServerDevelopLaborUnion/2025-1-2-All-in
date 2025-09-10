@@ -40,9 +40,9 @@ public class RandomItem : MonoBehaviour
     public void OnClick()
     {
         RandAllSlots();
-        Debug.Log(moneymahine.Money + "ตส");
+        Debug.Log(moneymahine.Money.ToString("N0") + "ตส");
         moneymahine.Money -= 1000;
-        Debug.Log(moneymahine.Money + "ตส");
+        Debug.Log(moneymahine.Money.ToString("N0") + "ตส");
         creditsText.text = "Credit:" + moneymahine.Money;
 
     }

@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI.Table;
 
@@ -271,15 +272,12 @@ public class SloltMachine : MonoBehaviour
         UpdateMagnificationUI();
         EnoughSpin();
     }
-
     public void EnoughSpin()
     {
 
         if (_haveSpin <= 0 || _haveSpin < _spinCost)
         {
-            pullButton.interactable = false;
-            minBetButton.interactable = false;
-            maxBetButton.interactable = false;
+            ButtonFlase();
             OnMessage(Color.white, "You don't have enough Spin");
             return;
         }
@@ -292,6 +290,19 @@ public class SloltMachine : MonoBehaviour
         }
 
     }
+    public void ButtonTrue()
+    {
+        pullButton.interactable = true;
+        minBetButton.interactable = true;
+        maxBetButton.interactable = true;
+    }
+
+    public void ButtonFlase()
+    {
+        pullButton.interactable = false;
+        minBetButton.interactable = false;
+        maxBetButton.interactable = false;
+    }
 
     public void OnSpinP()
     {
@@ -303,9 +314,7 @@ public class SloltMachine : MonoBehaviour
 
         credits.Money -= _spinCoststandard;
         _haveSpin += 1;
-        pullButton.interactable = true;
-        minBetButton.interactable = true;
-        maxBetButton.interactable = true;
+        ButtonTrue();
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         UpdateMagnificationUI();
     }
@@ -384,9 +393,7 @@ public class SloltMachine : MonoBehaviour
     private void StartSpin()
     {
         isStartSpin = true;
-        pullButton.interactable = false;
-        minBetButton.interactable = false;
-        maxBetButton.interactable = false;
+        ButtonFlase();
         ResetReelSpins();
 
         // 0) 항상 전체 기본 랜덤 채우기
@@ -519,9 +526,7 @@ public class SloltMachine : MonoBehaviour
             CheckBet();
         if (_haveSpin > 0)
         {
-            pullButton.interactable = true;
-            minBetButton.interactable = true;
-            maxBetButton.interactable = true;
+            ButtonTrue();
         }
     }
 
@@ -828,6 +833,6 @@ public class SloltMachine : MonoBehaviour
         else if (rand < 75) return 4;
         else if (rand < 95) return 5;
         else if (rand < 99) return 6;
-        else return 7; // 2% 확률
+        else return 7; // 1% 확률
     }
 }
