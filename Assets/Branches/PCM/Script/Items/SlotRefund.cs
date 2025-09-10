@@ -11,6 +11,7 @@ public class SlotRefund : ItemOn
 
     public override void Itemon()
     {
+        base.Itemon();
         slotrefund();
     }
     private void slotrefund()

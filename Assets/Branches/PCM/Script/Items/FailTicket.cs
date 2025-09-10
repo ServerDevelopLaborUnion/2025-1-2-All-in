@@ -14,6 +14,7 @@ public class FailTicket : ItemOn
     }
     public override void Itemon()
     {
+        base.Itemon();
         Failticket();
     }
     private void Failticket()
@@ -21,7 +22,6 @@ public class FailTicket : ItemOn
          Debug.Log("µÈ´Ù");
         if (Random.Range(0, 100) < probability&& !machine.hasMatch)
         {
-           
             machine.HaveSpin += 2;
             ticketText.text = machine.HaveSpin.ToString();
             

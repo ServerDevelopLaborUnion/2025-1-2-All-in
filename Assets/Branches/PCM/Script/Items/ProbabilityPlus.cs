@@ -7,13 +7,11 @@ public class ProbabilityPlus : ItemOn
 
     private void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
-        {
-            Itemon();
-        }
+        
     }
     public override void Itemon()
     {
+        base.Itemon();
         probabilityPlus();
     }
     private void probabilityPlus()

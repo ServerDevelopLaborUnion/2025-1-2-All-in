@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +12,7 @@ public class RandomItem : MonoBehaviour
     private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
+    [SerializeField]private SloltMachine machine; 
 
     // 모든 슬롯이 공유하는 전역 풀
     public static List<ItemsSO> drawItem = new List<ItemsSO>();
@@ -97,7 +99,10 @@ public class RandomItem : MonoBehaviour
             GameObject items = Instantiate(data.itemPrefab, bag.transform);
             items.SetActive(true);
 
+            machine.items.Add(items.GetComponent<ItemOn>());
+
             drawItem[_randitem] = null; // 아이템 구매 처리
+
         }
 
         _skillimage.sprite = _soldOut;

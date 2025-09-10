@@ -14,6 +14,7 @@ public class VerticalPlus : ItemOn
     }
     public override void Itemon()
     {
+        base.Itemon();
         verticalPlus();
     }
     private void verticalPlus()
