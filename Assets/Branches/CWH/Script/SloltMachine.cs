@@ -32,8 +32,7 @@ public class SloltMachine : MonoBehaviour
         return CheckJackpot(betAmount);
     }
     #endregion
-
-    ItemOn[] items;
+    public List<ItemOn> items = new List<ItemOn>();
     public long lastBetAmount;
     private bool fallChecked;
 
@@ -145,7 +144,6 @@ public class SloltMachine : MonoBehaviour
 
     private void Start()
     {
-        items = FindObjectsByType<ItemOn>(FindObjectsSortMode.None); // 철민이의 코드
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
@@ -595,7 +593,16 @@ public class SloltMachine : MonoBehaviour
         _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        foreach (var item in items)
+        {
+            Debug.Log("들어옴");
+            if (!item.transform.IsChildOf(bag.transform))
+                continue;
 
+            Debug.Log($"Invoke 시도: {item.name}");
+            var itemOn = item.GetComponent<ItemOn>();
+            itemOn.OnAbilityCast?.Invoke();
+        }
 
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
@@ -608,24 +615,6 @@ public class SloltMachine : MonoBehaviour
             StartCoroutine(PlayHorizontalMatchEffects());
         }
 
-
-        foreach (var item in items)
-        {
-            if (item.transform.IsChildOf(bag.transform))
-            {
-                Debug.Log($"Invoke 시도: {item.name}");
-                var itemOn = item.GetComponent<ItemOn>();
-                if (itemOn != null)
-                {
-                    itemOn.OnAbilityCast?.Invoke();
-                }
-            }
-            else
-            {
-                return;
-            }
-
-        }
         // 아마도 내가 추가함 - 박철민
 
     }
