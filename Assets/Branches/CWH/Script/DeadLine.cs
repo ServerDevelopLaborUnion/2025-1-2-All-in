@@ -51,7 +51,7 @@ public class DeadLine : MonoBehaviour
     }
     private void Start()
     {
-        _conditionText.text = $"DeadLine : {_condition.ToString("N0")}";//데드라인 조건 표시
+        _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
         _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
 
     }
@@ -77,14 +77,14 @@ public class DeadLine : MonoBehaviour
                 _condition /= 20;
                 _condition *= 19;
                 _onActived = true;
-                _conditionText.text = "DeadLine" + _condition;
+                _conditionText.text = "데드라인" + _condition;
             }
             else if (!_amountDown.TargetDown() && _onActived)
             {
                 _condition /= 19;
                 _condition *= 20;
                 _onActived = false;
-                _conditionText.text = "DeadLine" + _condition;
+                _conditionText.text = "데드라인" + _condition;
             }
         }
     } //56번 줄 부터 내가 추가
@@ -98,8 +98,8 @@ public class DeadLine : MonoBehaviour
             //차감한 금액만큼 증가
             _bankBook += aaa;
             //Ui갱신 
-            _creditsText.text = $"Credits : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
-            logUI.AddLog($"-{aaa.ToString("N0")} balance : {_moneyManager.Money.ToString("N0")}", Color.red);
+            _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
+            logUI.AddLog($"-{aaa.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.red);
             _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
         }
         else logUI.AddLog($"Fall : ",Color.red);
@@ -136,7 +136,7 @@ public class DeadLine : MonoBehaviour
             _sloltMahcin.ButtonTrue();
             _condition *= 2;
             _rounds = 3;
-            _conditionText.text = $"DeadLine : {_condition.ToString("N0")}";
+            _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";
             _sloltMahcin.UpdateMagnificationUI();
 
             // 조건 달성 후 플래그 리셋 (다음 조건에서 다시 작동 가능)
@@ -160,8 +160,8 @@ public class DeadLine : MonoBehaviour
             Debug.Log(_rounds);
             //현재 입금된 금액의 x%만큼 돈 지급
             _moneyManager.Money += abc;
-            _creditsText.text = $"Credits : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
-            logUI.AddLog($"+{abc.ToString("N0")} balance : {_moneyManager.Money.ToString("N0")}", Color.green);
+            _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
+            logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
         }
         async = true;
     }

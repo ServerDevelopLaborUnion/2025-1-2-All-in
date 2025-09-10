@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using NUnit.Framework.Constraints;
 
 public class ShopPanel : MonoBehaviour
 {
@@ -18,6 +19,13 @@ public class ShopPanel : MonoBehaviour
         rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// ¾Æ·¡·Î ´Ý±â
         _deadLineText.SetActive(false);
         panelopen = false;
+    }
+    private void FixedUpdate()
+    {
+        if (_machine.GetCredits() <= 0 && _machine._panel == true)
+        {
+            OnClick();
+        }
     }
 
     public void OnClick()

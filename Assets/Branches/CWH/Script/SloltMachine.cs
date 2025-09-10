@@ -136,6 +136,7 @@ public class SloltMachine : MonoBehaviour
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
     bool _startSpinbug = true;
+    public bool _panel;
 
     private void Awake()
     {
@@ -156,14 +157,14 @@ public class SloltMachine : MonoBehaviour
         }
         EnoughSpin();
         UpdateMagnificationUI();
-        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
-        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
-        _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
-                                  $"\n Horizontal : {magnification * 1.5}x" +
-                                  $"\n Jackpot : {magnification * 100}x" +
-                                  $"\n Fall : 0x" +
-                                  $"\n Bonus : 2x";
+        textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
+        _minBetText.text = $"최소 베팅금 : {_minBet.ToString("N0")}원";
+        textChance.text = $" 가로줄 : {_verticalChance * 100}% \n 세로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
+        _magnificationText.text = $" 가로줄 : {magnification * 1.2}x" +
+                                  $"\n 세로줄 : {magnification * 1.5}x" +
+                                  $"\n 잭팟 : {magnification * 100}x" +
+                                  $"\n 실패 : 0x" +
+                                  $"\n 보너스 : 2x";
         _remainSpins.text = $"{_haveSpin}";
         _SpinCosts.text = $"{_spinCost}";
         _startSpinbug = false;
@@ -252,18 +253,18 @@ public class SloltMachine : MonoBehaviour
         horizontalMatchParticle.Stop();
         if (!long.TryParse(input, out long bet) || bet < _minBet)
         {
-            OnMessage(Color.red, "Invalid bet amount");
+            OnMessage(Color.red, "잘못된 베팅금입니다.");
             return;
         }
 
         if (credits.Money < bet)
         {
-            OnMessage(Color.red, "You don't have enough money");
+            OnMessage(Color.red, "보유한 금액이 부족합니다.");
             return;
         }
 
         credits.Money -= bet;
-        logUI.AddLog($"-{bet.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.red);
+        logUI.AddLog($"-{bet.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
         lastBetAmount = bet;   // 이번 스핀의 베팅 금액 저장
         fallChecked = false;   // Fall 체크 초기화
 
@@ -276,7 +277,7 @@ public class SloltMachine : MonoBehaviour
         if (_haveSpin <= 0 || _haveSpin < _spinCost)
         {
             ButtonFlase();
-            OnMessage(Color.white, "You don't have enough Spin");
+            OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
         else
@@ -306,14 +307,14 @@ public class SloltMachine : MonoBehaviour
     {
         if (credits.Money < _spinCoststandard)
         {
-            OnMessage(Color.white, "You don't have enough money");
+            OnMessage(Color.white, "보유한 금액이 부족합니다.");
             return;
         }
 
         credits.Money -= _spinCoststandard;
         _haveSpin += 1;
         ButtonTrue();
-        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
+        textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
         UpdateMagnificationUI();
     }
 
@@ -322,11 +323,11 @@ public class SloltMachine : MonoBehaviour
         long a = magnification * magnification;
         if (credits.Money < 10)
         {
-            OnMessage(Color.white, "You don't have enough money");
+            OnMessage(Color.white, "보유한 금액이 부족합니다.");
             return;
         }
         credits.Money -= a;
-        logUI.AddLog($"-{a.ToString("N0")} balance : {credits.Money.ToString("N0")}", Color.red);
+        logUI.AddLog($"-{a.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -338,11 +339,11 @@ public class SloltMachine : MonoBehaviour
         long a = magnification * magnification;
         if (credits.Money < 10)
         {
-            OnMessage(Color.white, "You don't have enough money");
+            OnMessage(Color.white, "보유한 금액이 부족합니다.");
             return;
         }
         credits.Money -= a;
-        logUI.AddLog($"-{a.ToString("N0")} balance : {credits.Money.ToString("N0")}", Color.red);
+        logUI.AddLog($"-{a.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
@@ -356,34 +357,34 @@ public class SloltMachine : MonoBehaviour
         pButton.interactable = magnification < 10;
 
         if (magnification <= 1)
-            _magnificationText.text = $" Vertical : {magnification * 1.2}x" +
-                                      $"\n Horizontal : {magnification * 1.5}x" +
-                                      $"\n Jackpot : {magnification * 100}x" +
-                                      $"\n Fall : 0x" +
-                                      $"\n Bonus : 2x";
+            _magnificationText.text = $" 세로줄 : {magnification * 1.2}x" +
+                                      $"\n 가로줄 : {magnification * 1.5}x" +
+                                      $"\n 잭팟 : {magnification * 100}x" +
+                                      $"\n 실패 : 0x" +
+                                      $"\n 보너스 : 2x";
         else if (magnification == 2)
             _magnificationText.text =
-                                   $" Vertical : {magnification * 1.2}x" +
-                                   $"\n Horizontal : {magnification * 1.5}x" +
-                                   $"\n Jackpot : {magnification * 100}x" +
-                                   $"\n Fall : {magnification * 2}x" +
-                                   $"\n Bonus : 2x";
+                                   $" 세로줄 : {magnification * 1.2}x" +
+                                   $"\n 가로줄 : {magnification * 1.5}x" +
+                                   $"\n 잭팟 : {magnification * 100}x" +
+                                   $"\n 실패 : {magnification * 2}x" +
+                                   $"\n 보너스 : 2x";
         else if (magnification >= 3)
             _magnificationText.text =
-                                   $" Vertical : {magnification * 1.2}x" +
-                                   $"\n Horizontal : {magnification * 1.5}x" +
-                                   $"\n Jackpot : {magnification * 100}x" +
-                                   $"\n Fall : {magnification * 5}x" +
-                                   $"\n Bonus : 2x";
+                                   $" 세로줄 : {magnification * 1.2}x" +
+                                   $"\n 가로줄 : {magnification * 1.5}x" +
+                                   $"\n 잭팟 : {magnification * 100}x" +
+                                   $"\n 실패 : {magnification * 5}x" +
+                                   $"\n 보너스 : 2x";
         if (_haveSpin == 777 && credits.Money == 777000)
             _magnificationText.text =
-                                  $" Vertical : {magnification * 1.2}x" +
-                                  $"\n Horizontal : {magnification * 1.5}x" +
-                                  $"\n Jackpot : {magnification * 100}x" +
-                                  $"\n Fall : {magnification * 0}x" +
-                                  $"\n Bonus : 7x";
+                                  $" 세로줄 : {magnification * 1.2}x" +
+                                  $"\n 가로줄 : {magnification * 1.5}x" +
+                                  $"\n 잭팟 : {magnification * 100}x" +
+                                  $"\n 실패 : {magnification * 0}x" +
+                                  $"\n 보너스 : 7x";
 
-        textCredits.text = $"Credits : {credits.Money:N0}";
+        textCredits.text = $"보유 금액 : {credits.Money:N0}원";
         _remainSpins.text = $"{_haveSpin}";
         _SpinCosts.text = $"{_spinCost}";
     }
@@ -464,7 +465,7 @@ public class SloltMachine : MonoBehaviour
     {
         if (credits.Money <= 0)
         {
-            OnMessage(Color.red, "You have no credits");
+            OnMessage(Color.red, "보유한 금액이 부족합니다.");
             return;
         }
 
@@ -590,9 +591,9 @@ public class SloltMachine : MonoBehaviour
             Fall();
         }
 
-        _minBetText.text = $"Minbet : {_minBet.ToString("N0")}";
-        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
-        textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
+        _minBetText.text = $"최소 베팅금 : {_minBet.ToString("N0")}원";
+        textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
+        textChance.text = $" 세로줄 : {_verticalChance * 100}% \n 가로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
         foreach (var item in items)
         {
             Debug.Log("들어옴");
@@ -604,7 +605,7 @@ public class SloltMachine : MonoBehaviour
             itemOn.OnAbilityCast?.Invoke();
         }
 
-        textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
+        textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
 
         if (horizontal)
         {
@@ -643,7 +644,7 @@ public class SloltMachine : MonoBehaviour
                         reward *= 7;
                     else
                         reward *= 2;
-                    textResult.text = "777 BONUS!!! ";
+                    textResult.text = "777 보너스!!! ";
                 }
                 AddCredits(reward);
 
@@ -684,7 +685,7 @@ public class SloltMachine : MonoBehaviour
                         reward *= 7;
                     else
                         reward *= 2;
-                    textResult.text = "777 BONUS!!! ";
+                    textResult.text = "777 보너스!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
                 if (noBag != null)
@@ -729,14 +730,14 @@ public class SloltMachine : MonoBehaviour
                 reward *= 777;
             else
                 reward *= 2;
-            textResult.text = " JACKPOT 777 BONUS!!! ";
+            textResult.text = " 잭팟 777 보너스!!! ";
         }
         else
         {
-            textResult.text = " JACKPOT!!! ";
+            textResult.text = " 잭팟!!! ";
         }
         AddCredits(reward);
-        textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
+        textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
 
         for (int r = 0; r < 3; r++)
             for (int c = 0; c < 5; c++)
@@ -766,7 +767,9 @@ public class SloltMachine : MonoBehaviour
         if (credits.Money <= 0)
         {
             credits.Money = 0;
+            _panel = true;
         }
+        _panel = false;
         return true;
     }
 
@@ -787,11 +790,11 @@ public class SloltMachine : MonoBehaviour
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         if (amount > 0)
         {
-            logUI.AddLog($"+{amount.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.green);
+            logUI.AddLog($"+{amount.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.green);
         }
         else
         {
-            logUI.AddLog($"-{amount.ToString("N0")} Money : {credits.Money.ToString("N0")}", Color.red);
+            logUI.AddLog($"-{amount.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
         }
     }
 

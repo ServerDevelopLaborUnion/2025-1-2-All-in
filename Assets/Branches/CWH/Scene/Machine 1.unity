@@ -932,8 +932,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'DeadLine :'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
+  m_sharedMaterial: {fileID: -6302241947983946732, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1067,7 +1067,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Current Magnification
+  m_text: "\uBC30\uC728"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
   m_sharedMaterial: {fileID: -6302241947983946732, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
@@ -3402,7 +3402,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Probability Table
+  m_text: "\uD655\uB960\uD45C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
   m_sharedMaterial: {fileID: -6302241947983946732, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
@@ -14030,7 +14030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\rRemain Spins\n"
+  m_text: "\r\uBCF4\uC720 \uD2F0\uCF13\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
   m_sharedMaterial: {fileID: -6302241947983946732, guid: 115da854a15561e4b84564d73907c2ba, type: 2}
