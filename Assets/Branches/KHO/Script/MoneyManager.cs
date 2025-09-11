@@ -5,6 +5,7 @@ public class MoneyManager : MonoBehaviour
 {
     private long _money = 0;
     private long _bestMoney;
+    private int _rankmin = 150000;
     public long Money
     {
         get => _money;
@@ -19,7 +20,7 @@ public class MoneyManager : MonoBehaviour
             else
                 _money = value;
 
-            if (_money > _bestMoney && _money >= 100000)
+            if (_money > _bestMoney && _money >= _rankmin)
                BestMoney = _money;
                 
         }
