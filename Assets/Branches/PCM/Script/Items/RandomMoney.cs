@@ -9,6 +9,7 @@ public class RandomMoney : ItemOn
 
     public override void Itemon()
     {
+        base.Itemon();
         if (gameObject != null)
         {
             RandMoney();

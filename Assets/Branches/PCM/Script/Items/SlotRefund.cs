@@ -5,12 +5,17 @@ using UnityEngine.Rendering;
 public class SlotRefund : ItemOn
 {
     public override int probability { get; set; } = 100;
-    [SerializeField]private SloltMachine machine;
-    [SerializeField] private MoneyManager moneyManager;
+    [SerializeField] private SloltMachine machine;
+    private MoneyManager moneyManager;
     [SerializeField] private TextMeshProUGUI creditsText;
 
+    private void Start()
+    {
+        moneyManager = MoneyManager.Instance;
+    }
     public override void Itemon()
     {
+        base.Itemon();
         slotrefund();
     }
     private void slotrefund()

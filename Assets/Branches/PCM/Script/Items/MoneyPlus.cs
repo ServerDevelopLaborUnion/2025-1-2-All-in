@@ -19,6 +19,7 @@ public class MoneyPlus : ItemOn
     }
     public override void Itemon()
     {
+        base.Itemon();
         moneyPlus();
     }
     public void moneyPlus()

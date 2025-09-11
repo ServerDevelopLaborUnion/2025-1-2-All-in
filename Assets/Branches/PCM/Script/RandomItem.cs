@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+using System.Runtime.InteropServices;
 using TMPro;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -11,6 +15,7 @@ public class RandomItem : MonoBehaviour
     private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
+    [SerializeField]private SloltMachine machine; 
 
     // ¸ðµç ½½·ÔÀÌ °øÀ¯ÇÏ´Â Àü¿ª Ç®
     public static List<ItemsSO> drawItem = new List<ItemsSO>();
@@ -21,11 +26,11 @@ public class RandomItem : MonoBehaviour
     private void Awake()
     {
         _skillimage = GetComponent<Image>();
-        moneymahine = MoneyManager.Instance;
     }
 
     private void Start()
     {
+        moneymahine = MoneyManager.Instance;
         if (drawItem.Count == 0)
         {
             for (int i = 0; i < _so.List.Count; i++)
@@ -40,9 +45,9 @@ public class RandomItem : MonoBehaviour
     public void OnClick()
     {
         RandAllSlots();
-        Debug.Log(moneymahine.Money + "µÊ");
+        Debug.Log(moneymahine.Money.ToString("N0") + "µÊ");
         moneymahine.Money -= 1000;
-        Debug.Log(moneymahine.Money + "µÊ");
+        Debug.Log(moneymahine.Money.ToString("N0") + "µÊ");
         creditsText.text = "Credit:" + moneymahine.Money;
 
     }
@@ -90,14 +95,20 @@ public class RandomItem : MonoBehaviour
         if (_randitem >= 0 && _randitem < drawItem.Count)
         {
             ItemsSO data = drawItem[_randitem];
-
             moneymahine.Money -= data.money;
             creditsText.text = "Credits :" + moneymahine.Money;
 
             GameObject items = Instantiate(data.itemPrefab, bag.transform);
             items.SetActive(true);
 
+            ItemOn itemOn = items.GetComponent<ItemOn>();
+            if (itemOn != null)
+            {
+                machine.items.Add(itemOn);
+            }
+
             drawItem[_randitem] = null; // ¾ÆÀÌÅÛ ±¸¸Å Ã³¸®
+
         }
 
         _skillimage.sprite = _soldOut;

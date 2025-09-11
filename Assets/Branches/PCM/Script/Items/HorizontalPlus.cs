@@ -15,6 +15,7 @@ public class HorizontalPlus : ItemOn
     }
     public override void Itemon()
     {
+        base.Itemon();
         horizontalPlus();
     }
     public void horizontalPlus()

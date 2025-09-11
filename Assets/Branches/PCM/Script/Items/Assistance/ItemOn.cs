@@ -6,7 +6,7 @@ public abstract class ItemOn : MonoBehaviour
 {
     public abstract int probability { get; set; } 
     public Action OnAbilityCast;
-    public static int probabilityplus;
+    public int probabilityplus;
   
     private void Start()
     {
