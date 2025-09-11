@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices;
 using TMPro;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -23,11 +26,11 @@ public class RandomItem : MonoBehaviour
     private void Awake()
     {
         _skillimage = GetComponent<Image>();
-        moneymahine = MoneyManager.Instance;
     }
 
     private void Start()
     {
+        moneymahine = MoneyManager.Instance;
         if (drawItem.Count == 0)
         {
             for (int i = 0; i < _so.List.Count; i++)
@@ -42,9 +45,9 @@ public class RandomItem : MonoBehaviour
     public void OnClick()
     {
         RandAllSlots();
-        Debug.Log(moneymahine.Money + "µ ");
+        Debug.Log(moneymahine.Money.ToString("N0") + "µ ");
         moneymahine.Money -= 1000;
-        Debug.Log(moneymahine.Money + "µ ");
+        Debug.Log(moneymahine.Money.ToString("N0") + "µ ");
         creditsText.text = "Credit:" + moneymahine.Money;
 
     }
@@ -98,7 +101,11 @@ public class RandomItem : MonoBehaviour
             GameObject items = Instantiate(data.itemPrefab, bag.transform);
             items.SetActive(true);
 
-            machine.items.Add(items.GetComponent<ItemOn>());
+            ItemOn itemOn = items.GetComponent<ItemOn>();
+            if (itemOn != null)
+            {
+                machine.items.Add(itemOn);
+            }
 
             drawItem[_randitem] = null; // æ∆¿Ã≈€ ±∏∏≈ √≥∏Æ
 

@@ -39,7 +39,7 @@ public class ShopBuyTicket : MonoBehaviour
     public void Buy7()
     {
 
-        BuyTicket(7, 600);
+        BuyTicket(7, 1000);
         machine.pullButton.interactable = true;
         machine.minBetButton.interactable = true;
         machine.maxBetButton.interactable = true;
