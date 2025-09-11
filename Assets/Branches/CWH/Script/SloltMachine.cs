@@ -136,9 +136,10 @@ public class SloltMachine : MonoBehaviour
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
     [Header("화면 흔들기용UI")]
-    [SerializeField] private RectTransform uiCanvasRect;
-    [SerializeField] private LayoutGroup uiLayoutGroup;
+    [SerializeField] private RectTransform[] uiCanvases;      // 흔들 UI Canvas 배열
+    [SerializeField] private LayoutGroup[] layoutGroups;      // 각 Canvas LayoutGroup (없으면 null)
 
+    private bool _this;
     bool _startSpinbug = true;
 
     private void Awake()
@@ -530,21 +531,26 @@ public class SloltMachine : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayHorizontalMatchEffects()
+    public IEnumerator PlayHorizontalMatchEffects()
     {
-        horizontalMatchParticle.Play();
+        if (_this == true) horizontalMatchParticle.Play();
+        else horizontalMatchParticle.Stop();
 
-        // 카메라 + UI 동시에 흔들기
-        yield return StartCoroutine(CameraAndUIShake(0.5f, 0.05f, 50f));
+            // 카메라 + UI 동시에 흔들기
+            yield return StartCoroutine(CameraAndMultipleUICanvasShake(0.5f, 0.05f, 5f));
     }
-    private IEnumerator CameraAndUIShake(float duration, float camMagnitude, float uiMagnitude)
+    private IEnumerator CameraAndMultipleUICanvasShake(float duration, float camMagnitude, float uiMagnitude)
     {
         Vector3 camOriginal = cameraTransform.localPosition;
-        Vector2 uiOriginal = uiCanvasRect.anchoredPosition;
+        Vector2[] uiOriginals = new Vector2[uiCanvases.Length];
 
-        // LayoutGroup 잠시 비활성화
-        if (uiLayoutGroup != null)
-            uiLayoutGroup.enabled = false;
+        // 각 UI Canvas 원위치 저장 & LayoutGroup 잠시 비활성화
+        for (int i = 0; i < uiCanvases.Length; i++)
+        {
+            uiOriginals[i] = uiCanvases[i].anchoredPosition;
+            if (layoutGroups != null && layoutGroups.Length > i && layoutGroups[i] != null)
+                layoutGroups[i].enabled = false;
+        }
 
         float elapsed = 0f;
         while (elapsed < duration)
@@ -554,21 +560,26 @@ public class SloltMachine : MonoBehaviour
             float camY = UnityEngine.Random.Range(-1f, 1f) * camMagnitude;
             cameraTransform.localPosition = camOriginal + new Vector3(camX, camY, 0);
 
-            // UI 흔들기 (anchoredPosition 기준)
-            float uiX = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
-            float uiY = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
-            uiCanvasRect.anchoredPosition = uiOriginal + new Vector2(uiX, uiY);
+            // 각 UI Canvas 흔들기
+            for (int i = 0; i < uiCanvases.Length; i++)
+            {
+                float uiX = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
+                float uiY = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
+                uiCanvases[i].anchoredPosition = uiOriginals[i] + new Vector2(uiX, uiY);
+            }
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        // 원위치 복원
+        // 원위치 복원 & LayoutGroup 재활성화
         cameraTransform.localPosition = camOriginal;
-        uiCanvasRect.anchoredPosition = uiOriginal;
-
-        if (uiLayoutGroup != null)
-            uiLayoutGroup.enabled = true;
+        for (int i = 0; i < uiCanvases.Length; i++)
+        {
+            uiCanvases[i].anchoredPosition = uiOriginals[i];
+            if (layoutGroups != null && layoutGroups.Length > i && layoutGroups[i] != null)
+                layoutGroups[i].enabled = true;
+        }
     }
 
     #endregion
@@ -623,7 +634,9 @@ public class SloltMachine : MonoBehaviour
 
         if (horizontal || jackpot)
         {
+            _this = true;
             StartCoroutine(PlayHorizontalMatchEffects());
+            _this = false;
         }
 
         // 아마도 내가 추가함 - 박철민

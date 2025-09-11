@@ -140,6 +140,7 @@ public class DeadLine : MonoBehaviour
             _rounds = 3;
             _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";
             _sloltMahcin.UpdateMagnificationUI();
+            StartCoroutine(_sloltMahcin.PlayHorizontalMatchEffects());
 
             _buttonDisabledOnce = false;
         }
