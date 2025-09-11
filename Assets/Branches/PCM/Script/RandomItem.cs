@@ -95,7 +95,6 @@ public class RandomItem : MonoBehaviour
         if (_randitem >= 0 && _randitem < drawItem.Count)
         {
             ItemsSO data = drawItem[_randitem];
-
             moneymahine.Money -= data.money;
             creditsText.text = "Credits :" + moneymahine.Money;
 

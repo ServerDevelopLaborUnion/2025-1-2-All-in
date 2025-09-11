@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 1798013206884280540}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 2.854533}
+  m_LocalScale: {x: 0.6, y: 0.7, z: 2.854533}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,6 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf30962c71159394e80178a40500cf79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  probabilityplus: 0
   moneyManager: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
   creditsText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}
   moneyplus: 1500

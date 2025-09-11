@@ -8,6 +8,6 @@ public class ItemsSO : ScriptableObject
 {
     public Sprite image;
     public GameObject itemPrefab;
-    public int money;
+    public long money;
     
 }
