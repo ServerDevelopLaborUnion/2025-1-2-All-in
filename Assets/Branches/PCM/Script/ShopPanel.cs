@@ -20,17 +20,17 @@ public class ShopPanel : MonoBehaviour
         _deadLineText.SetActive(false);
         panelopen = false;
     }
-    private void FixedUpdate()
-    {
-        if (_machine.GetCredits() <= 0 && _machine._panel == true)
-        {
-            OnClick();
-        }
-    }
+    //private void FixedUpdate()
+    //{
+    //    if (_machine.GetCredits() <= 0 && _machine)
+    //    {
+    //        OnClick();
+    //    }
+    //}
 
     public void OnClick()
     {
-        if (_machine.HaveSpin <= 0)
+        if (_machine.HaveSpin <= 0 || _machine.GetCredits() <= 0)
         {
             if (!panelopen)
             {

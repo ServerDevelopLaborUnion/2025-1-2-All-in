@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal.ShaderGUI;
 using UnityEngine;
@@ -43,16 +44,17 @@ public class DeadLine : MonoBehaviour
         _moneyManager = MoneyManager.Instance;
         rate = FindAnyObjectByType<InterestRate>();
         _amountDown = FindAnyObjectByType<TargetAmountDown>();
-        _moneyManager = MoneyManager.Instance;
-        rate = FindAnyObjectByType<InterestRate>();
-        _amountDown = FindAnyObjectByType<TargetAmountDown>();
-        if (_currentBankText != null) _currentBankBaseColor = _currentBankText.color;
-        else Debug.LogWarning("_currentBankText is not assigned in Inspector.");
+
+        if (_currentBankText != null)
+            _currentBankBaseColor = _currentBankText.color;
+        else
+            Debug.LogWarning("_currentBankText is not assigned in Inspector.");
     }
     private void Start()
     {
         _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
         _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
+
 
     }
 
@@ -77,14 +79,14 @@ public class DeadLine : MonoBehaviour
                 _condition /= 20;
                 _condition *= 19;
                 _onActived = true;
-                _conditionText.text = "데드라인" + _condition;
+                _conditionText.text = "데드라인 : " + _condition;
             }
             else if (!_amountDown.TargetDown() && _onActived)
             {
                 _condition /= 19;
                 _condition *= 20;
                 _onActived = false;
-                _conditionText.text = "데드라인" + _condition;
+                _conditionText.text = "데드라인 : " + _condition;
             }
         }
     } //56번 줄 부터 내가 추가
@@ -99,10 +101,10 @@ public class DeadLine : MonoBehaviour
             _bankBook += aaa;
             //Ui갱신 
             _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
-            logUI.AddLog($"-{aaa.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.red);
+            logUI.AddLog($"-{aaa.ToString("N0")} 입금 : {_moneyManager.Money.ToString("N0")}", Color.red);
             _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
         }
-        else logUI.AddLog($"Fall : ",Color.red);
+        else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
     }
 
     public void CheckMoney()
@@ -139,7 +141,6 @@ public class DeadLine : MonoBehaviour
             _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";
             _sloltMahcin.UpdateMagnificationUI();
 
-            // 조건 달성 후 플래그 리셋 (다음 조건에서 다시 작동 가능)
             _buttonDisabledOnce = false;
         }
         else if (_bankBook < _condition && _rounds == 0)
@@ -164,6 +165,15 @@ public class DeadLine : MonoBehaviour
             logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
         }
         async = true;
+    }
+    private void StopBlink()
+    {
+        if (_blinkCoroutine != null)
+        {
+            StopCoroutine(_blinkCoroutine);
+            _blinkCoroutine = null;
+        }
+        _currentBankText.color = _currentBankBaseColor;
     }
 
     private IEnumerator BlinkUntilConditionChanged()
@@ -191,15 +201,5 @@ public class DeadLine : MonoBehaviour
 
         _buttonCooldown = false;
         _buttonDisabledOnce = true; // 이미 한 번 처리했음 표시
-    }
-
-    private void StopBlink()
-    {
-        if (_blinkCoroutine != null)
-        {
-            StopCoroutine(_blinkCoroutine);
-            _blinkCoroutine = null;
-        }
-        _currentBankText.color = _currentBankBaseColor;
     }
 }

@@ -99,7 +99,11 @@ public class RandomItem : MonoBehaviour
             GameObject items = Instantiate(data.itemPrefab, bag.transform);
             items.SetActive(true);
 
-            machine.items.Add(items.GetComponent<ItemOn>());
+            ItemOn itemOn = items.GetComponent<ItemOn>();
+            if (itemOn != null)
+            {
+                machine.items.Add(itemOn);
+            }
 
             drawItem[_randitem] = null; // 아이템 구매 처리
 

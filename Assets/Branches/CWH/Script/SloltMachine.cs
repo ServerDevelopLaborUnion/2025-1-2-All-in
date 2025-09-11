@@ -135,8 +135,11 @@ public class SloltMachine : MonoBehaviour
     Color32 customMatch = new Color32(255, 239, 184, 255);
     Color32 customJackPot = new Color32(207, 255, 182, 255);
 
+    [Header("화면 흔들기용UI")]
+    [SerializeField] private RectTransform uiCanvasRect;
+    [SerializeField] private LayoutGroup uiLayoutGroup;
+
     bool _startSpinbug = true;
-    public bool _panel;
 
     private void Awake()
     {
@@ -145,6 +148,8 @@ public class SloltMachine : MonoBehaviour
 
     private void Start()
     {
+        if (cameraTransform == null)
+            Debug.LogError("카메라 Transform이 할당되지 않았습니다!");
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
         for (int row = 0; row < 3; row++)
@@ -320,14 +325,12 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickP()
     {
-        long a = magnification * magnification;
-        if (credits.Money < 10)
+        if (_haveSpin < 1)
         {
-            OnMessage(Color.white, "보유한 금액이 부족합니다.");
+            OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        credits.Money -= a;
-        logUI.AddLog($"-{a.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
+        _haveSpin = 1;
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -336,14 +339,12 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickM()
     {
-        long a = magnification * magnification;
-        if (credits.Money < 10)
+        if (_haveSpin < 1)
         {
-            OnMessage(Color.white, "보유한 금액이 부족합니다.");
+            OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        credits.Money -= a;
-        logUI.AddLog($"-{a.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
+        _haveSpin = 1;
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
@@ -478,7 +479,7 @@ public class SloltMachine : MonoBehaviour
         OnClickpull();
     }
 
-      #region 코루틴
+    #region 코루틴
     private IEnumerator BlinkText(TextMeshProUGUI text, float duration, float interval)
     {
         float elapsed = 0f;
@@ -531,32 +532,45 @@ public class SloltMachine : MonoBehaviour
 
     private IEnumerator PlayHorizontalMatchEffects()
     {
-        // 파티클 재생 (예: particleSystem.Play();)
         horizontalMatchParticle.Play();
 
-        // 화면 흔들기 효과 실행
-        yield return StartCoroutine(ScreenShakeCoroutine(0.5f, 0.01f));
-
+        // 카메라 + UI 동시에 흔들기
+        yield return StartCoroutine(CameraAndUIShake(0.5f, 0.05f, 50f));
     }
-
-    private IEnumerator ScreenShakeCoroutine(float duration, float magnitude)
+    private IEnumerator CameraAndUIShake(float duration, float camMagnitude, float uiMagnitude)
     {
-        Vector3 originalPos = cameraTransform.localPosition;
-        float elapsed = 0f;
+        Vector3 camOriginal = cameraTransform.localPosition;
+        Vector2 uiOriginal = uiCanvasRect.anchoredPosition;
 
+        // LayoutGroup 잠시 비활성화
+        if (uiLayoutGroup != null)
+            uiLayoutGroup.enabled = false;
+
+        float elapsed = 0f;
         while (elapsed < duration)
         {
-            float x = UnityEngine.Random.Range(-1f, 1f) * magnitude;
-            float y = UnityEngine.Random.Range(-1f, 1f) * magnitude;
+            // 카메라 흔들기
+            float camX = UnityEngine.Random.Range(-1f, 1f) * camMagnitude;
+            float camY = UnityEngine.Random.Range(-1f, 1f) * camMagnitude;
+            cameraTransform.localPosition = camOriginal + new Vector3(camX, camY, 0);
 
-            cameraTransform.localPosition = originalPos + new Vector3(x, y, 0);
+            // UI 흔들기 (anchoredPosition 기준)
+            float uiX = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
+            float uiY = UnityEngine.Random.Range(-1f, 1f) * uiMagnitude;
+            uiCanvasRect.anchoredPosition = uiOriginal + new Vector2(uiX, uiY);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        cameraTransform.localPosition = originalPos;
+        // 원위치 복원
+        cameraTransform.localPosition = camOriginal;
+        uiCanvasRect.anchoredPosition = uiOriginal;
+
+        if (uiLayoutGroup != null)
+            uiLayoutGroup.enabled = true;
     }
+
     #endregion
     private void OnMessage(Color color, string msg)
     {
@@ -607,11 +621,7 @@ public class SloltMachine : MonoBehaviour
 
         textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
 
-        if (horizontal)
-        {
-            StartCoroutine(PlayHorizontalMatchEffects());
-        }
-        else if (jackpot)
+        if (horizontal || jackpot)
         {
             StartCoroutine(PlayHorizontalMatchEffects());
         }
@@ -767,9 +777,7 @@ public class SloltMachine : MonoBehaviour
         if (credits.Money <= 0)
         {
             credits.Money = 0;
-            _panel = true;
         }
-        _panel = false;
         return true;
     }
 
