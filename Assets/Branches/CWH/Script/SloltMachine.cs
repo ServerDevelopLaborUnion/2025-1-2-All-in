@@ -68,6 +68,9 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
+
+    [Header("잡다한거")]
+    [SerializeField] private ShopPanel shopPanel;
     public int HaveSpin
     {
         get { return _haveSpin; }
@@ -597,18 +600,6 @@ public class SloltMachine : MonoBehaviour
         textCredits.text = $"Credits : {credits.Money.ToString("N0")}";
         textChance.text = $" Vertical : {_verticalChance * 100}% \n Horizontal : {_horizontalChance * 100}% \n Jackpot : {jackpotChance * 100:F4}%";
 
-        foreach (var item in items)
-        {
-            Debug.Log("들어옴");
-            if (!item.transform.IsChildOf(bag.transform))
-                continue;
-
-            Debug.Log($"Invoke 시도: {item.name}");
-            var itemOn = item.GetComponent<ItemOn>();
-            itemOn.OnAbilityCast?.Invoke();
-        }
-
-
         textResult.text = hasMatch ? "YOU WIN!!!" : "YOU LOSE!!!!";
 
         if (horizontal)
@@ -619,6 +610,18 @@ public class SloltMachine : MonoBehaviour
         {
             StartCoroutine(PlayHorizontalMatchEffects());
         }
+
+        foreach (var item in items)
+        {
+            Debug.Log("들어옴");
+            if (!item.transform.IsChildOf(bag.transform))
+                continue;
+
+            Debug.Log($"Invoke 시도: {item.name}");
+            var itemOn = item.GetComponent<ItemOn>();
+            itemOn.OnAbilityCast?.Invoke();
+        }
+        shopPanel.PanelDown();
 
 
       

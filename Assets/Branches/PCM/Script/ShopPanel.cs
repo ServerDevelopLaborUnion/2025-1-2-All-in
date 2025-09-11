@@ -1,35 +1,49 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using System.Net.NetworkInformation;
+using UnityEngine.InputSystem;
 
 public class ShopPanel : MonoBehaviour
 {
+    [SerializeField] private GameObject dontHaveSpin;
     private RectTransform rect;
-    [SerializeField] private bool panelopen = false; // 현재 열렸는지 여부
+    private bool onActive = false;
+    private SloltMachine machine;
 
     private void Awake()
     {
+        machine = FindAnyObjectByType<SloltMachine>();
         rect = GetComponent<RectTransform>();
     }
     private void Start()
     {
-        rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-        panelopen = false;
+        dontHaveSpin.transform.localScale = Vector3.zero;
+        //rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
+        //panelopen = false;
     }
-
-    public void OnClick()
+    private void Update()
     {
-       
-
-        if (!panelopen)
+        if (onActive == true&&Mouse.current.leftButton.wasPressedThisFrame) 
         {
-            rect.DOAnchorPosY(-56f, 1).SetEase(Ease.OutExpo);// 위로 열기
-            panelopen = true; 
+            dontHaveSpin.transform.localScale = Vector3.zero;
+            StartCoroutine(Wait());
+            onActive = false;
         }
-        else if(panelopen)
+    }
+    public void PanelDown()
+    {
+        if (machine.HaveSpin <= 0)
         {
-            rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-            panelopen = false;
+            dontHaveSpin.transform.DOScale(new Vector3(1.1f,0.1f,0) , 0.7f);
+            onActive = true;
         }
+    }
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.5f);
+        rect.DOAnchorPosY(21f, 3f).SetEase(Ease.OutElastic, 0.5f);
+        
     }
 }
 
