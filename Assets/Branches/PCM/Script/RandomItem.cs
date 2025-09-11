@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices;
 using TMPro;
+using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -23,11 +26,11 @@ public class RandomItem : MonoBehaviour
     private void Awake()
     {
         _skillimage = GetComponent<Image>();
-        moneymahine = MoneyManager.Instance;
     }
 
     private void Start()
     {
+        moneymahine = MoneyManager.Instance;
         if (drawItem.Count == 0)
         {
             for (int i = 0; i < _so.List.Count; i++)
