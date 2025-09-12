@@ -9,6 +9,8 @@ public class Insurance : ItemOn
     [SerializeField] private TextMeshProUGUI creditText;
     [SerializeField]private SloltMachine machine;
     public override int probability { get; set; }
+    public override MoneyManager money { get; set; }
+
     private bool deathcount = false;
     private void Update()
     {

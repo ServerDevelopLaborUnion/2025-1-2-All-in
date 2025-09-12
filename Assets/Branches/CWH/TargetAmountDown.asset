@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ee36b42c56218b4da64dba9d6cbc3d3, type: 3}
+  m_Name: TargetAmountDown
+  m_EditorClassIdentifier: 
+  image: {fileID: -7221224098965706921, guid: c116a6e83a98e4f4f93eef02748ae463, type: 3}
+  itemPrefab: {fileID: 7306841412650738982, guid: c18c082b63fdb224086b0b7e0e089117, type: 3}
+  money: 1000
+  itemName: TargetAmountDown
+  itemInformation: "\uBAA9\uD45C\uAE08\uC744 10% \uC904\uC785\uB2C8\uB2E4"

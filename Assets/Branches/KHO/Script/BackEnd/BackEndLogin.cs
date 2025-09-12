@@ -28,15 +28,20 @@ public class BackEndLogin
     public void Login(string id, string pin)
     {
         var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
-
+        Debug.Log("로그인");
         if (bro.IsSuccess())
         {
+            Debug.Log("로그인 성공");
             string nickname = Backend.UserNickName;
 
             if (string.IsNullOrEmpty(nickname))
             {
                 //나중에 UI 쪽에서 해결 후 기제
             }
+        }
+        else
+        {
+            Debug.Log(bro);
         }
     }
 

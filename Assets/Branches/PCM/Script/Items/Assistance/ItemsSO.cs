@@ -9,5 +9,6 @@ public class ItemsSO : ScriptableObject
     public Sprite image;
     public GameObject itemPrefab;
     public long money;
-    
+    public string itemName;
+    public string itemInformation;
 }
