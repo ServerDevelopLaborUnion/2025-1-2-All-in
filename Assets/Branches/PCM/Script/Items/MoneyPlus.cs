@@ -7,9 +7,12 @@ public class MoneyPlus : ItemOn
 {
     public override int probability { get; set; } = 60;
     public override MoneyManager money { get; set; }
-    [SerializeField] private TextMeshProUGUI creditsText;
+    private TextMeshProUGUI creditsText;
     [SerializeField]private int moneyplus;
-
+    private void Awake()
+    {       
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+    }
     private void Update()
     {
         if (Keyboard.current.rKey.wasPressedThisFrame)

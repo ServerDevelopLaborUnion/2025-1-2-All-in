@@ -5,7 +5,11 @@ public class HorizontalPlus : ItemOn
 {
     public override int probability { get; set; } = 100;
     public override MoneyManager money { get; set; }
-    [SerializeField] private SloltMachine machine;
+    private SloltMachine machine;
+    private void Awake()
+    {
+        machine = FindAnyObjectByType<SloltMachine>();
+    }
 
     private void Update()
     {

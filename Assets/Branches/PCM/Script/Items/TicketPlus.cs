@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 public class TicketPlus : ItemOn
 {
     private SloltMachine machine;
-    [SerializeField] private TextMeshProUGUI ticketText;
+     private TextMeshProUGUI ticketText;
 
+    
     public override int probability { get; set; } = 40;
     public override MoneyManager money { get; set; }
 
@@ -14,7 +15,10 @@ public class TicketPlus : ItemOn
     {
         machine = FindAnyObjectByType<SloltMachine>();
     }
-
+    private void Start()
+    {
+        ticketText = GameObject.Find(" Number of spins remaining").GetComponent<TextMeshProUGUI>();
+    }
     private void Update()
     {
         
