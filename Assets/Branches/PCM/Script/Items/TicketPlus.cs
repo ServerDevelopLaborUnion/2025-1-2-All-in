@@ -8,6 +8,7 @@ public class TicketPlus : ItemOn
     [SerializeField] private TextMeshProUGUI ticketText;
 
     public override int probability { get; set; } = 40;
+    public override MoneyManager money { get; set; }
 
     private void Awake()
     {

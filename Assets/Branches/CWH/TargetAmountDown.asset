@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ee36b42c56218b4da64dba9d6cbc3d3, type: 3}
-  m_Name: Slotfound
+  m_Name: TargetAmountDown
   m_EditorClassIdentifier: 
-  image: {fileID: 7409545333400097356, guid: 5fb47ad838ff3ac469db16e30ab74ba3, type: 3}
-  itemPrefab: {fileID: 2931597082425576896, guid: 8749ad856832fa64092a756840d4a939, type: 3}
+  image: {fileID: -7221224098965706921, guid: c116a6e83a98e4f4f93eef02748ae463, type: 3}
+  itemPrefab: {fileID: 7306841412650738982, guid: c18c082b63fdb224086b0b7e0e089117, type: 3}
   money: 1000
-  itemName: "\uD658\uBD88\uC0AC\uD0DC"
-  itemInformation: "50%\uD655\uB960\uB85C \uAC78\uC5C8\uB358 \uB3C8\uC5D0 10%\uB97C
-    \uD658\uAE09\uD569\uB2C8\uB2E4"
+  itemName: TargetAmountDown
+  itemInformation: "\uBAA9\uD45C\uAE08\uC744 10% \uC904\uC785\uB2C8\uB2E4"

@@ -331,7 +331,7 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        _haveSpin = 1;
+        _haveSpin -= 1;
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -345,7 +345,6 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        _haveSpin = 1;
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
@@ -536,8 +535,8 @@ public class SloltMachine : MonoBehaviour
         if (_this == true) horizontalMatchParticle.Play();
         else horizontalMatchParticle.Stop();
 
-            // 카메라 + UI 동시에 흔들기
-            yield return StartCoroutine(CameraAndMultipleUICanvasShake(0.5f, 0.05f, 5f));
+        // 카메라 + UI 동시에 흔들기
+        yield return StartCoroutine(CameraAndMultipleUICanvasShake(0.5f, 0.05f, 5f));
     }
     private IEnumerator CameraAndMultipleUICanvasShake(float duration, float camMagnitude, float uiMagnitude)
     {

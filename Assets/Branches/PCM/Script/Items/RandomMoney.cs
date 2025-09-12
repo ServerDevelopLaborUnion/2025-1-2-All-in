@@ -4,7 +4,8 @@ using UnityEngine;
 public class RandomMoney : ItemOn
 {
     public override int probability { get; set; }
-    [SerializeField] private MoneyManager moneyManager;
+    public override MoneyManager money { get; set; }
+
     [SerializeField] private TextMeshProUGUI creditsText;
 
     public override void Itemon()
@@ -17,9 +18,11 @@ public class RandomMoney : ItemOn
     }
     private void RandMoney()
     {
+        long a = Random.Range(4000, 15000);
 
-        moneyManager.Money += Random.Range(4000, 15000);
-        creditsText.text = "Credits :" + moneyManager.Money;
+        money.Money += a;
+        Debug.Log(money.Money);
+        creditsText.text = "Credits :" + money.Money;
 
     }
 }

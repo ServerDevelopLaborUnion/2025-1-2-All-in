@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class ProbabilityPlus : ItemOn
 {
     public override int probability { get; set;}
+    public override MoneyManager money { get; set; }
 
     private void Update()
     {

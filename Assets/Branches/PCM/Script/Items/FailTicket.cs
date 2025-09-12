@@ -5,6 +5,7 @@ public class FailTicket : ItemOn
 {
     [SerializeField]private TextMeshProUGUI ticketText;
     public override int probability { get; set; } = 50;
+    public override MoneyManager money { get; set; }
     private SloltMachine machine;
     
 

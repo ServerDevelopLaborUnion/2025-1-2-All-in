@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 public class SlotRefund : ItemOn
 {
     public override int probability { get; set; } = 100;
+    public override MoneyManager money { get; set; }
     [SerializeField] private SloltMachine machine;
     private MoneyManager moneyManager;
     [SerializeField] private TextMeshProUGUI creditsText;

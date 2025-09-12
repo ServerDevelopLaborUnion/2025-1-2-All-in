@@ -4,12 +4,14 @@ using UnityEngine;
 
 public abstract class ItemOn : MonoBehaviour
 {
-    public abstract int probability { get; set; } 
+    public abstract int probability { get; set; }
     public Action OnAbilityCast;
     public int probabilityplus;
-  
+    public abstract MoneyManager money { get; set; }
+
     private void Start()
     {
+        money = MoneyManager.Instance;
         OnAbilityCast += Itemon;
         SloltMachine slolt = FindAnyObjectByType<SloltMachine>();
     }

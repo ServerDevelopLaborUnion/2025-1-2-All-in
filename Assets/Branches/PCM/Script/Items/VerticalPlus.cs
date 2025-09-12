@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class VerticalPlus : ItemOn
 {
     public override int probability { get; set; } = 10;
+    public override MoneyManager money { get; set; }
     [SerializeField] private SloltMachine machine;
     private void Update()
     {
