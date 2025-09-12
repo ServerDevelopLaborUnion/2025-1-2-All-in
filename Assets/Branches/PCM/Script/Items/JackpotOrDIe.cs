@@ -7,8 +7,13 @@ public class JackpotOrDie : ItemOn
     public override int probability { get; set; }
     [SerializeField] private SloltMachine machine;
     public override MoneyManager money { get; set; }
-    [SerializeField] private TextMeshProUGUI creditsText;
+    private TextMeshProUGUI creditsText;
     public bool onAbility { get; set; } = false;
+    private void Awake()
+    {
+        
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+    }
     private void Update()
     {
         if (Keyboard.current.jKey.wasPressedThisFrame)

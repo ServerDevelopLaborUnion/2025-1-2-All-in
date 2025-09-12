@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Net.NetworkInformation;
 using UnityEngine.InputSystem;
+using Unity.VisualScripting;
 
 public class ShopPanel : MonoBehaviour
 {
@@ -37,6 +38,10 @@ public class ShopPanel : MonoBehaviour
             dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
             onActive = true;
         }
+    }
+    public void PanelUp()
+    {
+        rect.DOAnchorPosY(500f, 2f).SetEase(Ease.OutQuint, 0.5f);
     }
     private IEnumerator Wait()
     {

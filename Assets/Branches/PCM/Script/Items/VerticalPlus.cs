@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,11 @@ public class VerticalPlus : ItemOn
 {
     public override int probability { get; set; } = 10;
     public override MoneyManager money { get; set; }
-    [SerializeField] private SloltMachine machine;
+     private SloltMachine machine;
+    private void Awake()
+    {
+        machine = GetComponent<SloltMachine>();
+    }
     private void Update()
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
