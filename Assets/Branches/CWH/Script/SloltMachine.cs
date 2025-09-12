@@ -90,6 +90,8 @@ public class SloltMachine : MonoBehaviour
 
     public int _spinCoststandard;
 
+    [Header("잡다한거")]
+    [SerializeField] private ShopPanel shopPanel;
     #region 잭팟확률 관련
     [Header("잭팟")]
     public float jackpotChance = 0.00001f;
@@ -618,6 +620,16 @@ public class SloltMachine : MonoBehaviour
         _minBetText.text = $"최소 베팅금 : {_minBet.ToString("N0")}원";
         textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
         textChance.text = $" 세로줄 : {_verticalChance * 100}% \n 가로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
+      
+
+        textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
+
+        if (horizontal || jackpot)
+        {
+            _this = true;
+            StartCoroutine(PlayHorizontalMatchEffects());
+            _this = false;
+        }
         foreach (var item in items)
         {
             Debug.Log("들어옴");
@@ -628,15 +640,7 @@ public class SloltMachine : MonoBehaviour
             var itemOn = item.GetComponent<ItemOn>();
             itemOn.OnAbilityCast?.Invoke();
         }
-
-        textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
-
-        if (horizontal || jackpot)
-        {
-            _this = true;
-            StartCoroutine(PlayHorizontalMatchEffects());
-            _this = false;
-        }
+        shopPanel.PanelDown();
 
         // 아마도 내가 추가함 - 박철민
 
