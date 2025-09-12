@@ -6,8 +6,12 @@ public class RandomMoney : ItemOn
     public override int probability { get; set; }
     public override MoneyManager money { get; set; }
 
-    [SerializeField] private TextMeshProUGUI creditsText;
-
+     private TextMeshProUGUI creditsText;
+    private void Awake()
+    {
+   
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+    }
     public override void Itemon()
     {
         base.Itemon();

@@ -3,12 +3,16 @@ using UnityEngine;
 
 public class FailTicket : ItemOn
 {
-    [SerializeField]private TextMeshProUGUI ticketText;
+    private TextMeshProUGUI ticketText;
     public override int probability { get; set; } = 50;
     public override MoneyManager money { get; set; }
     private SloltMachine machine;
-    
 
+    private void Start()
+    {
+        ticketText = GameObject.Find(" Number of spins remaining").GetComponent<TextMeshProUGUI>();
+        
+    }
     private void Awake()
     {
         machine = GameObject.FindAnyObjectByType<SloltMachine>();
