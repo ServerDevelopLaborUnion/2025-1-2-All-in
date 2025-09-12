@@ -15,7 +15,8 @@ public class RandomItem : MonoBehaviour
     private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
-    [SerializeField]private SloltMachine machine; 
+    [SerializeField]private SloltMachine machine;
+    [SerializeField] private TextMeshProUGUI credits;
 
     // 모든 슬롯이 공유하는 전역 풀
     public static List<ItemsSO> drawItem = new List<ItemsSO>();
@@ -80,6 +81,7 @@ public class RandomItem : MonoBehaviour
         {
             _randitem = -1;
             _skillimage.sprite = _soldOut;
+            Debug.Log(drawItem[_randitem].money);
             return;
         }
 
@@ -88,6 +90,7 @@ public class RandomItem : MonoBehaviour
         usedIndexes.Add(_randitem);
 
         _skillimage.sprite = drawItem[_randitem].image;
+        credits.text = "$" + drawItem[_randitem].money;
     }
 
     public void Buy()

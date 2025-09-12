@@ -1,51 +1,50 @@
 using UnityEngine;
 using DG.Tweening;
-using NUnit.Framework.Constraints;
+using System.Collections;
+using System.Net.NetworkInformation;
+using UnityEngine.InputSystem;
 
 public class ShopPanel : MonoBehaviour
 {
+    [SerializeField] private GameObject dontHaveSpin;
     private RectTransform rect;
-    [SerializeField] private bool panelopen = false; // 현재 열렸는지 여부
-    [SerializeField] private DeadLine _deadLine;
-    [SerializeField] private SloltMachine _machine;
-    [SerializeField] GameObject _deadLineText;
+    public bool onActive { get; set; }
+    private SloltMachine machine;
 
     private void Awake()
     {
+        machine = FindAnyObjectByType<SloltMachine>();
         rect = GetComponent<RectTransform>();
     }
     private void Start()
     {
-        rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-        _deadLineText.SetActive(false);
-        panelopen = false;
+        dontHaveSpin.transform.localScale = Vector3.zero;
+        //rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
+        //panelopen = false;
     }
-    //private void FixedUpdate()
-    //{
-    //    if (_machine.GetCredits() <= 0 && _machine)
-    //    {
-    //        OnClick();
-    //    }
-    //}
-
-    public void OnClick()
+    private void Update()
     {
-        if (_machine.HaveSpin <= 0 || _machine.GetCredits() <= 0)
-        {
-            if (!panelopen)
-            {
-                rect.DOAnchorPosY(-56f, 1).SetEase(Ease.OutExpo);// 위로 열기
-                _deadLine.MoneyP();
-                _deadLineText.SetActive(true);
-                panelopen = true;
-            }
+        if (onActive == true && Mouse.current.leftButton.wasPressedThisFrame)
+        { 
+            StartCoroutine(Wait());
+            onActive = false;
         }
-        else if (panelopen)
+    }
+    public void PanelDown()
+    {
+        if (machine.HaveSpin <= 0)
         {
-            _deadLineText.SetActive(false);
-            rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-            panelopen = false;
+            dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
+            onActive = true;
         }
+    }
+    private IEnumerator Wait()
+    {
+        dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+        yield return new WaitForSeconds(0.5f);
+        rect.DOAnchorPosY(21f, 3f).SetEase(Ease.OutElastic, 0.5f);
+
     }
 }
+
 
