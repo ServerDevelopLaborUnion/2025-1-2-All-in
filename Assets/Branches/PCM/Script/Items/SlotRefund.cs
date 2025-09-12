@@ -6,12 +6,14 @@ public class SlotRefund : ItemOn
 {
     public override int probability { get; set; } = 100;
     public override MoneyManager money { get; set; }
-    [SerializeField] private SloltMachine machine;
+     private SloltMachine machine;
     private MoneyManager moneyManager;
-    [SerializeField] private TextMeshProUGUI creditsText;
+    private TextMeshProUGUI creditsText;
 
     private void Start()
     {
+        machine = FindAnyObjectByType<SloltMachine>();
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
         moneyManager = MoneyManager.Instance;
     }
     public override void Itemon()
