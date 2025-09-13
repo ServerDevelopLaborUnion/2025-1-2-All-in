@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -38,7 +39,10 @@ public class ButtonManager : MonoBehaviour
             _onSettingPanel = false;
         }
     }
-
+    public void Starts()
+    {
+        SceneManager.LoadScene(1);
+    }
     public void OnOffSettingPanel()
     {
         if(!_onSettingPanel)
