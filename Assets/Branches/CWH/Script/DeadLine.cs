@@ -2,10 +2,7 @@ using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
-using UnityEditor.Rendering.Universal.ShaderGUI;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class DeadLine : MonoBehaviour
 {

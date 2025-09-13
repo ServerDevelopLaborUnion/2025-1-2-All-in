@@ -30,6 +30,7 @@ public class RankUP : MonoBehaviour
         _currentTime += Time.deltaTime;
         if (_currentTime >= _rankUpdateTime)
         {
+            _currentTime = 0;
             StartCoroutine(TypeRankText(_text));
         }
     }

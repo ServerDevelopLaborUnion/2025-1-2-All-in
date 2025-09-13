@@ -58,13 +58,11 @@ public class MoneyGameData
 
     public void GetData(ref long a)
     {
-        Debug.Log("게임 정보 조회 함수를 호출합니다.");
 
         var bro = Backend.GameData.GetMyData("Money", new Where());
 
         if (bro.IsSuccess())
         {
-            Debug.Log("게임 정보 조회에 성공했습니다. : " + bro);
 
 
             LitJson.JsonData gameDataJson = bro.FlattenRows();
@@ -72,7 +70,6 @@ public class MoneyGameData
             // 받아온 데이터의 갯수가 0이라면 데이터가 존재하지 않는 것입니다.  
             if (gameDataJson.Count <= 0)
             {
-                Debug.LogWarning("데이터가 존재하지 않습니다.");
                 
                 Param param = new Param();
                 param.Add("Money", 0);
@@ -96,7 +93,6 @@ public class MoneyGameData
         }
         else
         {
-            Debug.LogError("게임 정보 조회에 실패했습니다. : " + bro);
 
         }
     }

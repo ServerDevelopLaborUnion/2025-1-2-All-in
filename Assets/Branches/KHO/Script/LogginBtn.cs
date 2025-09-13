@@ -1,6 +1,7 @@
-using UnityEngine;
 using BackEnd;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LogginBtn : MonoBehaviour
 {
@@ -62,8 +63,7 @@ public class LogginBtn : MonoBehaviour
         if (bro)
         {
             NickNameSetWin.SetActive(false);
-            Debug.Log("게임 시작");
-            //게임으로
+            SceneManager.LoadScene("CTJMachine");
         }
         else
         {
@@ -81,7 +81,7 @@ public class LogginBtn : MonoBehaviour
         }
         else
         {
-            //게임으로
+            SceneManager.LoadScene("CTJMachine");
         }
     }
 
