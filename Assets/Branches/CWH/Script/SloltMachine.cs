@@ -289,7 +289,7 @@ public class SloltMachine : MonoBehaviour
 
         if (_haveSpin <= 0 || _haveSpin < _spinCost)
         {
-            ButtonFlase();
+            ButtonFalse();
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
@@ -309,7 +309,7 @@ public class SloltMachine : MonoBehaviour
         maxBetButton.interactable = true;
     }
 
-    public void ButtonFlase()
+    public void ButtonFalse()
     {
         pullButton.interactable = false;
         minBetButton.interactable = false;
@@ -338,7 +338,12 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        _haveSpin -= 1;
+        if (_haveSpin < _spinCost)
+            ButtonFalse();
+        else
+            ButtonTrue();
+
+            _haveSpin -= 1;
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -352,6 +357,11 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
+        if (_haveSpin < _spinCost)
+            ButtonFalse();
+        else
+            ButtonTrue();
+
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
@@ -400,7 +410,7 @@ public class SloltMachine : MonoBehaviour
     private void StartSpin()
     {
         isStartSpin = true;
-        ButtonFlase();
+        ButtonFalse();
         ResetReelSpins();
 
         // 0) 항상 전체 기본 랜덤 채우기

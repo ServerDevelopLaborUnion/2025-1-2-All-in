@@ -37,7 +37,7 @@ public class JackpotOrDie : ItemOn
         if (!isJackpot)
         {
             money.Money = 0;
-            creditsText.text = "Credits :" + money.Money;
+            creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
             machine.jackpotChance = 0.00001f;
         }
         else
