@@ -25,11 +25,17 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private int _randitem = -1;
     private Image _skillimage;
     public GameObject infoPanel;
+    [SerializeField] private TextMeshProUGUI _itemName;
+    [SerializeField] private TextMeshProUGUI _itemInformation;
     [SerializeField]private TextMeshProUGUI credits;
+    private AudioSource audio;
+    [SerializeField] private AudioClip reroll;
 
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         _skillimage = GetComponent<Image>();
+        infoPanel.SetActive(false);
     }
 
     private void Start()
@@ -48,6 +54,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnClick()
     {
         RandAllSlots();
+        audio.PlayOneShot(reroll);
         Debug.Log(moneymahine.Money.ToString("N0") + "µÊ");
         moneymahine.Money -= 1000;
         Debug.Log(moneymahine.Money.ToString("N0") + "µÊ");
@@ -112,7 +119,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
 
             drawItem[_randitem] = null; // ¾ÆÀÌÅÛ ±¸¸Å Ã³¸®
-
+            audio.PlayOneShot(reroll);
         }
 
         _skillimage.sprite = _soldOut;
@@ -123,18 +130,18 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (infoPanel != null)
         {
-            //infoPanel.SetActive(true);
+            infoPanel.SetActive(true);
 
-            //if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
-            //{
-            //    _itemName.text = drawItem[_randitem].itemName;
-            //    _itemInformation.text = drawItem[_randitem].itemInformation;
-            //}
-            //else
-            //{
-            //    _itemName.text = "";
-            //    _itemInformation.text = "";
-            //}
+            if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
+            {
+                _itemName.text = drawItem[_randitem].itemName;
+                _itemInformation.text = drawItem[_randitem].itemInformation;
+            }
+            else
+            {
+                _itemName.text = "";
+                _itemInformation.text = "";
+            }
         }
     }
 
@@ -143,9 +150,9 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (infoPanel != null)
         {
-            //infoPanel.SetActive(false);
-            //_itemName.text = "";
-            //_itemInformation.text = "";
+            infoPanel.SetActive(false);
+            _itemName.text = "";
+            _itemInformation.text = "";
         }
     }
 }
