@@ -46,6 +46,11 @@ public class DeadLine : MonoBehaviour
     [SerializeField]private AudioClip moneysound;
     public bool Oninterest { get; set; }
     private ShopPanel shopPanel;
+
+    [Header("Fade In And Out")]
+    [SerializeField] private FadeInAndOut _inAndOut;
+    [SerializeField] private TextMeshProUGUI _inAndOutText;
+    [SerializeField] private int _inAndOutint = 1;
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
@@ -60,6 +65,7 @@ public class DeadLine : MonoBehaviour
     }
     private void Start()
     {
+        _inAndOut.gameObject.SetActive(false);
         _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
         _currentBankText.text = $"입금한 금액{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
 
@@ -162,6 +168,8 @@ public class DeadLine : MonoBehaviour
             _rounds = 3;
             _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";
             _sloltMahcin.UpdateMagnificationUI();
+            StartCoroutine(FadeSequence());
+            _inAndOutint++;
             StartCoroutine(_sloltMahcin.PlayHorizontalMatchEffects());
 
             _buttonDisabledOnce = false;
@@ -230,5 +238,16 @@ public class DeadLine : MonoBehaviour
 
         _buttonCooldown = false;
         _buttonDisabledOnce = true; // 이미 한 번 처리했음 표시
+    }
+    private IEnumerator FadeSequence()
+    {
+        _inAndOut.gameObject.SetActive(true);
+
+        yield return StartCoroutine(_inAndOut.StartFadeIn());
+        _inAndOutText.text = $"{_inAndOutint} 스테이지";
+        yield return new WaitForSeconds(0.6f); 
+        yield return StartCoroutine(_inAndOut.StartFadeStart());
+
+        _inAndOut.gameObject.SetActive(false);
     }
 }

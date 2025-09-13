@@ -10,18 +10,18 @@ public class FadeInAndOut : MonoBehaviour
 
     private void Start()
     {
-        Color color  = new Color(0, 0, 0, 1f);
+        Color color  = new Color(0, 0, 0, 0f);
         Image.color = color;
     }
 
-    public void StartFadeStart()
+    public IEnumerator StartFadeIn()
     {
-        StartCoroutine(FadeOut());
+        yield return StartCoroutine(FadeIn());
     }
 
-    public void StartFadeIn()
+    public IEnumerator StartFadeStart()
     {
-        StartCoroutine(FadeIn());
+        yield return StartCoroutine(FadeOut());
     }
     private IEnumerator FadeOut()
     {
