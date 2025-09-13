@@ -9,14 +9,12 @@ public class BackEndManager : MonoBehaviour
     private MoneyManager moneyManager;
     private void Awake()
     {
-        Backend.Initialize();
         moneyManager = GetComponentInChildren<MoneyManager>();
         TestIntser();
     }
 
     private void TestIntser()
     {
-        BackEndLogin.Instance.Login(id,pin);
         MoneyGameData.Intance.GetData(ref best);
         moneyManager.Setbeest(best);
     }
