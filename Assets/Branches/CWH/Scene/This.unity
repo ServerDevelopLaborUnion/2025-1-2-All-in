@@ -422,6 +422,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 896692082}
     m_Modifications:
     - target: {fileID: 486794203311958110, guid: 1bcdeaa98bdf2e543b6d175faeec77c9, type: 3}
+      propertyPath: Dead
+      value: 
+      objectReference: {fileID: 1751136410}
+    - target: {fileID: 486794203311958110, guid: 1bcdeaa98bdf2e543b6d175faeec77c9, type: 3}
       propertyPath: logUI
       value: 
       objectReference: {fileID: 1080965052}
