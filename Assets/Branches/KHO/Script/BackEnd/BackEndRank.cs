@@ -80,7 +80,7 @@ public class BackEndRank
         {
             StringBuilder info = new StringBuilder();
             long money = long.Parse(json["score"].ToString());
-            info.AppendLine($"{json["rank"].ToString()} 위 {json["nickname"].ToString()} 점수: {money:N0}");
+            info.AppendLine($"{json["rank"].ToString()}|위 {json["nickname"].ToString()}|점수: {money:N0}");
 
             rank.Add(info.ToString());
             Debug.Log(info);

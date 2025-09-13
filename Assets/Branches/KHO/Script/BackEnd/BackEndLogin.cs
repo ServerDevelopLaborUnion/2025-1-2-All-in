@@ -19,42 +19,45 @@ public class BackEndLogin
     }
 
 
-    public void SignUp(string id, string pin)
+    public bool SignUp(string id, string pin)
     {
         var bro = Backend.BMember.CustomSignUp(id.Trim(), pin.Trim());
-    }
 
-
-    public void Login(string id, string pin)
-    {
-        var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
-        Debug.Log("로그인");
         if (bro.IsSuccess())
         {
-            Debug.Log("로그인 성공");
-            string nickname = Backend.UserNickName;
-
-            if (string.IsNullOrEmpty(nickname))
-            {
-                //나중에 UI 쪽에서 해결 후 기제
-            }
+            return true;
         }
         else
         {
-            Debug.Log(bro);
+            return false;
         }
     }
 
-    public void NickNameChage(string nickname)
+
+    public bool Login(string id, string pin)
+    {
+        var bro = Backend.BMember.CustomLogin(id.Trim(), pin.Trim());
+        if (bro.IsSuccess())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool NickNameChage(string nickname)
     {
         var bro = Backend.BMember.CheckNicknameDuplication(nickname);
         if (bro.IsSuccess())
         {
             var setNicknamebro = Backend.BMember.UpdateNickname(nickname);
+            return true;
         }
         else
         {
-            Debug.Log("중복된 닉네임입니다");
+            return false;
         }
     }
 }
