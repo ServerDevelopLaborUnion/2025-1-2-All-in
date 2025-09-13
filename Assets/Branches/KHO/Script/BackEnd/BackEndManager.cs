@@ -15,6 +15,7 @@ public class BackEndManager : MonoBehaviour
 
     private void TestIntser()
     {
+        BackEndLogin.Instance.Login(id,pin);
         MoneyGameData.Intance.GetData(ref best);
         moneyManager.Setbeest(best);
     }

@@ -41,7 +41,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Starts()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Login");
     }
     public void OnOffSettingPanel()
     {
