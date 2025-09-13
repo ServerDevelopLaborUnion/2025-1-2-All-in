@@ -41,7 +41,7 @@ public class DeadLine : MonoBehaviour
     private TargetAmountDown _amountDown;
     private bool _onActived;
     private AudioSource audio;
-    [SerializeField]private AudioClip moneysound;
+    [SerializeField] private AudioClip moneysound;
     public bool Oninterest { get; set; }
     private ShopPanel shopPanel;
 
@@ -49,6 +49,8 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private FadeInAndOut _inAndOut;
     [SerializeField] private TextMeshProUGUI _inAndOutText;
     [SerializeField] private int _inAndOutint = 1;
+
+    [SerializeField] private TextMeshProUGUI _stageText;
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
@@ -66,7 +68,7 @@ public class DeadLine : MonoBehaviour
         _inAndOut.gameObject.SetActive(false);
         _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
         _currentBankText.text = $"입금한 금액{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
-
+        _stageText.text = $"Stage {_inAndOutint}";
 
     }
 
@@ -81,11 +83,11 @@ public class DeadLine : MonoBehaviour
             oninterRest = true;
         }
         targetAmount();
-        if(_shopPanel.onActive == true)
+        if (_shopPanel.onActive == true)
         {
             long abc = _bankBook * aa / 100;
-            _interestText.text = "이자:" +abc.ToString();
-            
+            _interestText.text = "이자:" + abc.ToString();
+
         }
         if (_shopPanel.onActive == true)
         {
@@ -169,13 +171,12 @@ public class DeadLine : MonoBehaviour
             StartCoroutine(FadeSequence());
             _inAndOutint++;
             StartCoroutine(_sloltMahcin.PlayHorizontalMatchEffects());
-
+            _stageText.text = $"Stage {_inAndOutint}";
             _buttonDisabledOnce = false;
         }
         else if (_bankBook < _condition && _rounds == 0)
         {
             Dead.SetActive(true);
-            Time.timeScale = 0;
             a = true;
         }
     }
@@ -193,15 +194,15 @@ public class DeadLine : MonoBehaviour
                 _moneyManager.Money += abc;
                 _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
                 logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
-                
+
             }
             audio.PlayOneShot(moneysound);
             Oninterest = true;
             async = true;
-        
+
         }
     }
-    
+
     private void StopBlink()
     {
         if (_blinkCoroutine != null)
@@ -244,7 +245,7 @@ public class DeadLine : MonoBehaviour
 
         yield return StartCoroutine(_inAndOut.StartFadeIn());
         _inAndOutText.text = $"{_inAndOutint} 스테이지";
-        yield return new WaitForSeconds(0.6f); 
+        yield return new WaitForSeconds(0.6f);
         yield return StartCoroutine(_inAndOut.StartFadeStart());
 
         _inAndOut.gameObject.SetActive(false);

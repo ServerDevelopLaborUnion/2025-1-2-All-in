@@ -6,10 +6,10 @@ public class RandomMoney : ItemOn
     public override int probability { get; set; }
     public override MoneyManager money { get; set; }
 
-     private TextMeshProUGUI creditsText;
+    private TextMeshProUGUI creditsText;
     private void Awake()
     {
-   
+
         creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
     }
     public override void Itemon()
@@ -26,7 +26,7 @@ public class RandomMoney : ItemOn
 
         money.Money += a;
         Debug.Log(money.Money);
-        creditsText.text = "Credits :" + money.Money;
+        creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
 
     }
 }

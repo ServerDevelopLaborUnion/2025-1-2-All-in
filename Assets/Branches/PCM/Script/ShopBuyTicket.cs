@@ -23,9 +23,9 @@ public class ShopBuyTicket : MonoBehaviour
         {
             Debug.Log("되어");
             MoneyManager.Instance.Money -= cost;
-            creditsText.text = "Credits :" + MoneyManager.Instance.Money;
+            creditsText.text = $"보유 금액 : {MoneyManager.Instance.Money.ToString("N0")}";
             machine.HaveSpin += amount;
-            ticketText.text = "SPIN:" + machine.HaveSpin;
+            ticketText.text = $"{machine.HaveSpin}";
 
         }
         else
