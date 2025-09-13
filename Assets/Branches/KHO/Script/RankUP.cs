@@ -3,20 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Hierarchy;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class RankUP : MonoBehaviour
 {
-    private TextMeshProUGUI _txte;
+    private TextMeshProUGUI _text;
     private bool _active = true;
+    private float _currentTime = 0;
+    private float _rankUpdateTime = 30f;
 
 
     private void Awake()
     {
-        _txte = GetComponent<TextMeshProUGUI>();
+        _text = GetComponent<TextMeshProUGUI>();
     }
 
+    private void Start()
+    {
+        StartCoroutine(TypeRankText(_text));
+    }
+
+    private void Update()
+    {
+        _currentTime += Time.deltaTime;
+        if (_currentTime >= _rankUpdateTime)
+        {
+            StartCoroutine(TypeRankText(_text));
+        }
+    }
+
+
+
+    //좋은데 느낌이 안살아남
     public void RankText(TextMeshProUGUI ranktext)
     {
         int rankMark = 10;
