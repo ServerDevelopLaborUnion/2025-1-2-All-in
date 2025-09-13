@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,10 +38,9 @@ public class Btns : MonoBehaviour
 
     private void Update()
     {
-        if (MoneyManager.Instance.Money <= 0 && SloltMachine.maxCheck == false)
+        if (MoneyManager.Instance.Dead)
         {
             Dead.SetActive(true);
-            Time.timeScale = 0;
         }
     }
 
