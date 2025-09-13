@@ -33,8 +33,8 @@ public class Insurance : ItemOn
     {        
         moneymachine.Money += 15000;
         machine.HaveSpin += 2;
-        creditText.text = "Credit"+ moneymachine.Money;
-        ticketText.text = "SPIN:" + machine.HaveSpin;
+        creditText.text = $"보유 금액 : {money.Money.ToString("N0")}";
+        ticketText.text = $"{machine.HaveSpin}";
     }
 
 }
