@@ -14,10 +14,12 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     [SerializeField] private ItemListSO _so;
     [SerializeField] private TextMeshProUGUI creditsText;
+    [SerializeField] private TextMeshProUGUI _itemName;
+    [SerializeField] private TextMeshProUGUI _itemInformation;
     private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
-    [SerializeField]private SloltMachine machine; 
+    [SerializeField] private SloltMachine machine;
 
     // 모든 슬롯이 공유하는 전역 풀
     public static List<ItemsSO> drawItem = new List<ItemsSO>();
@@ -25,7 +27,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private int _randitem = -1;
     private Image _skillimage;
     public GameObject infoPanel;
-    [SerializeField]private TextMeshProUGUI credits;
+    [SerializeField] private TextMeshProUGUI credits;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
         }
         RandAllSlots();
+        infoPanel.SetActive(false);
     }
 
     public void OnClick()
@@ -116,6 +119,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
 
         _skillimage.sprite = _soldOut;
+
     }
 
     // 마우스가 버튼 위로 올라갈 때
@@ -123,18 +127,21 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (infoPanel != null)
         {
-            //infoPanel.SetActive(true);
+            if (_skillimage.sprite != _soldOut)
+            {
+                infoPanel.SetActive(true);
 
-            //if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
-            //{
-            //    _itemName.text = drawItem[_randitem].itemName;
-            //    _itemInformation.text = drawItem[_randitem].itemInformation;
-            //}
-            //else
-            //{
-            //    _itemName.text = "";
-            //    _itemInformation.text = "";
-            //}
+                if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
+                {
+                    _itemName.text = drawItem[_randitem].itemName;
+                    _itemInformation.text = drawItem[_randitem].itemInformation;
+                }
+                else
+                {
+                    _itemName.text = "";
+                    _itemInformation.text = "";
+                }
+            }
         }
     }
 
@@ -143,9 +150,9 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (infoPanel != null)
         {
-            //infoPanel.SetActive(false);
-            //_itemName.text = "";
-            //_itemInformation.text = "";
+            infoPanel.SetActive(false);
+            _itemName.text = "";
+            _itemInformation.text = "";
         }
     }
 }
