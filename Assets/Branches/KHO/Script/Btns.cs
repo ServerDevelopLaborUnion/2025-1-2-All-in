@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,6 +6,7 @@ public class Btns : MonoBehaviour
 {
     [SerializeField] private GameObject _sginupPanel;
     [SerializeField] private GameObject Dead;
+    [SerializeField] private SloltMachine SloltMachine;
 
     private void Start()
     {
@@ -37,7 +39,7 @@ public class Btns : MonoBehaviour
 
     private void Update()
     {
-        if (MoneyManager.Instance.Money <= 0)
+        if (MoneyManager.Instance.Money <= 0 && SloltMachine.maxCheck == false)
         {
             Dead.SetActive(true);
             Time.timeScale = 0;

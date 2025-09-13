@@ -66,7 +66,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
-    
+
     public int HaveSpin
     {
         get { return _haveSpin; }
@@ -145,7 +145,9 @@ public class SloltMachine : MonoBehaviour
     bool _startSpinbug = true;
     private AudioSource audio;
     [SerializeField] private AudioClip coinSound;
-    [SerializeField]private AudioClip tingSound;
+    [SerializeField] private AudioClip tingSound;
+
+    public bool maxCheck;
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
@@ -480,6 +482,7 @@ public class SloltMachine : MonoBehaviour
     }
     public void OnClickMaximumbet()
     {
+        maxCheck = true;
         inputBetAmount.text = credits.Money.ToString();
         audio.PlayOneShot(coinSound);
         OnClickpull();
@@ -624,7 +627,7 @@ public class SloltMachine : MonoBehaviour
         _minBetText.text = $"최소 베팅금 : {_minBet.ToString("N0")}원";
         textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
         textChance.text = $" 세로줄 : {_verticalChance * 100}% \n 가로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
-      
+
 
         textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
 
@@ -635,7 +638,7 @@ public class SloltMachine : MonoBehaviour
             _this = false;
         }
         foreach (var item in items)
-        { 
+        {
             if (!item.transform.IsChildOf(bag.transform))
                 continue;
 
@@ -823,6 +826,7 @@ public class SloltMachine : MonoBehaviour
         {
             logUI.AddLog($"-{amount.ToString("N0")}원 : 보유금 {credits.Money.ToString("N0")}원", Color.red);
         }
+        maxCheck = false;
     }
 
     private void CreditMaxOver()
