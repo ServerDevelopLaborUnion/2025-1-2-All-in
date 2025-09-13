@@ -35,6 +35,7 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _conditionText;
     [SerializeField] private TextMeshProUGUI _currentBankText;
     [SerializeField] private TextMeshProUGUI _interestText;
+    [SerializeField] private GameObject Dead;
     private ShopPanel _shopPanel;
 
     private TargetAmountDown _amountDown;
@@ -173,7 +174,8 @@ public class DeadLine : MonoBehaviour
         }
         else if (_bankBook < _condition && _rounds == 0)
         {
-            Debug.Log("게임오버");
+            Dead.SetActive(true);
+            Time.timeScale = 0;
             a = true;
         }
     }
