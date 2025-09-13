@@ -5,35 +5,35 @@ using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 public class FadeInAndOut : MonoBehaviour
 {
-    public Image image;
-    public float _speed = 3f;
+    public Image Image;
+    [SerializeField] private float _speed = 3f;
 
     private void Start()
     {
-        Color color  = new Color(0, 0, 0, 0f);
-        image.color = color;
+        Color color  = new Color(0, 0, 0, 1f);
+        Image.color = color;
     }
 
-    public IEnumerator StartFadeIn()
+    public void StartFadeStart()
     {
-        yield return StartCoroutine(FadeIn());
+        StartCoroutine(FadeOut());
     }
 
-    public IEnumerator StartFadeStart()
+    public void StartFadeIn()
     {
-        yield return StartCoroutine(FadeOut());
+        StartCoroutine(FadeIn());
     }
     private IEnumerator FadeOut()
     {
         float alpha = 1f;
         Color color  = new Color(0, 0, 0, 1f);
-        image.color = color;
+        Image.color = color;
         
         while (alpha > 0f)
         {
             alpha -= Time.deltaTime  * _speed;
             color.a = Mathf.Clamp01(alpha);
-            image.color = color;
+            Image.color = color;
             yield return null;
         }
     }
@@ -42,13 +42,13 @@ public class FadeInAndOut : MonoBehaviour
     {
         float alpha = 0f;
         Color color = new Color(0, 0, 0, 0);
-        image.color = color;
+        Image.color = color;
 
         while (alpha < 1f)
         {
             alpha += Time.deltaTime * _speed;
             color.a = Mathf.Clamp01(alpha);
-            image.color = color;
+            Image.color = color;
             yield return null;
         }
     }
