@@ -8,33 +8,13 @@ using UnityEngine.InputSystem;
 
 public class RankUP : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _txte;
+    private TextMeshProUGUI _txte;
     private bool _active = true;
-    
 
-    void Update()
+
+    private void Awake()
     {
-        if (Keyboard.current.rKey.wasPressedThisFrame && _active)
-        {
-            //RankText(_txte);
-
-            StartCoroutine(TypeRankText(_txte));
-
-
-            //List<string> rank = BackEndRank.Instance.RankGet();
-            //if (rank == null)
-            //{
-            //    _txte.text = string.Empty;
-            //    return;
-            //}
-
-            //_txte.text = string.Empty;
-
-            //foreach (string rankItem in rank)
-            //{ 
-            //    _txte.text += rankItem;
-            //}
-        }
+        _txte = GetComponent<TextMeshProUGUI>();
     }
 
     public void RankText(TextMeshProUGUI ranktext)
