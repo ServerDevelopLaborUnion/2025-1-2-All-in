@@ -26,9 +26,12 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private Image _skillimage;
     public GameObject infoPanel;
     [SerializeField]private TextMeshProUGUI credits;
+    private AudioSource audio;
+    [SerializeField] private AudioClip reroll;
 
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         _skillimage = GetComponent<Image>();
     }
 
@@ -48,6 +51,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnClick()
     {
         RandAllSlots();
+        audio.PlayOneShot(reroll);
         Debug.Log(moneymahine.Money.ToString("N0") + "µ ");
         moneymahine.Money -= 1000;
         Debug.Log(moneymahine.Money.ToString("N0") + "µ ");
@@ -112,7 +116,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
 
             drawItem[_randitem] = null; // æ∆¿Ã≈€ ±∏∏≈ √≥∏Æ
-
+            audio.PlayOneShot(reroll);
         }
 
         _skillimage.sprite = _soldOut;

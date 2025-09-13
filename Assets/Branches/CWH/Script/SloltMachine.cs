@@ -67,6 +67,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
+    
     public int HaveSpin
     {
         get { return _haveSpin; }
@@ -143,9 +144,12 @@ public class SloltMachine : MonoBehaviour
 
     private bool _this;
     bool _startSpinbug = true;
-
+    private AudioSource audio;
+    [SerializeField] private AudioClip coinSound;
+    [SerializeField]private AudioClip tingSound;
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         credits = MoneyManager.Instance;
     }
 
@@ -471,13 +475,14 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.red, "보유한 금액이 부족합니다.");
             return;
         }
-
+        audio.PlayOneShot(coinSound);
         inputBetAmount.text = _minBet.ToString();
         OnClickpull();
     }
     public void OnClickMaximumbet()
     {
         inputBetAmount.text = credits.Money.ToString();
+        audio.PlayOneShot(coinSound);
         OnClickpull();
     }
 
@@ -638,6 +643,7 @@ public class SloltMachine : MonoBehaviour
             var itemOn = item.GetComponent<ItemOn>();
             itemOn.OnAbilityCast?.Invoke();
         }
+        audio.PlayOneShot(tingSound);
         shopPanel.PanelDown();
 
         // 아마도 내가 추가함 - 박철민

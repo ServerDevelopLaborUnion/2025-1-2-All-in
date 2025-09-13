@@ -42,11 +42,13 @@ public class DeadLine : MonoBehaviour
 
     private TargetAmountDown _amountDown;
     private bool _onActived;
-
+    private AudioSource audio;
+    [SerializeField]private AudioClip moneysound;
     public bool Oninterest { get; set; }
     private ShopPanel shopPanel;
     private void Awake()
     {
+        audio = GetComponent<AudioSource>();
         _moneyManager = MoneyManager.Instance;
         rate = FindAnyObjectByType<InterestRate>();
         _amountDown = FindAnyObjectByType<TargetAmountDown>();
@@ -123,6 +125,7 @@ public class DeadLine : MonoBehaviour
                 _currentBankText.text = $"입금한 금액: {_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
             }
             else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
+            audio.PlayOneShot(moneysound);
         }
     }
 
@@ -185,6 +188,7 @@ public class DeadLine : MonoBehaviour
                 logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
                 
             }
+            audio.PlayOneShot(moneysound);
             Oninterest = true;
             async = true;
         

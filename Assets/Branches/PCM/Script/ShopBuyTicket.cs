@@ -6,10 +6,16 @@ public class ShopBuyTicket : MonoBehaviour
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField] private TextMeshProUGUI ticketText;
     [SerializeField] private SloltMachine machine;
+    [SerializeField] private AudioClip purchaseSound;
+    private AudioSource audio;
 
+    private void Awake()
+    {
+        audio = GetComponent<AudioSource>();
+    }
 
     // 버튼 클릭 시 몇 개를 살지 매개변수로 받음
-    
+
     public void BuyTicket(int amount, long cost)
     {
         Debug.Log($"진입{cost}, {MoneyManager.Instance.Money}");
@@ -35,6 +41,7 @@ public class ShopBuyTicket : MonoBehaviour
         machine.pullButton.interactable = true;
         machine.minBetButton.interactable = true;
         machine.maxBetButton.interactable = true;
+        audio.PlayOneShot(purchaseSound);
     }
     public void Buy7()
     {
@@ -43,6 +50,7 @@ public class ShopBuyTicket : MonoBehaviour
         machine.pullButton.interactable = true;
         machine.minBetButton.interactable = true;
         machine.maxBetButton.interactable = true;
+        audio.PlayOneShot(purchaseSound);
     }
 
 }
