@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 231489786468669705}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.7, z: 3.018383}
+  m_LocalScale: {x: 0.6, y: 0.8, z: 3.018383}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -92,8 +92,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   probabilityplus: 0
   moneymachine: {fileID: 9067864971806993068, guid: 46e62f272cef77a4e821dc0abc0bfa2c, type: 3}
-  ticketText: {fileID: 3441484887649339717, guid: 2cb38f6c4f32de447a1aa2987e58715b, type: 3}
-  creditText: {fileID: 3716511351740734563, guid: 3c0bcc20d7bc3a147932cb42a7373f23, type: 3}
   machine: {fileID: 2752451670022054012, guid: a8566e0275712e640a4283f80896722c, type: 3}
 --- !u!114 &5158678416743708577
 MonoBehaviour:
@@ -152,5 +150,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSO: {fileID: 11400000, guid: 697d25f8dce3a6245a900e4190bf32bf, type: 2}
-  _itemName: {fileID: 0}
-  _itemInformation: {fileID: 0}

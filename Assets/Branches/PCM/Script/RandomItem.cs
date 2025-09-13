@@ -83,7 +83,6 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             _randitem = -1;
             _skillimage.sprite = _soldOut;
-            Debug.Log(drawItem[_randitem].money);
             return;
         }
 

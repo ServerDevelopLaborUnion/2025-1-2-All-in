@@ -9,7 +9,7 @@ public class VerticalPlus : ItemOn
      private SloltMachine machine;
     private void Awake()
     {
-        machine = GetComponent<SloltMachine>();
+        machine = FindAnyObjectByType<SloltMachine>();
     }
     private void Update()
     {
@@ -29,7 +29,7 @@ public class VerticalPlus : ItemOn
         if(Random.Range(1,100)<= final)
         {
             Debug.Log(final);
-            machine.VerticalChance += 0.5f;
+            machine.VerticalChance += 0.05f;
         }
     }
 }
