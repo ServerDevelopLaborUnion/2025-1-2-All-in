@@ -35,11 +35,11 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         audio = GetComponent<AudioSource>();
         _skillimage = GetComponent<Image>();
-        infoPanel.SetActive(false);
     }
 
     private void Start()
     {
+        infoPanel.SetActive(false);
         moneymahine = MoneyManager.Instance;
         if (drawItem.Count == 0)
         {
