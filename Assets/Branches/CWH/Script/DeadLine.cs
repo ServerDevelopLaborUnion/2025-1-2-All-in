@@ -3,6 +3,7 @@ using TMPro;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEditor.Rendering.Universal.ShaderGUI;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -36,15 +37,20 @@ public class DeadLine : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _creditsText;
     [SerializeField] private TextMeshProUGUI _conditionText;
     [SerializeField] private TextMeshProUGUI _currentBankText;
+    [SerializeField] private TextMeshProUGUI _interestText;
+    private ShopPanel _shopPanel;
 
     private TargetAmountDown _amountDown;
     private bool _onActived;
+
+    public bool Oninterest { get; set; }
+    private ShopPanel shopPanel;
     private void Awake()
     {
         _moneyManager = MoneyManager.Instance;
         rate = FindAnyObjectByType<InterestRate>();
         _amountDown = FindAnyObjectByType<TargetAmountDown>();
-
+        _shopPanel = FindAnyObjectByType<ShopPanel>();
         if (_currentBankText != null)
             _currentBankBaseColor = _currentBankText.color;
         else
@@ -53,7 +59,7 @@ public class DeadLine : MonoBehaviour
     private void Start()
     {
         _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
-        _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
+        _currentBankText.text = $"입금한 금액{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
 
 
     }
@@ -69,6 +75,16 @@ public class DeadLine : MonoBehaviour
             oninterRest = true;
         }
         targetAmount();
+        if(_shopPanel.onActive == true)
+        {
+            long abc = _bankBook * aa / 100;
+            _interestText.text = "이자:" +abc.ToString();
+            
+        }
+        if (_shopPanel.onActive == true)
+        {
+            Oninterest = false;
+        }
     }
     private void targetAmount()
     {
@@ -92,19 +108,22 @@ public class DeadLine : MonoBehaviour
     } //56번 줄 부터 내가 추가
     public void InMoney()//버튼에 이벤트
     {
-        //현재 소지금에 x%만큼 차감
-        aaa = _condition * 1 / 10;
-        if (_moneyManager.Money >= aaa)
+        if (oninterRest == false)
         {
-            _moneyManager.Money -= aaa;
-            //차감한 금액만큼 증가
-            _bankBook += aaa;
-            //Ui갱신 
-            _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
-            logUI.AddLog($"-{aaa.ToString("N0")} 입금 : {_moneyManager.Money.ToString("N0")}", Color.red);
-            _currentBankText.text = $"{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
+            //현재 소지금에 x%만큼 차감
+            aaa = _condition * 1 / 10;
+            if (_moneyManager.Money >= aaa)
+            {
+                _moneyManager.Money -= aaa;
+                //차감한 금액만큼 증가
+                _bankBook += aaa;
+                //Ui갱신 
+                _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
+                logUI.AddLog($"-{aaa.ToString("N0")} 입금 : {_moneyManager.Money.ToString("N0")}", Color.red);
+                _currentBankText.text = $"입금한 금액: {_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
+            }
+            else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
         }
-        else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
     }
 
     public void CheckMoney()
@@ -153,20 +172,25 @@ public class DeadLine : MonoBehaviour
 
     public void MoneyP()
     {
-        long abc = _bankBook * aa / 100;
-        bool async = false;
-        if (!async)
+        if (Oninterest == false)
         {
-            //남은 라운드 수 차감
-            _rounds--;
-            Debug.Log(_rounds);
-            //현재 입금된 금액의 x%만큼 돈 지급
-            _moneyManager.Money += abc;
-            _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
-            logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
+            long abc = _bankBook * aa / 100;
+            bool async = false;
+            if (!async)
+            {
+                //남은 라운드 수 차감
+                //현재 입금된 금액의 x%만큼 돈 지급
+                _moneyManager.Money += abc;
+                _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
+                logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
+                
+            }
+            Oninterest = true;
+            async = true;
+        
         }
-        async = true;
     }
+    
     private void StopBlink()
     {
         if (_blinkCoroutine != null)

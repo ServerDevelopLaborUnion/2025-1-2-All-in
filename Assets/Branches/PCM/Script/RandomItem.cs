@@ -5,11 +5,13 @@ using System.Runtime.InteropServices;
 using TMPro;
 using Unity.Profiling;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class RandomItem : MonoBehaviour
+public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+
     [SerializeField] private ItemListSO _so;
     [SerializeField] private TextMeshProUGUI creditsText;
     private MoneyManager moneymahine;
@@ -22,6 +24,8 @@ public class RandomItem : MonoBehaviour
 
     private int _randitem = -1;
     private Image _skillimage;
+    public GameObject infoPanel;
+    [SerializeField]private TextMeshProUGUI credits;
 
     private void Awake()
     {
@@ -38,7 +42,6 @@ public class RandomItem : MonoBehaviour
                 drawItem.Add(_so.List[i]);
             }
         }
-
         RandAllSlots();
     }
 
@@ -88,6 +91,7 @@ public class RandomItem : MonoBehaviour
         usedIndexes.Add(_randitem);
 
         _skillimage.sprite = drawItem[_randitem].image;
+        credits.text = "$" + drawItem[_randitem].money;
     }
 
     public void Buy()
@@ -112,5 +116,36 @@ public class RandomItem : MonoBehaviour
         }
 
         _skillimage.sprite = _soldOut;
+    }
+
+    // 마우스가 버튼 위로 올라갈 때
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (infoPanel != null)
+        {
+            //infoPanel.SetActive(true);
+
+            //if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
+            //{
+            //    _itemName.text = drawItem[_randitem].itemName;
+            //    _itemInformation.text = drawItem[_randitem].itemInformation;
+            //}
+            //else
+            //{
+            //    _itemName.text = "";
+            //    _itemInformation.text = "";
+            //}
+        }
+    }
+
+    // 마우스가 버튼에서 나갈 때
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (infoPanel != null)
+        {
+            //infoPanel.SetActive(false);
+            //_itemName.text = "";
+            //_itemInformation.text = "";
+        }
     }
 }

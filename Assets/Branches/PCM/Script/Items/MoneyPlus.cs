@@ -6,10 +6,13 @@ using UnityEngine.InputSystem;
 public class MoneyPlus : ItemOn
 {
     public override int probability { get; set; } = 60;
-    [SerializeField]private MoneyManager moneyManager;
-    [SerializeField] private TextMeshProUGUI creditsText;
+    public override MoneyManager money { get; set; }
+    private TextMeshProUGUI creditsText;
     [SerializeField]private int moneyplus;
-
+    private void Awake()
+    {       
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+    }
     private void Update()
     {
         if (Keyboard.current.rKey.wasPressedThisFrame)
@@ -27,8 +30,8 @@ public class MoneyPlus : ItemOn
         int final = probability + probabilityplus;
         if (Random.Range(0, 100) <= final)
         {
-            moneyManager.Money += moneyplus;
-            creditsText.text = "Credits :" + moneyManager.Money;
+            money.Money += moneyplus;
+            creditsText.text = "Credits :" + money.Money;
         }
     }
 }

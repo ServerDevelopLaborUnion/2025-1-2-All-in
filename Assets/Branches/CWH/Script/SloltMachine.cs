@@ -90,6 +90,8 @@ public class SloltMachine : MonoBehaviour
 
     public int _spinCoststandard;
 
+    [Header("잡다한거")]
+    [SerializeField] private ShopPanel shopPanel;
     #region 잭팟확률 관련
     [Header("잭팟")]
     public float jackpotChance = 0.00001f;
@@ -331,7 +333,7 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        _haveSpin = 1;
+        _haveSpin -= 1;
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -345,7 +347,6 @@ public class SloltMachine : MonoBehaviour
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
         }
-        _haveSpin = 1;
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
@@ -536,8 +537,8 @@ public class SloltMachine : MonoBehaviour
         if (_this == true) horizontalMatchParticle.Play();
         else horizontalMatchParticle.Stop();
 
-            // 카메라 + UI 동시에 흔들기
-            yield return StartCoroutine(CameraAndMultipleUICanvasShake(0.5f, 0.05f, 5f));
+        // 카메라 + UI 동시에 흔들기
+        yield return StartCoroutine(CameraAndMultipleUICanvasShake(0.5f, 0.05f, 5f));
     }
     private IEnumerator CameraAndMultipleUICanvasShake(float duration, float camMagnitude, float uiMagnitude)
     {
@@ -619,16 +620,7 @@ public class SloltMachine : MonoBehaviour
         _minBetText.text = $"최소 베팅금 : {_minBet.ToString("N0")}원";
         textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
         textChance.text = $" 세로줄 : {_verticalChance * 100}% \n 가로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
-        foreach (var item in items)
-        {
-            Debug.Log("들어옴");
-            if (!item.transform.IsChildOf(bag.transform))
-                continue;
-
-            Debug.Log($"Invoke 시도: {item.name}");
-            var itemOn = item.GetComponent<ItemOn>();
-            itemOn.OnAbilityCast?.Invoke();
-        }
+      
 
         textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
 
@@ -638,6 +630,15 @@ public class SloltMachine : MonoBehaviour
             StartCoroutine(PlayHorizontalMatchEffects());
             _this = false;
         }
+        foreach (var item in items)
+        { 
+            if (!item.transform.IsChildOf(bag.transform))
+                continue;
+
+            var itemOn = item.GetComponent<ItemOn>();
+            itemOn.OnAbilityCast?.Invoke();
+        }
+        shopPanel.PanelDown();
 
         // 아마도 내가 추가함 - 박철민
 

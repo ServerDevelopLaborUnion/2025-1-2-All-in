@@ -1,51 +1,75 @@
 using UnityEngine;
 using DG.Tweening;
-using NUnit.Framework.Constraints;
+using System.Collections;
+using System.Net.NetworkInformation;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
+using TMPro;
 
 public class ShopPanel : MonoBehaviour
 {
+    [SerializeField] private GameObject dontHaveSpin;
+    [SerializeField] private GameObject round1;
     private RectTransform rect;
-    [SerializeField] private bool panelopen = false; // 현재 열렸는지 여부
-    [SerializeField] private DeadLine _deadLine;
-    [SerializeField] private SloltMachine _machine;
-    [SerializeField] GameObject _deadLineText;
+    private bool roundActive;
+    public bool onActive { get; set; }
+    private SloltMachine machine;
+    private DeadLine deadLine;
 
     private void Awake()
     {
+        deadLine = FindAnyObjectByType<DeadLine>();
+        machine = FindAnyObjectByType<SloltMachine>();
         rect = GetComponent<RectTransform>();
     }
     private void Start()
     {
-        rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-        _deadLineText.SetActive(false);
-        panelopen = false;
+        dontHaveSpin.transform .localScale = Vector3.zero;
+        round1.transform.localScale = Vector3.zero;
     }
-    //private void FixedUpdate()
-    //{
-    //    if (_machine.GetCredits() <= 0 && _machine)
-    //    {
-    //        OnClick();
-    //    }
-    //}
-
-    public void OnClick()
+    private void Update()
     {
-        if (_machine.HaveSpin <= 0 || _machine.GetCredits() <= 0)
-        {
-            if (!panelopen)
+        if (onActive == true && Mouse.current.leftButton.wasPressedThisFrame)
+        { 
+            if (deadLine._rounds == 1)
             {
-                rect.DOAnchorPosY(-56f, 1).SetEase(Ease.OutExpo);// 위로 열기
-                _deadLine.MoneyP();
-                _deadLineText.SetActive(true);
-                panelopen = true;
+                round1.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
             }
+            StartCoroutine(Wait());
+            onActive = false;
         }
-        else if (panelopen)
+        
+        if (roundActive == true&& Mouse.current.leftButton.wasPressedThisFrame)
         {
-            _deadLineText.SetActive(false);
-            rect.DOAnchorPosY(-412.5f, 1).SetEase(Ease.OutExpo);// 아래로 닫기
-            panelopen = false;
+            round1.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+            roundActive = false;
         }
+    }
+    public void PanelDown()
+    {
+        if (machine.HaveSpin <= 0)
+        {
+            dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
+            deadLine._rounds -= 1;
+            onActive = true;
+        }
+    }
+    public void PanelUp()
+    {
+        if (deadLine.Oninterest == true)
+        {
+            rect.DOAnchorPosY(500f, 2f).SetEase(Ease.OutQuint, 0.5f);
+        }
+    }
+    private IEnumerator Wait()
+    {
+        dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+        yield return new WaitForSeconds(0.5f);
+        round1.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+        yield return new WaitForSeconds(0.5f);
+        rect.DOAnchorPosY(21f, 3f).SetEase(Ease.OutElastic, 0.5f);
+
     }
 }
+
 
