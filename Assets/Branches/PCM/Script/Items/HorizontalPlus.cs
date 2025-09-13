@@ -3,7 +3,7 @@ using UnityEngine.Rendering;
 
 public class HorizontalPlus : ItemOn
 {
-    public override int probability { get; set; } = 100;
+    public override int probability { get; set; } = 10;
     public override MoneyManager money { get; set; }
     private SloltMachine machine;
     private void Awake()
@@ -29,7 +29,7 @@ public class HorizontalPlus : ItemOn
         if (Random.Range(1,100)<=final)
         {
             Debug.Log("Áõ°¡!");
-            machine._horizontalChance += 0.5f;
+            machine._horizontalChance += 0.05f;
         }
         else
         {

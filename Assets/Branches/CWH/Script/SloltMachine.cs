@@ -631,12 +631,10 @@ public class SloltMachine : MonoBehaviour
             _this = false;
         }
         foreach (var item in items)
-        {
-            Debug.Log("들어옴");
+        { 
             if (!item.transform.IsChildOf(bag.transform))
                 continue;
 
-            Debug.Log($"Invoke 시도: {item.name}");
             var itemOn = item.GetComponent<ItemOn>();
             itemOn.OnAbilityCast?.Invoke();
         }

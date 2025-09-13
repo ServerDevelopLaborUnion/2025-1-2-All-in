@@ -43,7 +43,7 @@ public class DeadLine : MonoBehaviour
     private TargetAmountDown _amountDown;
     private bool _onActived;
 
-    private bool Oninterest;
+    public bool Oninterest { get; set; }
     private ShopPanel shopPanel;
     private void Awake()
     {
@@ -179,8 +179,6 @@ public class DeadLine : MonoBehaviour
             if (!async)
             {
                 //남은 라운드 수 차감
-                _rounds--;
-                Debug.Log(_rounds);
                 //현재 입금된 금액의 x%만큼 돈 지급
                 _moneyManager.Money += abc;
                 _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
