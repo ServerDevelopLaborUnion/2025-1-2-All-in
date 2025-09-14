@@ -656,7 +656,7 @@ public class SloltMachine : MonoBehaviour
             itemOn.OnAbilityCast?.Invoke();
         }
         audio.PlayOneShot(tingSound);
-        shopPanel.PanelDown();
+        shopPanel.PanelDown(); 
 
         // 아마도 내가 추가함 - 박철민
 

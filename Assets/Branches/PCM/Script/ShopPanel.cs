@@ -12,7 +12,7 @@ public class ShopPanel : MonoBehaviour
     [SerializeField] private GameObject round1;
     private RectTransform rect;
     private bool roundActive;
-    public bool onActive { get; set; }
+    [field:SerializeField]public bool onActive { get; set; }
     private SloltMachine machine;
     private DeadLine deadLine;
 
@@ -37,6 +37,7 @@ public class ShopPanel : MonoBehaviour
             }
             StartCoroutine(Wait());
             onActive = false;
+            Debug.Log("µÈ´Ù");
         }
         
         if (roundActive == true&& Mouse.current.leftButton.wasPressedThisFrame)
