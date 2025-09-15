@@ -68,7 +68,7 @@ public class DeadLine : MonoBehaviour
         _inAndOut.gameObject.SetActive(false);
         _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";//데드라인 조건 표시
         _currentBankText.text = $"입금한 금액{_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
-        _stageText.text = $"Stage {_inAndOutint}";
+        _stageText.text = $"Stage {_inAndOutint} - {_rounds}";
 
     }
 
@@ -171,7 +171,7 @@ public class DeadLine : MonoBehaviour
             StartCoroutine(FadeSequence());
             _inAndOutint++;
             StartCoroutine(_sloltMahcin.PlayHorizontalMatchEffects());
-            _stageText.text = $"Stage {_inAndOutint}";
+            _stageText.text = $"Stage {_inAndOutint} - {_rounds}";
             _buttonDisabledOnce = false;
         }
         else if (_bankBook < _condition && _rounds == 0)
