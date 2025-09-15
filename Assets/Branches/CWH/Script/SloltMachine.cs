@@ -160,6 +160,8 @@ public class SloltMachine : MonoBehaviour
             Debug.LogError("카메라 Transform이 할당되지 않았습니다!");
         credits.Money = _startCredits;
         credits.Money = Math.Clamp(credits.Money, 0, long.MaxValue / 2);
+        _horizontalChance = Math.Clamp(_horizontalChance, 0, 0.4f);
+        _verticalChance = Math.Clamp(_verticalChance, 0, 0.4f);
         for (int row = 0; row < 3; row++)
         {
             for (int col = 0; col < 5; col++)
@@ -343,7 +345,7 @@ public class SloltMachine : MonoBehaviour
         else
             ButtonTrue();
 
-            _haveSpin -= 1;
+        _haveSpin -= 1;
         _spinCost = Mathf.Clamp(_spinCost += 2, 1, 10);
         magnification = Mathf.Clamp(magnification + 1, 1, 10);
 
@@ -656,7 +658,7 @@ public class SloltMachine : MonoBehaviour
             itemOn.OnAbilityCast?.Invoke();
         }
         audio.PlayOneShot(tingSound);
-        shopPanel.PanelDown(); 
+        shopPanel.PanelDown();
 
         // 아마도 내가 추가함 - 박철민
 
