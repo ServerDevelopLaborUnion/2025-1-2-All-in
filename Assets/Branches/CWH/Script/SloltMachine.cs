@@ -151,11 +151,11 @@ public class SloltMachine : MonoBehaviour
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
-        credits = MoneyManager.Instance;
     }
 
     private void Start()
     {
+        credits = MoneyManager.Instance;
         if (cameraTransform == null)
             Debug.LogError("카메라 Transform이 할당되지 않았습니다!");
         credits.Money = _startCredits;
