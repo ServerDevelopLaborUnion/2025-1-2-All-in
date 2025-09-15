@@ -103,13 +103,13 @@ TextureImporter:
       name: AllinButton3_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 0
         y: 0
-        width: 71
+        width: 90
         height: 80
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 22, y: 37, z: 44, w: 38}
+      border: {x: 0, y: 0, z: 8, w: 0}
       customData: 
       outline: []
       physicsShape: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 81e2076ea667d5440bf87f9e3b19b894
+    spriteID: 4344e0831c4ac214c9870d7334fd33a1
     internalID: 0
     vertices: []
     indices: 

@@ -16,6 +16,8 @@ public class ShopPanel : MonoBehaviour
     private SloltMachine machine;
     private DeadLine deadLine;
 
+    private bool isAnimating = false;
+
     private void Awake()
     {
         deadLine = FindAnyObjectByType<DeadLine>();
@@ -29,22 +31,43 @@ public class ShopPanel : MonoBehaviour
     }
     private void Update()
     {
+        // 애니메이션 중이면 입력 무시
+        if (isAnimating) return;
+
         if (onActive == true && Mouse.current.leftButton.wasPressedThisFrame)
-        { 
+        {
             if (deadLine._rounds == 1)
             {
-                round1.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
+                StartCoroutine(ShowRound1());
             }
             StartCoroutine(Wait());
             onActive = false;
-            Debug.Log("된다");
         }
-        
-        if (roundActive == true&& Mouse.current.leftButton.wasPressedThisFrame)
+
+        if (roundActive == true && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            round1.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
-            roundActive = false;
+            StartCoroutine(HideRound1());
         }
+    }
+
+    private IEnumerator ShowRound1()
+    {
+        isAnimating = true;
+        round1.transform.DOKill();
+        yield return round1.transform
+            .DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f)
+            .WaitForCompletion();
+        isAnimating = false;
+    }
+
+    private IEnumerator HideRound1()
+    {
+        isAnimating = true;
+        round1.transform.DOKill();
+        yield return round1.transform
+            .DOScale(new Vector3(2.7f, 0, 0), 0.3f)
+            .WaitForCompletion();
+        isAnimating = false;
     }
     public void PanelDown()
     {
@@ -64,12 +87,23 @@ public class ShopPanel : MonoBehaviour
     }
     private IEnumerator Wait()
     {
+        isAnimating = true;
+
+        dontHaveSpin.transform.DOKill();
+        round1.transform.DOKill();
+        rect.DOKill();
+
         dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
         yield return new WaitForSeconds(0.5f);
+
         round1.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
         yield return new WaitForSeconds(0.5f);
-        rect.DOAnchorPosY(21f, 3f).SetEase(Ease.OutElastic, 0.5f);
 
+        yield return rect.DOAnchorPosY(21f, 3f)
+            .SetEase(Ease.OutElastic, 0.5f)
+            .WaitForCompletion();
+
+        isAnimating = false;
     }
 }
 
