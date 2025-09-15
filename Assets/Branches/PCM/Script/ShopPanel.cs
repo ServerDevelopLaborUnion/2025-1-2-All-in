@@ -59,7 +59,7 @@ public class ShopPanel : MonoBehaviour
     {
         if (deadLine.Oninterest == true)
         {
-            rect.DOAnchorPosY(500f, 2f).SetEase(Ease.OutQuint, 0.5f);
+            rect.DOAnchorPosY(1200f, 2f).SetEase(Ease.OutQuint, 0.5f);
         }
     }
     private IEnumerator Wait()

@@ -42,6 +42,7 @@ public class Btns : MonoBehaviour
         {
             Dead.SetActive(true);
         }
+        else return;
     }
 
     public void Reset()
