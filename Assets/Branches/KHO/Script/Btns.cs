@@ -3,15 +3,15 @@ using UnityEngine.SceneManagement;
 
 public class Btns : MonoBehaviour
 {
-    [SerializeField] private GameObject _sginupPanel;
+    [SerializeField] private GameObject _signupPanel;
     [SerializeField] private GameObject Dead;
     [SerializeField] private SloltMachine SloltMachine;
 
     private void Start()
     {
-        if (_sginupPanel != null)
+        if (_signupPanel != null)
         {
-            _sginupPanel.SetActive(false);
+            _signupPanel.SetActive(false);
         }
         if (Dead != null)
         {
@@ -24,15 +24,15 @@ public class Btns : MonoBehaviour
         Application.Quit();
     }
 
-    public void SginupOnOff()
+    public void SignupOnOff()
     {
-        if (!_sginupPanel.activeSelf)
+        if (!_signupPanel.activeSelf)
         {
-            _sginupPanel.SetActive(true);
+            _signupPanel.SetActive(true);
         }
         else
         {
-            _sginupPanel.SetActive(false);
+            _signupPanel.SetActive(false);
         }
     }
 
