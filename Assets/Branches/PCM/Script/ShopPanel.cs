@@ -38,7 +38,7 @@ public class ShopPanel : MonoBehaviour
 
         if (onActive == true && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (deadLine._rounds == 1)
+            if (deadLine._compensation == 1)
             {
                 StartCoroutine(ShowRound1());
             }
@@ -76,7 +76,7 @@ public class ShopPanel : MonoBehaviour
         if (machine.HaveSpin <= 0)
         {
             dontHaveSpin.transform.DOScale(new Vector3(1, 1, 0), 0.7f);
-            deadLine._rounds -= 1;
+            deadLine._compensation -= 1;
             onActive = true;
         }
     }

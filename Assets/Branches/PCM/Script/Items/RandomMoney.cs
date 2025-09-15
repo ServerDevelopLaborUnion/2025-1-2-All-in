@@ -26,7 +26,7 @@ public class RandomMoney : ItemOn
 
         money.Money += a;
         Debug.Log(money.Money);
-        creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
+        creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}원";
 
     }
 }

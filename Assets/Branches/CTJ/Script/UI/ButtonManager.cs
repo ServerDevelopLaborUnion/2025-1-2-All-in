@@ -7,6 +7,7 @@ public class ButtonManager : MonoBehaviour
 {
     [SerializeField] GameObject menuPanel;
     [SerializeField] GameObject settingPanel;
+    [SerializeField] private GameObject loginPanel;
 
     bool _onMenu = false;
     bool _onSettingPanel = false;
@@ -41,7 +42,7 @@ public class ButtonManager : MonoBehaviour
     }
     public void Starts()
     {
-        SceneManager.LoadScene("Login");
+
     }
     public void OnOffSettingPanel()
     {
@@ -54,6 +55,18 @@ public class ButtonManager : MonoBehaviour
         {
             settingPanel.SetActive(false);
             _onSettingPanel = false;
+        }
+    }
+
+    public void OnLogin()
+    {
+        if (!loginPanel)
+        {
+            loginPanel.SetActive(true);
+        }
+        else
+        {
+            loginPanel.SetActive(false);
         }
     }
 }
