@@ -55,7 +55,7 @@ public class ShopPanel : MonoBehaviour
         isAnimating = true;
         round1.transform.DOKill();
         yield return round1.transform
-            .DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f)
+            .DOScale(new Vector3(1, 1, 0), 0.7f)
             .WaitForCompletion();
         isAnimating = false;
     }
@@ -65,7 +65,7 @@ public class ShopPanel : MonoBehaviour
         isAnimating = true;
         round1.transform.DOKill();
         yield return round1.transform
-            .DOScale(new Vector3(2.7f, 0, 0), 0.3f)
+            .DOScale(new Vector3(1, 0, 0), 0.3f)
             .WaitForCompletion();
         isAnimating = false;
     }
@@ -73,7 +73,7 @@ public class ShopPanel : MonoBehaviour
     {
         if (machine.HaveSpin <= 0)
         {
-            dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0.26f, 0), 0.7f);
+            dontHaveSpin.transform.DOScale(new Vector3(1, 1, 0), 0.7f);
             deadLine._rounds -= 1;
             onActive = true;
         }
@@ -93,10 +93,10 @@ public class ShopPanel : MonoBehaviour
         round1.transform.DOKill();
         rect.DOKill();
 
-        dontHaveSpin.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+        dontHaveSpin.transform.DOScale(new Vector3(1, 0, 0), 0.3f);
         yield return new WaitForSeconds(0.5f);
 
-        round1.transform.DOScale(new Vector3(2.7f, 0, 0), 0.3f);
+        round1.transform.DOScale(new Vector3(1, 0, 0), 0.3f);
         yield return new WaitForSeconds(0.5f);
 
         yield return rect.DOAnchorPosY(21f, 3f)
