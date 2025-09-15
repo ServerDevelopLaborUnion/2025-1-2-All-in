@@ -3,40 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Hierarchy;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class RankUP : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _txte;
+    private TextMeshProUGUI _text;
     private bool _active = true;
-    
+    private float _currentTime = 0;
+    private float _rankUpdateTime = 30f;
 
-    void Update()
+
+    private void Awake()
     {
-        if (Keyboard.current.rKey.wasPressedThisFrame && _active)
+        _text = GetComponent<TextMeshProUGUI>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(TypeRankText(_text));
+    }
+
+    private void Update()
+    {
+        _currentTime += Time.deltaTime;
+        if (_currentTime >= _rankUpdateTime)
         {
-            //RankText(_txte);
-
-            StartCoroutine(TypeRankText(_txte));
-
-
-            //List<string> rank = BackEndRank.Instance.RankGet();
-            //if (rank == null)
-            //{
-            //    _txte.text = string.Empty;
-            //    return;
-            //}
-
-            //_txte.text = string.Empty;
-
-            //foreach (string rankItem in rank)
-            //{ 
-            //    _txte.text += rankItem;
-            //}
+            _currentTime = 0;
+            StartCoroutine(TypeRankText(_text));
         }
     }
 
+
+
+    //좋은데 느낌이 안살아남
     public void RankText(TextMeshProUGUI ranktext)
     {
         int rankMark = 10;

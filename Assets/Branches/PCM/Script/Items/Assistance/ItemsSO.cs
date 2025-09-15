@@ -1,4 +1,3 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +7,7 @@ public class ItemsSO : ScriptableObject
 {
     public Sprite image;
     public GameObject itemPrefab;
-    public int money;
-    
+    public long money;
+    public string itemName;
+    public string itemInformation;
 }

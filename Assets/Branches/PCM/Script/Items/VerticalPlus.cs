@@ -1,10 +1,16 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class VerticalPlus : ItemOn
 {
     public override int probability { get; set; } = 10;
-    [SerializeField] private SloltMachine machine;
+    public override MoneyManager money { get; set; }
+     private SloltMachine machine;
+    private void Awake()
+    {
+        machine = FindAnyObjectByType<SloltMachine>();
+    }
     private void Update()
     {
         if (Keyboard.current.eKey.wasPressedThisFrame)
@@ -14,6 +20,7 @@ public class VerticalPlus : ItemOn
     }
     public override void Itemon()
     {
+        base.Itemon();
         verticalPlus();
     }
     private void verticalPlus()
@@ -22,7 +29,7 @@ public class VerticalPlus : ItemOn
         if(Random.Range(1,100)<= final)
         {
             Debug.Log(final);
-            machine.VerticalChance += 0.5f;
+            machine.VerticalChance += 0.05f;
         }
     }
 }

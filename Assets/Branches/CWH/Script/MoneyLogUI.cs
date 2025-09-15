@@ -1,13 +1,14 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MoneyLogUI : MonoBehaviour
 {
-    public Transform content;        
-    public GameObject logTextPrefab;  
-    public ScrollRect scrollRect;     
-    public int maxLogs = 5;              
+    public Transform content;
+    public GameObject logTextPrefab;
+    public ScrollRect scrollRect;
+    public int maxLogs = 5;
 
     public void AddLog(string message, Color color)
     {
@@ -23,5 +24,12 @@ public class MoneyLogUI : MonoBehaviour
 
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 0f;
+
+        StartCoroutine(DeleteAfterTime(newLog, 60f));
+    }
+    IEnumerator DeleteAfterTime(GameObject log, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (log != null) Destroy(log);
     }
 }

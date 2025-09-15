@@ -4,16 +4,15 @@ using UnityEngine.InputSystem;
 public class ProbabilityPlus : ItemOn
 {
     public override int probability { get; set;}
+    public override MoneyManager money { get; set; }
 
     private void Update()
     {
-        if (Keyboard.current.aKey.wasPressedThisFrame)
-        {
-            Itemon();
-        }
+        
     }
     public override void Itemon()
     {
+        base.Itemon();
         probabilityPlus();
     }
     private void probabilityPlus()

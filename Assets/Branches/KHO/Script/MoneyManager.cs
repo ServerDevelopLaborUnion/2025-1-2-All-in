@@ -5,12 +5,17 @@ public class MoneyManager : MonoBehaviour
 {
     private long _money = 0;
     private long _bestMoney;
+    private int _rankmin = 150000;
+    public bool Dead { get; private set; } = false;
     public long Money
     {
         get => _money;
         set
         {
             long max = long.MaxValue;
+
+            if (_money == 0 && value <= 0)
+                Dead = true;
 
             if (value < 0)
                 _money = 0;
@@ -19,7 +24,7 @@ public class MoneyManager : MonoBehaviour
             else
                 _money = value;
 
-            if (_money > _bestMoney && _money >= 100000)
+            if (_money > _bestMoney && _money >= _rankmin)
                BestMoney = _money;
                 
         }
@@ -65,7 +70,7 @@ public class MoneyManager : MonoBehaviour
     }
     private void Update()
     {
-        Debug.Log(_bestMoney);
+        //Debug.Log(_bestMoney);
     }
 
 

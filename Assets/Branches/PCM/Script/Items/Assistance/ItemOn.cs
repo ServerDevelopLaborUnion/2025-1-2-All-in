@@ -4,28 +4,21 @@ using UnityEngine;
 
 public abstract class ItemOn : MonoBehaviour
 {
-    public abstract int probability { get; set; } 
+    public abstract int probability { get; set; }
     public Action OnAbilityCast;
-    public static int probabilityplus;
-    private void Awake()
-    {    
-        
-        OnAbilityCast += ItemsCheck;
-    }
+    public int probabilityplus;
+    public abstract MoneyManager money { get; set; }
+
     private void Start()
     {
-        probability += probabilityplus;
+        money = MoneyManager.Instance;
+        OnAbilityCast += Itemon;
+        SloltMachine slolt = FindAnyObjectByType<SloltMachine>();
     }
-    // 아이템이 가방에 들어있는지 확인
-    public void ItemsCheck()
-    {
-            Itemon(); // 자식에서 오버라이드 가능        
-    }
-
-    
+    // 아이템이 가방에 들어있는지 확인    
     public virtual void Itemon()
     {
-     
+        Debug.Log("된다");
     }
 }
 

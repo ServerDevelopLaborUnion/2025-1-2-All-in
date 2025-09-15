@@ -5,12 +5,20 @@ using UnityEngine.Rendering;
 public class SlotRefund : ItemOn
 {
     public override int probability { get; set; } = 100;
-    [SerializeField]private SloltMachine machine;
-    [SerializeField] private MoneyManager moneyManager;
-    [SerializeField] private TextMeshProUGUI creditsText;
+    public override MoneyManager money { get; set; }
+     private SloltMachine machine;
+    private MoneyManager moneyManager;
+    private TextMeshProUGUI creditsText;
 
+    private void Start()
+    {
+        machine = FindAnyObjectByType<SloltMachine>();
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+        moneyManager = MoneyManager.Instance;
+    }
     public override void Itemon()
     {
+        base.Itemon();
         slotrefund();
     }
     private void slotrefund()
@@ -23,7 +31,7 @@ public class SlotRefund : ItemOn
             if (Random.Range(0, 100) <= final)
             {
                 moneyManager.Money += (currentBet / 10);
-                creditsText.text = "Credit" + moneyManager.Money;
+                creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
                 Debug.Log("야 된다!");
             }
         }

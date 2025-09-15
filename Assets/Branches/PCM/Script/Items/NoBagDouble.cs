@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class NoBagDouble : ItemOn
 {
-    public override int probability { get ; set; }
+    [SerializeField] private GameObject bag;
+    public override int probability { get; set; }
+    public override MoneyManager money { get; set; }
 
-    private void noBagDouble()
+    public bool Nobagdouble()
     {
-        
+        if (bag.transform.childCount >= 1)
+        {
+            Destroy(gameObject);
+        }
+        return true;
     }
 }

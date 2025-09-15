@@ -15,3 +15,6 @@ MonoBehaviour:
   image: {fileID: 3013467233978981376, guid: 0c4b10f7a74b79a4fb3fe6a7519f1d26, type: 3}
   itemPrefab: {fileID: 231489786468669705, guid: dc0f65023d04f064faf2002000fcb112, type: 3}
   money: 1000
+  itemName: "\uB370\uC2A4 \uCE74\uC6B4\uD2B8"
+  itemInformation: "\uB3C8\uC774 0\uC774 \uB418\uC5C8\uC744\uB54C \uB3C8\uC744 10000\uC6D0\uACFC
+    \uD2F0\uCF13 2\uAC1C\uB97C \uCD94\uAC00\uB85C \uC9C0\uAE09\uD55C\uB2E4"

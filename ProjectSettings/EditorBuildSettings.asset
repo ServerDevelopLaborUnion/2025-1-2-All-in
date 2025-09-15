@@ -17,9 +17,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Branches/KHO/Scene/Machine.unity
     guid: eae67502d56ccf6478cf80eec8c5c7b8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Branches/CTJ/Scene/CTJMachine.unity
     guid: 3a0854329bb971e4aaf46a671d62bc65
+  - enabled: 1
+    path: Assets/Branches/PCM/Scene/Title.unity
+    guid: d9b174233e87d9d4e92f9dc430f1c1e6
+  - enabled: 1
+    path: Assets/Branches/KHO/Scene/Login.unity
+    guid: cfc33fa27ea91f74fb477cb80fda6728
+  - enabled: 1
+    path: Assets/Branches/PCM/Scene/CTJMachine.unity
+    guid: 3ad6206793819ce4e96e2237c7272755
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -4,18 +4,29 @@ using UnityEngine;
 public class RandomMoney : ItemOn
 {
     public override int probability { get; set; }
-    [SerializeField] private MoneyManager moneyManager;
-    [SerializeField] private TextMeshProUGUI creditsText;
+    public override MoneyManager money { get; set; }
 
+    private TextMeshProUGUI creditsText;
+    private void Awake()
+    {
+
+        creditsText = GameObject.Find("Credits").GetComponent<TextMeshProUGUI>();
+    }
     public override void Itemon()
     {
-        RandMoney();
+        base.Itemon();
+        if (gameObject != null)
+        {
+            RandMoney();
+        }
     }
     private void RandMoney()
     {
-        long money = Random.Range(4000, 15000);
-        moneyManager.Money += money;
-        creditsText.text = "Credits :" + moneyManager.Money;
+        long a = Random.Range(4000, 15000);
+
+        money.Money += a;
+        Debug.Log(money.Money);
+        creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
 
     }
 }
