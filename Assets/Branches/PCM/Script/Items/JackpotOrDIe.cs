@@ -16,7 +16,7 @@ public class JackpotOrDie : ItemOn
     }
     private void Update()
     {
-        if (Keyboard.current.jKey.wasPressedThisFrame)
+        if (Keyboard.current.fKey.wasPressedThisFrame)
         {
             machine.jackpotChance = 0.25f;
             onAbility = true;
@@ -37,7 +37,7 @@ public class JackpotOrDie : ItemOn
         if (!isJackpot)
         {
             money.Money = 0;
-            creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
+            creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}원";
             machine.jackpotChance = 0.00001f;
         }
         else
