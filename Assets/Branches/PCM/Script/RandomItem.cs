@@ -17,7 +17,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     private MoneyManager moneymahine;
     [SerializeField] private GameObject bag;
     [SerializeField] private Sprite _soldOut;
-    [SerializeField]private SloltMachine machine; 
+    [SerializeField] private SloltMachine machine;
 
     // 모든 슬롯이 공유하는 전역 풀
     public static List<ItemsSO> drawItem = new List<ItemsSO>();
@@ -27,7 +27,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public GameObject infoPanel;
     [SerializeField] private TextMeshProUGUI _itemName;
     [SerializeField] private TextMeshProUGUI _itemInformation;
-    [SerializeField]private TextMeshProUGUI credits;
+    [SerializeField] private TextMeshProUGUI credits;
     private AudioSource audio;
     [SerializeField] private AudioClip reroll;
 
@@ -130,17 +130,20 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         if (infoPanel != null)
         {
-            infoPanel.SetActive(true);
+            if (_skillimage.sprite != _soldOut)
+            {
+                infoPanel.SetActive(true);
 
-            if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
-            {
-                _itemName.text = drawItem[_randitem].itemName;
-                _itemInformation.text = drawItem[_randitem].itemInformation;
-            }
-            else
-            {
-                _itemName.text = "";
-                _itemInformation.text = "";
+                if (_randitem >= 0 && _randitem < drawItem.Count && drawItem[_randitem] != null)
+                {
+                    _itemName.text = drawItem[_randitem].itemName;
+                    _itemInformation.text = drawItem[_randitem].itemInformation;
+                }
+                else
+                {
+                    _itemName.text = "";
+                    _itemInformation.text = "";
+                }
             }
         }
     }
