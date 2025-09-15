@@ -6,7 +6,7 @@ public class MoneyManager : MonoBehaviour
     private long _money = 0;
     private long _bestMoney;
     private int _rankmin = 150000;
-    public bool Dead { get; private set; } = false;
+    public bool Dead { get; set; } = false;
     public long Money
     {
         get => _money;
