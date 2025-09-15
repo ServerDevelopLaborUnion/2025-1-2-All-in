@@ -8,6 +8,8 @@ public class ShopBuyTicket : MonoBehaviour
     [SerializeField] private SloltMachine machine;
     [SerializeField] private AudioClip purchaseSound;
     private AudioSource audio;
+    public bool _3onActive { get; set; } = false;
+    public bool _7onActive { get; set; } = false;
 
     private void Awake()
     {
@@ -36,21 +38,27 @@ public class ShopBuyTicket : MonoBehaviour
     }
     public void Buy3()
     {
-        Debug.Log("e");
-        BuyTicket(3, 300);
-        machine.pullButton.interactable = true;
-        machine.minBetButton.interactable = true;
-        machine.maxBetButton.interactable = true;
-        audio.PlayOneShot(purchaseSound);
+        if (!_3onActive)
+        {
+            BuyTicket(10, 3000);
+            machine.pullButton.interactable = true;
+            machine.minBetButton.interactable = true;
+            machine.maxBetButton.interactable = true;
+            audio.PlayOneShot(purchaseSound);
+        }
+        _3onActive = true;
     }
     public void Buy7()
     {
-
-        BuyTicket(7, 1000);
-        machine.pullButton.interactable = true;
-        machine.minBetButton.interactable = true;
-        machine.maxBetButton.interactable = true;
-        audio.PlayOneShot(purchaseSound);
+        if (!_7onActive)
+        {
+            BuyTicket(20, 7000);
+            machine.pullButton.interactable = true;
+            machine.minBetButton.interactable = true;
+            machine.maxBetButton.interactable = true;
+            audio.PlayOneShot(purchaseSound);
+        }
+        _7onActive = true;
     }
 
 }

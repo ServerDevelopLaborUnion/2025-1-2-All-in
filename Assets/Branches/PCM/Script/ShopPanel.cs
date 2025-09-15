@@ -15,6 +15,7 @@ public class ShopPanel : MonoBehaviour
     [field:SerializeField]public bool onActive { get; set; }
     private SloltMachine machine;
     private DeadLine deadLine;
+    private ShopBuyTicket _buyTicket;
 
     private bool isAnimating = false;
 
@@ -23,6 +24,7 @@ public class ShopPanel : MonoBehaviour
         deadLine = FindAnyObjectByType<DeadLine>();
         machine = FindAnyObjectByType<SloltMachine>();
         rect = GetComponent<RectTransform>();
+        _buyTicket = FindAnyObjectByType<ShopBuyTicket>();
     }
     private void Start()
     {
@@ -84,6 +86,8 @@ public class ShopPanel : MonoBehaviour
         {
             rect.DOAnchorPosY(1200f, 2f).SetEase(Ease.OutQuint, 0.5f);
         }
+        _buyTicket._3onActive = false;
+        _buyTicket._7onActive = false;
     }
     private IEnumerator Wait()
     {
