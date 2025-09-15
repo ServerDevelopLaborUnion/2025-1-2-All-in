@@ -38,7 +38,7 @@ public class Btns : MonoBehaviour
 
     private void Update()
     {
-        if (MoneyManager.Instance.Dead)
+        if (MoneyManager.Instance != null && MoneyManager.Instance.Dead)
         {
             Dead.SetActive(true);
         }
