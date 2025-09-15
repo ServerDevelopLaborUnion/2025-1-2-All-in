@@ -47,6 +47,7 @@ public class Btns : MonoBehaviour
 
     public void Reset()
     {
+        MoneyManager.Instance.Dead = false;
         SceneManager.LoadScene("CTJMachine");
     }
 }
