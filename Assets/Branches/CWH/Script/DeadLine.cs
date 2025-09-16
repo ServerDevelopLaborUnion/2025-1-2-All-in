@@ -191,8 +191,6 @@ public class DeadLine : MonoBehaviour
             bool async = false;
             if (!async)
             {
-                _rounds++;
-                _compensation--;
                 //남은 라운드 수 차감
                 //현재 입금된 금액의 x%만큼 돈 지급
                 _moneyManager.Money += abc;

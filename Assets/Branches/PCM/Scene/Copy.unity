@@ -459,6 +459,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4277376976039449558}
     - target: {fileID: 486794203311958110, guid: 1bcdeaa98bdf2e543b6d175faeec77c9, type: 3}
+      propertyPath: _compensation
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 486794203311958110, guid: 1bcdeaa98bdf2e543b6d175faeec77c9, type: 3}
       propertyPath: _inAndOutText
       value: 
       objectReference: {fileID: 674963223}
@@ -4397,6 +4401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 762228474}
   settingPanel: {fileID: 1856059020}
+  loginPanel: {fileID: 0}
 --- !u!4 &671746158
 Transform:
   m_ObjectHideFlags: 0
@@ -17889,7 +17894,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3757c85f3b8b01d4d985af7d6ff14440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sginupPanel: {fileID: 0}
+  _signupPanel: {fileID: 0}
   Dead: {fileID: 275712291}
   SloltMachine: {fileID: 0}
 --- !u!1 &1757038207
@@ -23962,10 +23967,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6919658781551644442}
     m_Modifications:
-    - target: {fileID: 1798013206884280540, guid: 420f8dc5fa5941649a84c0cc336b1864, type: 3}
-      propertyPath: m_Name
-      value: MoneyPlus
-      objectReference: {fileID: 0}
     - target: {fileID: 4059527641721308209, guid: 57112cb1277f14842a0d10f676a0d2b3, type: 3}
       propertyPath: m_Colors.m_PressedColor.b
       value: 1
@@ -24134,6 +24135,10 @@ PrefabInstance:
       propertyPath: _itemInformation
       value: 
       objectReference: {fileID: 1163786312}
+    - target: {fileID: 1798013206884280540, guid: 420f8dc5fa5941649a84c0cc336b1864, type: 3}
+      propertyPath: m_Name
+      value: MoneyPlus
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
