@@ -1886,9 +1886,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 244868923}
+      - m_Target: {fileID: 671746156}
         m_TargetAssemblyTypeName: TableMovement, Assembly-CSharp
-        m_MethodName: TableSets
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
