@@ -3,15 +3,19 @@ using UnityEngine;
 public class NoBagDouble : ItemOn
 {
     [SerializeField] private GameObject bag;
-    public override int probability { get; set; }
+    public override int probability { get; set; } = 30;
     public override MoneyManager money { get; set; }
 
     public bool Nobagdouble()
     {
-        if (bag.transform.childCount >= 1)
+        int final = probability + probabilityplus;
+        if (Random.Range(0, 100 )< final)
         {
-            Destroy(gameObject);
+            return true;
         }
-        return true;
+        else
+        {
+            return false;
+        }
     }
 }

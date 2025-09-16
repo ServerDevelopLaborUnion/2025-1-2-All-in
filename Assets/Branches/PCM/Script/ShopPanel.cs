@@ -90,6 +90,8 @@ public class ShopPanel : MonoBehaviour
         }
         _buyTicket._3onActive = false;
         _buyTicket._7onActive = false;
+        _buyTicket.text3.text = "품절";
+        _buyTicket.text7.text = "품절";
     }
     private IEnumerator Wait()
     {

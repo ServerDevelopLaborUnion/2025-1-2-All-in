@@ -734,7 +734,7 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 보너스!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
-                if (noBag != null)
+                if (noBag != null&& noBag.Nobagdouble())
                 {
                     if (noBag.Nobagdouble())
                     {

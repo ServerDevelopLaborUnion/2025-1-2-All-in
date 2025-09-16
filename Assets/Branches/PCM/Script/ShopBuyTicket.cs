@@ -5,11 +5,11 @@ public class ShopBuyTicket : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField] private TextMeshProUGUI ticketText;
-    [SerializeField] private TextMeshProUGUI text7;
-    [SerializeField] private TextMeshProUGUI text3;
     [SerializeField] private SloltMachine machine;
     [SerializeField] private AudioClip purchaseSound;
     private AudioSource audio;
+    [field:SerializeField] public TextMeshProUGUI text7 {  get; set; }
+    [field:SerializeField] public TextMeshProUGUI text3 {  get; set; }
     public bool _3onActive { get; set; } = false;
     public bool _7onActive { get; set; } = false;
 
