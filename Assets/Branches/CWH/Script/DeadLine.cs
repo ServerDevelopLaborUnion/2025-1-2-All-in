@@ -130,9 +130,12 @@ public class DeadLine : MonoBehaviour
                 _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신\
                 logUI.AddLog($"-{aaa.ToString("N0")} 입금 : {_moneyManager.Money.ToString("N0")}", Color.red);
                 _currentBankText.text = $"입금한 금액: {_bankBook.ToString("N0")}";//현재까지 입금된 금액 표시
+
             }
             else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
             audio.PlayOneShot(moneysound);
+                long abc = _bankBook * aa / 100;
+            _interestText.text = "이자:" + abc.ToString();
         }
     }
 

@@ -13,10 +13,7 @@ public class HorizontalPlus : ItemOn
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W))
-        {
-            Itemon();
-        }
+       
     }
     public override void Itemon()
     {

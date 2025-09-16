@@ -75,6 +75,7 @@ public class ShopPanel : MonoBehaviour
     {
         if (machine.HaveSpin <= 0)
         {
+            Debug.Log("µé¾î¿È");
             dontHaveSpin.transform.DOScale(new Vector3(1, 1, 0), 0.7f);
             deadLine._compensation -= 1;
             deadLine._rounds += 1;
