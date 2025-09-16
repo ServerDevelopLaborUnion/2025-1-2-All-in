@@ -31,7 +31,7 @@ public class SlotRefund : ItemOn
             if (Random.Range(0, 100) <= final)
             {
                 moneyManager.Money += (currentBet / 10);
-                creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
+                creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}원";
                 Debug.Log("야 된다!");
             }
         }

@@ -29,7 +29,8 @@ public class DeadLine : MonoBehaviour
 
     [field: SerializeField] public long _condition { get; set; } = 100000;
 
-    public int _rounds = 3;
+    public int _compensation = 3;
+    public int _rounds = 1;
     private bool a;
     [SerializeField] private TextMeshProUGUI _creditsText;
     [SerializeField] private TextMeshProUGUI _conditionText;
@@ -162,10 +163,11 @@ public class DeadLine : MonoBehaviour
         if (_bankBook >= _condition)
         {
             StopBlink();
-            _sloltMahcin.HaveSpin += _rounds * 2;
+            _sloltMahcin.HaveSpin += _compensation * 2;
             _sloltMahcin.ButtonTrue();
             _condition *= 2;
-            _rounds = 3;
+            _compensation = 3;
+            _rounds = 1;
             _conditionText.text = $"데드라인 : {_condition.ToString("N0")}";
             _sloltMahcin.UpdateMagnificationUI();
             StartCoroutine(FadeSequence());
@@ -174,7 +176,7 @@ public class DeadLine : MonoBehaviour
             _stageText.text = $"Stage {_inAndOutint} - {_rounds}";
             _buttonDisabledOnce = false;
         }
-        else if (_bankBook < _condition && _rounds == 0)
+        else if (_bankBook < _condition && _compensation <= 0)
         {
             Dead.SetActive(true);
             a = true;
@@ -189,10 +191,13 @@ public class DeadLine : MonoBehaviour
             bool async = false;
             if (!async)
             {
+                _rounds++;
+                _compensation--;
                 //남은 라운드 수 차감
                 //현재 입금된 금액의 x%만큼 돈 지급
                 _moneyManager.Money += abc;
                 _creditsText.text = $"보유 금액 : {_moneyManager.Money.ToString("N0")}";//현재 소유한 금액 갱신
+                _stageText.text = $"Stage {_inAndOutint} - {_rounds}";
                 logUI.AddLog($"+{abc.ToString("N0")} 이자 : {_moneyManager.Money.ToString("N0")}", Color.green);
 
             }
@@ -244,7 +249,7 @@ public class DeadLine : MonoBehaviour
         _inAndOut.gameObject.SetActive(true);
 
         yield return StartCoroutine(_inAndOut.StartFadeIn());
-        _inAndOutText.text = $"{_inAndOutint} 스테이지";
+        _inAndOutText.text = $"{_inAndOutint} - {_rounds} 스테이지";
         yield return new WaitForSeconds(0.6f);
         yield return StartCoroutine(_inAndOut.StartFadeStart());
 

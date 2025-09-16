@@ -58,7 +58,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         Debug.Log(moneymahine.Money.ToString("N0") + "됨");
         moneymahine.Money -= 1000;
         Debug.Log(moneymahine.Money.ToString("N0") + "됨");
-        creditsText.text = $"보유 금액 : {moneymahine.Money.ToString("N0")}";
+        creditsText.text = $"보유 금액 : {moneymahine.Money.ToString("N0")}원";
 
     }
     // 모든 슬롯이 동시에 랜덤 돌리는 함수
@@ -107,7 +107,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             ItemsSO data = drawItem[_randitem];
             moneymahine.Money -= data.money;
-            creditsText.text = $"보유 금액 : {moneymahine.Money.ToString("N0")}";
+            creditsText.text = $"보유 금액 : {moneymahine.Money.ToString("N0")}원";
 
             GameObject items = Instantiate(data.itemPrefab, bag.transform);
             items.SetActive(true);
