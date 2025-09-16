@@ -150,7 +150,6 @@ public class SloltMachine : MonoBehaviour
     private DeadLine _deadLine;
 
     public bool maxCheck;
-    [SerializeField] private DeadLine _deadLine;
     private void Awake()
     {
         _deadLine = FindAnyObjectByType<DeadLine>();
