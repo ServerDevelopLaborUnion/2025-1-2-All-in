@@ -87,11 +87,11 @@ public class ShopPanel : MonoBehaviour
         if (deadLine.Oninterest == true)
         {
             rect.DOAnchorPosY(1200f, 2f).SetEase(Ease.OutQuint, 0.5f);
+            _buyTicket._3onActive = false;
+            _buyTicket._7onActive = false;
+            _buyTicket.text3.text = "3000원";
+            _buyTicket.text7.text = "7000원";
         }
-        _buyTicket._3onActive = false;
-        _buyTicket._7onActive = false;
-        _buyTicket.text3.text = "3000원";
-        _buyTicket.text7.text = "7000원";
     }
     private IEnumerator Wait()
     {
