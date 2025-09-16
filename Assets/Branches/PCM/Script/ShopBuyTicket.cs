@@ -10,8 +10,8 @@ public class ShopBuyTicket : MonoBehaviour
     private AudioSource audio;
     [field:SerializeField] public TextMeshProUGUI text7 {  get; set; }
     [field:SerializeField] public TextMeshProUGUI text3 {  get; set; }
-    public bool _3onActive { get; set; } = false;
-    public bool _7onActive { get; set; } = false;
+    [field:SerializeField]public bool _3onActive { get; set; } = false;
+    [field:SerializeField]public bool _7onActive { get; set; } = false;
 
     private void Awake()
     {
@@ -49,8 +49,8 @@ public class ShopBuyTicket : MonoBehaviour
             audio.PlayOneShot(purchaseSound);
             text3.text = "품절";
             text3.color = Color.red;
+            _3onActive = true;
         }
-        _3onActive = true;
     }
     public void Buy7()
     {
@@ -63,8 +63,8 @@ public class ShopBuyTicket : MonoBehaviour
             audio.PlayOneShot(purchaseSound);
             text7.text = "품절";
             text7.color = Color.red;
+            _7onActive = true;
         }
-        _7onActive = true;
     }
 
 }
