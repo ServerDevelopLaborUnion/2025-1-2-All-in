@@ -31,7 +31,7 @@ public class MoneyPlus : ItemOn
         if (Random.Range(0, 100) <= final)
         {
             money.Money += moneyplus;
-            creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}";
+            creditsText.text = $"보유 금액 : {money.Money.ToString("N0")}원";
         }
     }
 }

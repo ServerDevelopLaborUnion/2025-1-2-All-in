@@ -18,7 +18,7 @@ public abstract class ItemOn : MonoBehaviour
     // 아이템이 가방에 들어있는지 확인    
     public virtual void Itemon()
     {
-        Debug.Log("된다");
+       
     }
 }
 

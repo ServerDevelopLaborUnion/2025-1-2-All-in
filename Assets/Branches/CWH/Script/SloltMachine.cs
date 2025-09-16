@@ -66,6 +66,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
+    
 
     public int HaveSpin
     {
@@ -146,10 +147,12 @@ public class SloltMachine : MonoBehaviour
     private AudioSource audio;
     [SerializeField] private AudioClip coinSound;
     [SerializeField] private AudioClip tingSound;
+    private DeadLine _deadLine;
 
     public bool maxCheck;
     private void Awake()
     {
+        _deadLine = FindAnyObjectByType<DeadLine>();
         audio = GetComponent<AudioSource>();
     }
 
@@ -335,6 +338,7 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickP()
     {
+        if (_deadLine._rounds == 1 && _deadLine._compensation == 1) return;
         if (_haveSpin < 1)
         {
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
@@ -612,18 +616,16 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private GameObject bag;
     private void CheckBet()
     {
-        hasMatch = false; // 외부에서 불려오기 위해 밖에서 선언 하고 프로퍼티함 - 박철민
+        hasMatch = false;
 
         foreach (var img in reelImagesFlat)
             img.color = Color.white;
 
-        if (CheckJackpot(lastBetAmount))
-            return;
-
+        bool jackpot = CheckJackpot(lastBetAmount);
         bool vertical = CheckVertical(lastBetAmount);
         bool horizontal = CheckHorizontal(lastBetAmount);
-        bool jackpot = CheckJackpot(lastBetAmount);
-        hasMatch = vertical || horizontal;
+
+        hasMatch = vertical || horizontal || jackpot;
 
         if (_minBet == 0)
             _minBet += 1;
@@ -640,7 +642,6 @@ public class SloltMachine : MonoBehaviour
         textCredits.text = $"보유 금액 : {credits.Money.ToString("N0")}원";
         textChance.text = $" 세로줄 : {_verticalChance * 100}% \n 가로줄 : {_horizontalChance * 100}% \n 잭팟 : {jackpotChance * 100:F4}%";
 
-
         textResult.text = hasMatch ? "성공!!!" : "실패!!!!";
 
         if (horizontal || jackpot)
@@ -649,6 +650,7 @@ public class SloltMachine : MonoBehaviour
             StartCoroutine(PlayHorizontalMatchEffects());
             _this = false;
         }
+
         foreach (var item in items)
         {
             if (!item.transform.IsChildOf(bag.transform))
@@ -657,12 +659,12 @@ public class SloltMachine : MonoBehaviour
             var itemOn = item.GetComponent<ItemOn>();
             itemOn.OnAbilityCast?.Invoke();
         }
+
         audio.PlayOneShot(tingSound);
+        Debug.Log("판넬다운");
         shopPanel.PanelDown();
-
-        // 아마도 내가 추가함 - 박철민
-
     }
+
     private bool CheckVertical(long bet)
     {
         bool matched = false;

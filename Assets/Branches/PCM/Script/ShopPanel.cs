@@ -15,6 +15,7 @@ public class ShopPanel : MonoBehaviour
     [field:SerializeField]public bool onActive { get; set; }
     private SloltMachine machine;
     private DeadLine deadLine;
+    private ShopBuyTicket _buyTicket;
 
     private bool isAnimating = false;
 
@@ -23,6 +24,7 @@ public class ShopPanel : MonoBehaviour
         deadLine = FindAnyObjectByType<DeadLine>();
         machine = FindAnyObjectByType<SloltMachine>();
         rect = GetComponent<RectTransform>();
+        _buyTicket = FindAnyObjectByType<ShopBuyTicket>();
     }
     private void Start()
     {
@@ -36,7 +38,7 @@ public class ShopPanel : MonoBehaviour
 
         if (onActive == true && Mouse.current.leftButton.wasPressedThisFrame)
         {
-            if (deadLine._rounds == 1)
+            if (deadLine._compensation == 1)
             {
                 StartCoroutine(ShowRound1());
             }
@@ -73,8 +75,10 @@ public class ShopPanel : MonoBehaviour
     {
         if (machine.HaveSpin <= 0)
         {
+            Debug.Log("µé¾î¿È");
             dontHaveSpin.transform.DOScale(new Vector3(1, 1, 0), 0.7f);
-            deadLine._rounds -= 1;
+            deadLine._compensation -= 1;
+            deadLine._rounds += 1;
             onActive = true;
         }
     }
@@ -84,6 +88,8 @@ public class ShopPanel : MonoBehaviour
         {
             rect.DOAnchorPosY(1200f, 2f).SetEase(Ease.OutQuint, 0.5f);
         }
+        _buyTicket._3onActive = false;
+        _buyTicket._7onActive = false;
     }
     private IEnumerator Wait()
     {

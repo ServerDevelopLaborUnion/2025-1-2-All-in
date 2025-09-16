@@ -5,9 +5,13 @@ public class ShopBuyTicket : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI creditsText;
     [SerializeField] private TextMeshProUGUI ticketText;
+    [SerializeField] private TextMeshProUGUI text7;
+    [SerializeField] private TextMeshProUGUI text3;
     [SerializeField] private SloltMachine machine;
     [SerializeField] private AudioClip purchaseSound;
     private AudioSource audio;
+    public bool _3onActive { get; set; } = false;
+    public bool _7onActive { get; set; } = false;
 
     private void Awake()
     {
@@ -36,21 +40,31 @@ public class ShopBuyTicket : MonoBehaviour
     }
     public void Buy3()
     {
-        Debug.Log("e");
-        BuyTicket(3, 300);
-        machine.pullButton.interactable = true;
-        machine.minBetButton.interactable = true;
-        machine.maxBetButton.interactable = true;
-        audio.PlayOneShot(purchaseSound);
+        if (!_3onActive)
+        {
+            BuyTicket(10, 3000);
+            machine.pullButton.interactable = true;
+            machine.minBetButton.interactable = true;
+            machine.maxBetButton.interactable = true;
+            audio.PlayOneShot(purchaseSound);
+            text3.text = "품절";
+            text3.color = Color.red;
+        }
+        _3onActive = true;
     }
     public void Buy7()
     {
-
-        BuyTicket(7, 1000);
-        machine.pullButton.interactable = true;
-        machine.minBetButton.interactable = true;
-        machine.maxBetButton.interactable = true;
-        audio.PlayOneShot(purchaseSound);
+        if (!_7onActive)
+        {
+            BuyTicket(20, 7000);
+            machine.pullButton.interactable = true;
+            machine.minBetButton.interactable = true;
+            machine.maxBetButton.interactable = true;
+            audio.PlayOneShot(purchaseSound);
+            text7.text = "품절";
+            text7.color = Color.red;
+        }
+        _7onActive = true;
     }
 
 }
