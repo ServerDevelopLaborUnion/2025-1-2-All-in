@@ -81,6 +81,11 @@ public class ShopPanel : MonoBehaviour
             deadLine._rounds += 1;
             onActive = true;
         }
+        else if (machine.HaveSpin >=0)
+        {
+
+        }
+
     }
     public void PanelUp()
     {
@@ -92,6 +97,8 @@ public class ShopPanel : MonoBehaviour
             _buyTicket._7onActive = false;
             _buyTicket.text3.text = "3000¿ø";
             _buyTicket.text7.text = "7000¿ø";
+            _buyTicket.text3.color = Color.black;
+            _buyTicket.text7.color = Color.black;
         }
     }
     private IEnumerator Delay()

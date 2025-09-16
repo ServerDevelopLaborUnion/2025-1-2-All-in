@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 3950598897847936683, guid: c42391ce47ea3c64b836fc8644855053, type: 3}
   itemPrefab: {fileID: 78924591665800206, guid: a3cb8a07052eeb84fbe6b4dd4b0125a4, type: 3}
-  money: 1000
+  money: 100000
   itemName: "\uC2E4\uD328\uB294 \uC131\uACF5\uC758 \uC5B4\uBA38\uB2C8"
   itemInformation: "\uC2E4\uD328\uC2DC 50% \uD2F0\uCF13 2\uAC1C \uD68D\uB4DD "

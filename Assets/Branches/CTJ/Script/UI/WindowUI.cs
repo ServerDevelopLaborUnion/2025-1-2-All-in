@@ -20,7 +20,7 @@ public class WindowUI : MonoBehaviour
     {
         IntiUI();
 
-        Screen.SetResolution(_width, _height, fullScreenMode);
+        Screen.SetResolution(SavaScreen.Widht, SavaScreen.Height, SavaScreen.ScreenMode);
     }
 
     void IntiUI()

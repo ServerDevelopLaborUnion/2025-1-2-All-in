@@ -109,7 +109,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void Buy()
     {
-        if (_randitem >= 0 && _randitem < drawItem.Count)
+        if (_randitem >= 0 && _randitem < drawItem.Count && moneymahine.Money >= drawItem[_randitem].money)
         {
             ItemsSO data = drawItem[_randitem];
             moneymahine.Money -= data.money;
@@ -126,9 +126,10 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
             drawItem[_randitem] = null; // 아이템 구매 처리
             audio.PlayOneShot(reroll);
+
+            _skillimage.sprite = _soldOut;
         }
 
-        _skillimage.sprite = _soldOut;
     }
 
     // 마우스가 버튼 위로 올라갈 때
