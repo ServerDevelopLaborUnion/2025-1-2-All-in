@@ -13971,7 +13971,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2489603}
         m_TargetAssemblyTypeName: Btns, Assembly-CSharp
         m_MethodName: Reset
         m_Mode: 1
@@ -18712,7 +18712,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2489603}
         m_TargetAssemblyTypeName: Btns, Assembly-CSharp
         m_MethodName: Qiut
         m_Mode: 1
