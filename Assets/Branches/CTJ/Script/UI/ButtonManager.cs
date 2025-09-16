@@ -11,6 +11,7 @@ public class ButtonManager : MonoBehaviour
 
     bool _onMenu = false;
     bool _onSettingPanel = false;
+    bool _onLogin = false;
 
     private void Update()
     {
@@ -40,9 +41,12 @@ public class ButtonManager : MonoBehaviour
             _onSettingPanel = false;
         }
     }
-    public void Starts()
+    public void Start()
     {
+        if(loginPanel == null) { return; }
 
+        loginPanel.SetActive(false);
+        
     }
     public void OnOffSettingPanel()
     {
@@ -60,13 +64,15 @@ public class ButtonManager : MonoBehaviour
 
     public void OnLogin()
     {
-        if (!loginPanel)
+        if (!_onLogin)
         {
             loginPanel.SetActive(true);
+            _onLogin = true;
         }
-        else
+        else if(_onLogin)
         {
             loginPanel.SetActive(false);
+            _onLogin = false;
         }
     }
 }
