@@ -134,7 +134,7 @@ public class DeadLine : MonoBehaviour
             }
             else logUI.AddLog($"실패 : 돈이 부족합니다 필요금액 {aaa}", Color.red);
             audio.PlayOneShot(moneysound);
-                long abc = _bankBook * aa / 100;
+            long abc = _bankBook * aa / 100;
             _interestText.text = "이자:" + abc.ToString();
         }
     }
@@ -250,7 +250,7 @@ public class DeadLine : MonoBehaviour
         _inAndOut.gameObject.SetActive(true);
 
         yield return StartCoroutine(_inAndOut.StartFadeIn());
-        _inAndOutText.text = $"{_inAndOutint} - {_rounds} 스테이지";
+        _inAndOutText.text = $"{_inAndOutint} 스테이지";
         yield return new WaitForSeconds(0.6f);
         yield return StartCoroutine(_inAndOut.StartFadeStart());
 
