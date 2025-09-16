@@ -41,6 +41,11 @@ public class ButtonManager : MonoBehaviour
             _onSettingPanel = false;
         }
     }
+
+    public void www()
+    {
+        Application.OpenURL("https://www.notion.so/ALL-IN-2706f28388af80e98ec6f94c2e6bc3c0");
+    }
     public void Start()
     {
         if(loginPanel == null) { return; }
