@@ -66,7 +66,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
-    
+
 
     public int HaveSpin
     {
@@ -358,13 +358,14 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickM()
     {
+        _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
+        magnification = Mathf.Clamp(magnification - 1, 1, 10);
+
         if (_haveSpin >= _spinCost)
             ButtonTrue();
         else
             ButtonFalse();
 
-        _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
-        magnification = Mathf.Clamp(magnification - 1, 1, 10);
 
         UpdateMagnificationUI();
     }
@@ -729,7 +730,7 @@ public class SloltMachine : MonoBehaviour
                     textResult.text = "777 보너스!!! ";
                 }
                 NoBagDouble noBag = FindAnyObjectByType<NoBagDouble>();
-                if (noBag != null&& noBag.Nobagdouble())
+                if (noBag != null && noBag.Nobagdouble())
                 {
                     if (noBag.Nobagdouble())
                     {
