@@ -8,13 +8,16 @@ public class ShopBuyTicket : MonoBehaviour
     [SerializeField] private SloltMachine machine;
     [SerializeField] private AudioClip purchaseSound;
     private AudioSource audio;
-    [field:SerializeField] public TextMeshProUGUI text7 {  get; set; }
-    [field:SerializeField] public TextMeshProUGUI text3 {  get; set; }
+    public TextMeshProUGUI text7 {  get; set; }
+    public TextMeshProUGUI text3 {  get; set; }
     [field:SerializeField]public bool _3onActive { get; set; } = false;
     [field:SerializeField]public bool _7onActive { get; set; } = false;
 
     private void Awake()
     {
+        text3= GameObject.Find("3000").GetComponent<TextMeshProUGUI>();
+        text7 = GameObject.Find("7000").GetComponent<TextMeshProUGUI>();
+
         audio = GetComponent<AudioSource>();
     }
 
