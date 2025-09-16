@@ -9,14 +9,11 @@ public class VerticalPlus : ItemOn
      private SloltMachine machine;
     private void Awake()
     {
-        machine = FindAnyObjectByType<SloltMachine>();
+        machine = FindAnyObjectByType<SloltMachine>();        
     }
     private void Update()
     {
-        if (Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            Itemon();
-        }
+        
     }
     public override void Itemon()
     {
@@ -28,8 +25,7 @@ public class VerticalPlus : ItemOn
         int final = probability + probabilityplus;
         if(Random.Range(1,100)<= final)
         {
-            Debug.Log(final);
-            machine.VerticalChance += 0.05f;
+            machine._verticalChance += 0.05f;
         }
     }
 }
