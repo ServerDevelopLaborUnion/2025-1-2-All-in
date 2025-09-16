@@ -339,7 +339,7 @@ public class SloltMachine : MonoBehaviour
     public void OnClickP()
     {
         if (_deadLine._rounds == 1 && _deadLine._inAndOutint == 1) return;
-        if (_haveSpin < 1)
+        if (_haveSpin < 2)
         {
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
             return;
@@ -358,15 +358,10 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickM()
     {
-        if (_haveSpin < 1)
-        {
-            OnMessage(Color.white, "보유한 티켓이 부족합니다.");
-            return;
-        }
-        if (_haveSpin < _spinCost)
-            ButtonFalse();
-        else
+        if (_haveSpin >= _spinCost)
             ButtonTrue();
+        else
+            ButtonFalse();
 
         _spinCost = Mathf.Clamp(_spinCost -= 2, 1, 10);
         magnification = Mathf.Clamp(magnification - 1, 1, 10);
