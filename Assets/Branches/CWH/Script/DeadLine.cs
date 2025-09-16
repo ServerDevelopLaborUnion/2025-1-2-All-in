@@ -49,7 +49,7 @@ public class DeadLine : MonoBehaviour
     [Header("Fade In And Out")]
     [SerializeField] private FadeInAndOut _inAndOut;
     [SerializeField] private TextMeshProUGUI _inAndOutText;
-    [SerializeField] private int _inAndOutint = 1;
+    public int _inAndOutint = 1;
 
     [SerializeField] private TextMeshProUGUI _stageText;
     private void Awake()
