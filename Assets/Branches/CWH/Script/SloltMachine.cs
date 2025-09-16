@@ -66,6 +66,7 @@ public class SloltMachine : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI _remainSpins;
     [SerializeField] private TMPro.TextMeshProUGUI _SpinCosts;
     [SerializeField] private int _haveSpin;
+    
 
     public int HaveSpin
     {
@@ -146,10 +147,12 @@ public class SloltMachine : MonoBehaviour
     private AudioSource audio;
     [SerializeField] private AudioClip coinSound;
     [SerializeField] private AudioClip tingSound;
+    private DeadLine _deadLine;
 
     public bool maxCheck;
     private void Awake()
     {
+        _deadLine = FindAnyObjectByType<DeadLine>();
         audio = GetComponent<AudioSource>();
     }
 
