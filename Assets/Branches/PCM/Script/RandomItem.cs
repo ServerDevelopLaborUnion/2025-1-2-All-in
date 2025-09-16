@@ -41,6 +41,7 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     {
         infoPanel.SetActive(false);
         moneymahine = MoneyManager.Instance;
+        drawItem.Clear();
         if (drawItem.Count == 0)
         {
             for (int i = 0; i < _so.List.Count; i++)
@@ -48,7 +49,13 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 drawItem.Add(_so.List[i]);
             }
         }
+        StartRand();
         RandAllSlots();
+    }
+
+    private void StartRand()
+    {
+        
     }
 
     public void OnClick()
@@ -64,7 +71,6 @@ public class RandomItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // 모든 슬롯이 동시에 랜덤 돌리는 함수
     public static void RandAllSlots()
     {
-        Debug.Log("asdas");
         // 사용된 인덱스 초기화
         HashSet<int> usedIndexes = new HashSet<int>();
 

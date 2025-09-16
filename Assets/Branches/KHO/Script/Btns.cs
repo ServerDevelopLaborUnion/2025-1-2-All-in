@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,9 +8,11 @@ public class Btns : MonoBehaviour
     [SerializeField] private GameObject _signupPanel;
     [SerializeField] private GameObject Dead;
     [SerializeField] private SloltMachine SloltMachine;
+    private RandomItem randomItem;
 
     private void Start()
     {
+
         if (_signupPanel != null)
         {
             _signupPanel.SetActive(false);
