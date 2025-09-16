@@ -12,7 +12,7 @@ public class ShopPanel : MonoBehaviour
     [SerializeField] private GameObject round1;
     private RectTransform rect;
     private bool roundActive;
-    [field:SerializeField]public bool onActive { get; set; }
+    [field: SerializeField] public bool onActive { get; set; }
     private SloltMachine machine;
     private DeadLine deadLine;
     private ShopBuyTicket _buyTicket;
@@ -28,7 +28,7 @@ public class ShopPanel : MonoBehaviour
     }
     private void Start()
     {
-        dontHaveSpin.transform .localScale = Vector3.zero;
+        dontHaveSpin.transform.localScale = Vector3.zero;
         round1.transform.localScale = Vector3.zero;
     }
     private void Update()
@@ -87,11 +87,16 @@ public class ShopPanel : MonoBehaviour
         if (deadLine.Oninterest == true)
         {
             rect.DOAnchorPosY(1200f, 2f).SetEase(Ease.OutQuint, 0.5f);
+            StartCoroutine(Delay());
             _buyTicket._3onActive = false;
             _buyTicket._7onActive = false;
             _buyTicket.text3.text = "3000¿ø";
             _buyTicket.text7.text = "7000¿ø";
         }
+    }
+    private IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
     }
     private IEnumerator Wait()
     {

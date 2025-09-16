@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Widht: 1920
   Height: 1080
-  ScreenMode: 1
-  Rate: 60
+  ScreenMode: 3
