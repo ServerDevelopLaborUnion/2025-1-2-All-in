@@ -338,7 +338,7 @@ public class SloltMachine : MonoBehaviour
 
     public void OnClickP()
     {
-        if (_deadLine._rounds == 1 && _deadLine._compensation == 1) return;
+        if (_deadLine._rounds == 1 && _deadLine._inAndOutint == 1) return;
         if (_haveSpin < 1)
         {
             OnMessage(Color.white, "보유한 티켓이 부족합니다.");
